@@ -10,6 +10,8 @@ Renderer::Renderer(SDL_Window *window)
         throw runtime_error("Renderer could not be created.");
     }
 
+    SDL_SetRenderDrawBlendMode(newRenderer, SDL_BLENDMODE_BLEND);
+
     _renderer = newRenderer;
 }
 
