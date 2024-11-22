@@ -1,0 +1,17 @@
+CMakeFiles/
+CMakeScripts/
+.vs/
+Debug/
+x64/
+Build/
+
+LeoEngine*
+*.vcxproj
+*.xcodeproj
+*.filters
+*.sln
+*.cmake
+*.user
+CMakeCache.txt
+Makefile
+.DS_Store
