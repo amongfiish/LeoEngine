@@ -15,7 +15,7 @@ using namespace std;
 class Graphics
 {
 public:
-    Graphics(string windowTitle, int windowWidth, int windowHeight);
+    Graphics();
     ~Graphics();
 
     // primitive drawing functions

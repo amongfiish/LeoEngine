@@ -1,9 +1,11 @@
 #include "Saver.hpp"
-#include "GameSettings.hpp"
+
+string Saver::_organizationName = "LeoEngineDefaultOrg";
+string Saver::_applicationName = "LeoEngineDefaultApp";
 
 Saver::Saver(string filename)
 {
-    string path = SDL_GetPrefPath(GameSettings::ORGANIZATION_NAME, GameSettings::APPLICATION_NAME);
+    string path = SDL_GetPrefPath(_organizationName.c_str(), _applicationName.c_str());
     path += filename;
 
     _file.open(path.c_str());
@@ -18,6 +20,12 @@ void Saver::moveTo(int position)
 {
     _file.seekp(static_cast<streampos>(position));
     _file.seekg(static_cast<streampos>(position));
+}
+
+void Saver::setOrgAndAppName(string organizationName, string applicationName)
+{
+    _organizationName = organizationName;
+    _applicationName = applicationName;
 }
 
 string Saver::getLine()

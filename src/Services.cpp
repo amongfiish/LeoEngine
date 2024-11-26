@@ -4,7 +4,7 @@
 #include "Audio.hpp"
 #include "Graphics.hpp"
 #include "Logger.hpp"
-#include "GameSettings.hpp"
+#include "Saver.hpp"
 
 Services *Services::_instance = nullptr;
 
@@ -43,12 +43,18 @@ Logger *Services::getLogger()
     return _logger;
 }
 
+Saver *Services::getSaver()
+{
+    return _saver;
+}
+
 Services::Services()
         : _logger(new Logger),
           _events(new Events),
-          _graphics(new Graphics(GameSettings::DEFAULT_WINDOW_TITLE, GameSettings::DEFAULT_WINDOW_WIDTH, GameSettings::DEFAULT_WINDOW_HEIGHT)),
+          _graphics(new Graphics),
           _audio(new Audio),
-          _input(new Input(_events))
+          _input(new Input(_events)),
+          _saver(new Saver("savedata"))
 {
 
 }

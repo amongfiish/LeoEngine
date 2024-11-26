@@ -13,8 +13,8 @@
 #include "Graphics.hpp"
 #include "Pair.hpp"
 
-Graphics::Graphics(string windowTitle, int windowWidth, int windowHeight)
-        : _window(windowTitle, windowWidth, windowHeight),
+Graphics::Graphics()
+        : _window("", 800, 600),
           _renderer(_window.getSDLWindowObject()),
           _textureLoader("textures"),
           _fontLoader("fonts")

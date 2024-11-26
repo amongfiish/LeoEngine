@@ -26,6 +26,8 @@ public:
     // scan around the file
     void moveTo(int position);
 
+    static void setOrgAndAppName(string organizationName, string appName);
+
     // read and write characters from the file
     // NOTE: read operations only work up to 100 characters.
     //       If more are needed increase BUFFER_SIZE.
@@ -35,6 +37,9 @@ public:
 
 private:
     fstream _file;
+
+    static string _organizationName;
+    static string _applicationName;
 
     static constexpr int BUFFER_SIZE = 100;
     char _buffer[BUFFER_SIZE];

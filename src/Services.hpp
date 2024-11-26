@@ -6,6 +6,7 @@ class Input;
 class Audio;
 class Graphics;
 class Logger;
+class Saver;
 
 class Services
 {
@@ -17,6 +18,7 @@ public:
     Audio *getAudio();
     Graphics *getGraphics();
     Logger *getLogger();
+    Saver *getSaver();
 
 private:
     Services();
@@ -29,6 +31,7 @@ private:
     Graphics *_graphics = nullptr;
     Audio *_audio = nullptr;
     Input *_input = nullptr;
+    Saver *_saver = nullptr;
 };
 
 #endif

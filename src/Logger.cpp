@@ -5,7 +5,9 @@
 #endif
 
 #include "Logger.hpp"
-#include "GameSettings.hpp"
+
+string Logger::_organizationName = "LeoEngineDefaultOrg";
+string Logger::_applicationName = "LeoEngineDefaultApp";
 
 Logger::Logger()
 {
@@ -15,6 +17,12 @@ Logger::Logger()
 Logger::~Logger()
 {
 
+}
+
+void Logger::setOrgAndAppName(string organizationName, string applicationName)
+{
+    _organizationName = organizationName;
+    _applicationName = applicationName;
 }
 
 void Logger::trace(string id, string content)
@@ -59,7 +67,7 @@ shared_ptr<spdlog::logger> Logger::getLogger(string id)
     auto logger = _spdLoggers.find(id);
     if (logger == _spdLoggers.end())
     {
-        string path = SDL_GetPrefPath(GameSettings::ORGANIZATION_NAME, GameSettings::APPLICATION_NAME);
+        string path = SDL_GetPrefPath(_organizationName.c_str(), _applicationName.c_str());
         path += "log.txt";
         return _spdLoggers.insert(make_pair(id, spdlog::basic_logger_mt(id, path))).first->second;
     }

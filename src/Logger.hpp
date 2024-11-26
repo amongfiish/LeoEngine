@@ -14,6 +14,8 @@ public:
     Logger();
     ~Logger();
 
+    static void setOrgAndAppName(string organizationName, string applicationName);
+
     void trace(string id, string content);
     void debug(string id, string content);
     void info(string id, string content);
@@ -25,6 +27,9 @@ private:
     shared_ptr<spdlog::logger> getLogger(string id);
 
     unordered_map<string, shared_ptr<spdlog::logger>> _spdLoggers;
+
+    static string _organizationName;
+    static string _applicationName;
 };
 
 #endif
