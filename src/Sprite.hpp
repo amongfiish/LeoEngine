@@ -15,7 +15,7 @@ public:
 
     void draw();
 
-    const TextureDrawData *getDrawData();
+    const TextureDrawData *getDrawData() const;
 
     void setPosition(int x, int y);
 

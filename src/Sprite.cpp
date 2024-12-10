@@ -20,7 +20,7 @@ void Sprite::draw()
     Services::get().getGraphics()->drawTexture(_textureFilename, _textureDrawData);
 }
 
-const TextureDrawData *Sprite::getDrawData()
+const TextureDrawData *Sprite::getDrawData() const
 {
     return &_textureDrawData;
 }
