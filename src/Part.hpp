@@ -5,7 +5,10 @@
 class Part
 {
 public:
-    virtual ~Part() = 0;
+    virtual ~Part() {};
+
+    virtual void update() = 0;
+    virtual void draw() = 0;
 
 private:
     Part() = default;

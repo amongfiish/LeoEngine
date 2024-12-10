@@ -23,7 +23,22 @@ public:
         _parts.clear();
     }
 
-private:
+    void update()
+    {
+        for (auto part : _parts)
+        {
+            part->update();
+        }
+    }
+
+    void draw()
+    {
+        for (auto part : _parts)
+        {
+            part->draw();
+        }
+    }
+
     template<class T>
     T *addPart()
     {
@@ -40,6 +55,7 @@ private:
         return castedNewPart;
     }
 
+private:
     vector<Part *> _parts;
 };
 
