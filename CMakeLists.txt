@@ -19,7 +19,8 @@ file(GLOB SOURCES src/*.cpp src/*.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC lib/boost lib/sdl lib/sdl_image lib/sdl_mixer lib/sdl_ttf lib/spdlog)
+include_directories(lib/sdl/include lib/sdl_image/include lib/sdl_mixer/include lib/sdl_ttf lib/spdlog/include lib/boost)
+target_link_libraries(${PROJECT_NAME} PUBLIC lib/sdl/Debug/SDL2d lib/sdl_image/Debug/SDL2_imaged lib/sdl_mixer/Debug/SDL2_mixerd lib/sdl_ttf/Debug/SDL2_ttfd lib/spdlog/Debug/spdlogd)
 
 if (APPLE)
     set_target_properties(LeoEngineApp PROPERTIES
