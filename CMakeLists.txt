@@ -17,7 +17,7 @@ add_subdirectory(lib/spdlog)
 
 file(GLOB SOURCES src/*.cpp src/*.hpp)
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
 include_directories(lib/sdl/include lib/sdl_image/include lib/sdl_mixer/include lib/sdl_ttf lib/spdlog/include lib/boost)
 target_link_libraries(${PROJECT_NAME} PUBLIC lib/sdl/Debug/SDL2d lib/sdl_image/Debug/SDL2_imaged lib/sdl_mixer/Debug/SDL2_mixerd lib/sdl_ttf/Debug/SDL2_ttfd lib/spdlog/Debug/spdlogd)

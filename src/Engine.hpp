@@ -19,7 +19,7 @@
 class Engine
 {
 public:
-    Engine();
+    Engine() = default;
     Engine(EngineSettings& settings);
     ~Engine();
 

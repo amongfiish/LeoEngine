@@ -32,7 +32,7 @@ void Engine::runGame(Game& game)
     const int MS_BETWEEN_UPDATES = 1000 / 60; // maybe stop hardcoding this?
 
     int previousFrameTicks = SDL_GetTicks();
-    int currentFrameTicks, totalUpdateLag, ticksBetweenFrames;
+    int currentFrameTicks = 0, totalUpdateLag = 0, ticksBetweenFrames = 0;
     
     while (_running)
     {
