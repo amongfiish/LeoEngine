@@ -8,6 +8,9 @@ To build the engine from source:
 3. Run `git submodule init`
 4. Run `git submodule update`
 5. Navigate to *LeoEngine/tools/\<your operating system\>/*
+
+**IF ON WINDOWS** run *pre_first_build.bat*.
+
 6. Run the build script located within
 
 If you ran the build script from the terminal, you should now be in the build directory. Otherwise, you can find the build library files in *LeoEngine/build/*
