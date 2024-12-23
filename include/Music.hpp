@@ -2,7 +2,7 @@
 #define MUSIC_HPP
 
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL2/SDL_mixer.h>
+    #include <SDL_mixer.h>
 #elif defined(_WIN32)
     #include <SDL_mixer.h>
 #endif
