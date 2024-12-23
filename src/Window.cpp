@@ -61,3 +61,8 @@ void Window::setResizable(bool isResizable)
 {
     SDL_SetWindowResizable(_window, static_cast<SDL_bool>(isResizable));
 }
+
+void Window::setTitle(string title)
+{
+    SDL_SetWindowTitle(_window, title.c_str());
+}

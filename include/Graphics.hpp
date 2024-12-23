@@ -45,6 +45,8 @@ public:
     void setWindowBordered(bool isBordered);
     void setWindowResizable(bool isResizable);
 
+    void setWindowTitle(string title);
+
     // renderer functions
     void setRenderDimensions(int width, int height);
     void setRenderDimensions(Pair<int, int>& dimensions);

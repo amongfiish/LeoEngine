@@ -180,6 +180,11 @@ void Graphics::setWindowResizable(bool isResizable)
     _window.setResizable(isResizable);
 }
 
+void Graphics::setWindowTitle(string title)
+{
+    _window.setTitle(title);
+}
+
 void Graphics::setRenderDimensions(int width, int height)
 {
     _renderer.setLogicalDimensions(width, height);

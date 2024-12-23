@@ -28,6 +28,8 @@ public:
     void setBordered(bool isBordered);
     void setResizable(bool isResizable);
 
+    void setTitle(string title);
+
 private:
     SDL_Window *_window = nullptr;
 
