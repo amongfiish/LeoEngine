@@ -1,5 +1,8 @@
 The Leo Engine. Originally made for a Minecart Madness re-write, now used primarily for Alley Cats, a mobile bowling game.
 
+# Dependencies
+Leo Engine's build process uses [CMake](https://cmake.org/download/) and as such it is necessary that you have it installed on your system. Every other dependency is included in this repository.
+
 # Building from Source
 To build the engine from source:
 
