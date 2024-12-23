@@ -102,7 +102,7 @@ void Graphics::drawTexture(string filename, const TextureDrawData& data)
 {
     SDL_Rect srcRect;
     SDL_Rect *p_srcRect;
-    if (data.sourceRectangle == NULL)
+    if (data.sourceRectangle == nullptr)
     {
         p_srcRect = NULL;
     }
@@ -114,7 +114,7 @@ void Graphics::drawTexture(string filename, const TextureDrawData& data)
 
     SDL_Rect destRect;
     SDL_Rect *p_destRect;
-    if (data.destinationRectangle == NULL)
+    if (data.destinationRectangle == nullptr)
     {
         p_destRect = NULL;
     }
@@ -131,7 +131,7 @@ void Graphics::drawTexture(string filename, const TextureDrawData& data)
 
     SDL_Point center;
     SDL_Point *p_center;
-    if (data.center == NULL)
+    if (data.center == nullptr)
     {
         p_center = NULL;
     }

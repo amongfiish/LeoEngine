@@ -32,6 +32,8 @@ public:
                 c = PATH_SEPARATOR;
             }
         }
+
+        _path = basePath + subdirectory + PATH_SEPARATOR;
     }
     
     ~Loader()
@@ -41,7 +43,7 @@ public:
 
     T& get(string filename)
     {
-        string pathToFile = path + filename;
+        string pathToFile = _path + filename;
 
         auto foundResource = _resources.find(filename);
         if (foundResource == _resources.end())
@@ -53,7 +55,7 @@ public:
     }
 
 private:
-    string path;
+    string _path;
 
     unordered_map<string, T> _resources;
 };

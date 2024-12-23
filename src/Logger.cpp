@@ -61,6 +61,14 @@ void Logger::critical(string id, string content)
     logger->critical(content);
 }
 
+void Logger::flush()
+{
+    for (auto logger : _spdLoggers) 
+    {
+        logger.second->flush();
+    }
+}
+
 shared_ptr<spdlog::logger> Logger::getLogger(string id)
 {
     // create a logger with this ID, if one doesn't already exist

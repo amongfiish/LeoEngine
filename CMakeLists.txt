@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 set(PROJECT_NAME "LeoEngine")
 
 project(${PROJECT_NAME})
@@ -15,12 +17,15 @@ add_subdirectory(lib/sdl_mixer)
 add_subdirectory(lib/sdl_ttf)
 add_subdirectory(lib/spdlog)
 
-file(GLOB SOURCES src/*.cpp src/*.hpp)
+file(GLOB SOURCES src/*.cpp)
 
-add_library(${PROJECT_NAME} STATIC ${SOURCES})
+add_library(${PROJECT_NAME} ${SOURCES})
+
+include_directories(include)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC SDL2 SDL2_image SDL2_mixer SDL2_ttf spdlog)
 
 include_directories(lib/sdl/include lib/sdl_image/include lib/sdl_mixer/include lib/sdl_ttf lib/spdlog/include lib/boost)
-target_link_libraries(${PROJECT_NAME} PUBLIC lib/sdl/Debug/SDL2d lib/sdl_image/Debug/SDL2_imaged lib/sdl_mixer/Debug/SDL2_mixerd lib/sdl_ttf/Debug/SDL2_ttfd lib/spdlog/Debug/spdlogd)
 
 if (APPLE)
     set_target_properties(LeoEngineApp PROPERTIES

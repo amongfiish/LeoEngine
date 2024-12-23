@@ -1,6 +1,9 @@
 #ifndef ENGINE_SETTINGS_HPP
 #define ENGINE_SETTINGS_HPP
 
+#include <string>
+using namespace std;
+
 class EngineSettings
 {
 public:

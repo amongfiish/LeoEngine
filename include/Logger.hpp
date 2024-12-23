@@ -23,6 +23,8 @@ public:
     void error(string id, string content);
     void critical(string id, string content);
 
+    void flush();
+
 private:
     shared_ptr<spdlog::logger> getLogger(string id);
 

@@ -1,5 +1,16 @@
+#if defined(__linux__) || defined(__APPLE__)
+    #include <SDL2/SDL.h>
+#elif defined(_WIN32)
+    #include <SDL.h>
+#endif
+
 #include "Engine.hpp"
 #include "Services.hpp"
+#include "Graphics.hpp"
+#include "Events.hpp"
+#include "Input.hpp"
+#include "Saver.hpp"
+#include "Logger.hpp"
 
 bool running = true;
 

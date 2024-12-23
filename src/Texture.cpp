@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include "Texture.hpp"
 #include "Graphics.hpp"
+#include "Logger.hpp"
 #include "Services.hpp"
 using namespace std;
 
@@ -15,6 +16,10 @@ Texture::Texture(string path)
     SDL_Surface *newTextureSurface = IMG_Load(path.c_str());
     if (newTextureSurface == nullptr)
     {
+        string message = "File '";
+        message = message + path + "' not found";
+        Services::get().getLogger()->critical("Texture", message);
+        Services::get().getLogger()->flush();
         throw runtime_error("Couldn't load new texture from file.");
     }
 
@@ -22,6 +27,8 @@ Texture::Texture(string path)
     SDL_FreeSurface(newTextureSurface);
     if (newTexture == nullptr)
     {
+        Services::get().getLogger()->critical("Texture", "Couldn't create new texture from surface.");
+        Services::get().getLogger()->flush();
         throw runtime_error("Couldn't create new texture from surface.");
     }
 
