@@ -1,7 +1,7 @@
 #if defined(__linux__) || defined(__APPLE__)
     #include <SDL2/SDL.h>
-    #include <SDL2/SDL_image.h>
-    #include <SDL2/SDL_ttf.h>
+    #include <SDL_image.h>
+    #include <SDL_ttf.h>
 #elif defined(_WIN32)
     #include <SDL.h>
     #include <SDL_image.h>

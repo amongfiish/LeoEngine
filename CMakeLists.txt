@@ -27,9 +27,3 @@ target_link_libraries(${PROJECT_NAME} PUBLIC SDL2 SDL2_image SDL2_mixer SDL2_ttf
 
 include_directories(lib/sdl/include lib/sdl_image/include lib/sdl_mixer/include lib/sdl_ttf lib/spdlog/include lib/boost)
 
-if (APPLE)
-    set_target_properties(LeoEngineApp PROPERTIES
-                          MACOSX_BUNDLE TRUE
-                          MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist)
-endif()
-
