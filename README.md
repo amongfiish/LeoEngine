@@ -16,4 +16,4 @@ To build the engine from source:
 
 6. Run the build script located within
 
-If you ran the build script from the terminal, you should now be in the build directory. Otherwise, you can find the build library files in *LeoEngine/build/*
+If you ran the build script from the terminal, you should now be in the build directory. Otherwise, you can find the built library files in *LeoEngine/build/*
