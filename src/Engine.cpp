@@ -27,8 +27,8 @@ Engine::Engine(EngineSettings& settings)
 
     Services::get().getGraphics()->setRenderVSync(true);
 
-    Services::get().getSaver()->setOrgAndAppName(settings.organizationName, settings.applicationName);
-    Services::get().getLogger()->setOrgAndAppName(settings.organizationName, settings.applicationName);
+    Saver::setOrgAndAppName(settings.organizationName, settings.applicationName);
+    Logger::setOrgAndAppName(settings.organizationName, settings.applicationName);
     
     Services::get().getLogger()->info("Core", "Testing");
 }
