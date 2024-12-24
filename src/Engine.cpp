@@ -23,7 +23,7 @@ Engine::Engine(EngineSettings& settings)
     Services::get().getGraphics()->setWindowBordered(settings.defaultBordered);
     Services::get().getGraphics()->setWindowResizable(settings.defaultResizable);
 
-    Services::get().getGraphics()->setWindowTitle(settings.applicationName);
+    Services::get().getGraphics()->setWindowTitle(settings.defaultWindowTitle);
 
     Services::get().getGraphics()->setRenderVSync(true);
 
