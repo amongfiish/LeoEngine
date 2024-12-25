@@ -33,7 +33,7 @@ namespace LeoEngine
         Saver::setOrgAndAppName(settings.organizationName, settings.applicationName);
         Logger::setOrgAndAppName(settings.organizationName, settings.applicationName);
         
-        Services::get().getLogger()->info("Core", "Testing");
+        Services::get().getLogger()->info("Core", "Engine instance initialized.");
     }
 
     Engine::~Engine()
@@ -51,6 +51,8 @@ namespace LeoEngine
 
         int previousFrameTicks = SDL_GetTicks();
         int currentFrameTicks = 0, totalUpdateLag = 0, ticksBetweenFrames = 0;
+
+        Services::get().getLogger()->info("Core", "Entering main loop.");
         
         while (_running)
         {
@@ -87,6 +89,8 @@ namespace LeoEngine
             Services::get().getGraphics()->present();
         }
 
+        Services::get().getLogger()->info("Core", "Exited main loop.");
+        
         Services::get().getEvents()->removeCallback(quitCallbackID);
     }
 
