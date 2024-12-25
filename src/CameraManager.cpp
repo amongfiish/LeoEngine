@@ -3,6 +3,8 @@
 #include "Camera.hpp"
 using namespace std;
 
+using namespace LeoEngine;
+
 CameraManager::CameraManager()
 {
 

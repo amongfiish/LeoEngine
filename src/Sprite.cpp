@@ -2,6 +2,8 @@
 #include "Graphics.hpp"
 #include "Services.hpp"
 
+using namespace LeoEngine;
+
 Sprite::Sprite(string textureFilename)
     : _textureFilename(textureFilename)
 {

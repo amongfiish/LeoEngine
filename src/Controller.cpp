@@ -1,5 +1,7 @@
 #include "Controller.hpp"
 
+using namespace LeoEngine;
+
 Controller::Controller(SDL_Joystick *sdlJoystick)
     : _sdlJoystick(sdlJoystick),
       _buttons(SDL_JoystickNumButtons(sdlJoystick),

@@ -1,5 +1,7 @@
 #include "Camera.hpp"
 
+using namespace LeoEngine;
+
 void Camera::setPosition(double x, double y)
 {
     _position.first = x;

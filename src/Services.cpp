@@ -6,6 +6,8 @@
 #include "Logger.hpp"
 #include "Saver.hpp"
 
+using namespace LeoEngine;
+
 Services *Services::_instance = nullptr;
 
 Services &Services::get()
@@ -18,32 +20,32 @@ Services &Services::get()
     return *_instance;
 }
 
-Events *Services::getEvents()
+LeoEngine::Events *Services::getEvents()
 {
     return _events;
 }
 
-Input *Services::getInput()
+LeoEngine::Input *Services::getInput()
 {
     return _input;
 }
 
-Audio *Services::getAudio()
+LeoEngine::Audio *Services::getAudio()
 {
     return _audio;
 }
 
-Graphics *Services::getGraphics()
+LeoEngine::Graphics *Services::getGraphics()
 {
     return _graphics;
 }
 
-Logger *Services::getLogger()
+LeoEngine::Logger *Services::getLogger()
 {
     return _logger;
 }
 
-Saver *Services::getSaver()
+LeoEngine::Saver *Services::getSaver()
 {
     return _saver;
 }

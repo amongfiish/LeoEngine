@@ -2,6 +2,8 @@
 #include "Window.hpp"
 using namespace std;
 
+using namespace LeoEngine;
+
 Window::Window(string title, int width, int height)
 {
     SDL_Window *newWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);

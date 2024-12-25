@@ -1,6 +1,8 @@
 #include <stdexcept>
 #include "SoundEffect.hpp"
 
+using namespace LeoEngine;
+
 SoundEffect::SoundEffect(string filepath)
 {
     Mix_Chunk *newChunk = Mix_LoadWAV(filepath.c_str());

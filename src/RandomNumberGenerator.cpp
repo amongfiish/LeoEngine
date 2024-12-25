@@ -1,6 +1,8 @@
 #include <ctime>
 #include "RandomNumberGenerator.hpp"
 
+using namespace LeoEngine;
+
 RandomNumberGenerator::RandomNumberGenerator(int seed)
 {
     _generator.seed(seed);

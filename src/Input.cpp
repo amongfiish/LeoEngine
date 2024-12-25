@@ -9,6 +9,8 @@
 #include "EventControllerAdded.hpp"
 #include "EventControllerRemoved.hpp"
 
+using namespace LeoEngine;
+
 Input::Input(Events *events)
     : _events(events),
       _mousePosition(0, 0),

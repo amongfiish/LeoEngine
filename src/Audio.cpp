@@ -2,6 +2,8 @@
 #include <string>
 #include "Audio.hpp"
 
+using namespace LeoEngine;
+
 Audio::Audio()
     : _musicLoader("music"),
       _soundEffectLoader("sfx")

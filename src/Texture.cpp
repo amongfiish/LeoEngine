@@ -11,6 +11,8 @@
 #include "Services.hpp"
 using namespace std;
 
+using namespace LeoEngine;
+
 Texture::Texture(string path)
 {
     SDL_Surface *newTextureSurface = IMG_Load(path.c_str());

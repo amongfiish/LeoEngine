@@ -2,6 +2,8 @@
 #include "Renderer.hpp"
 using namespace std;
 
+using namespace LeoEngine;
+
 Renderer::Renderer(SDL_Window *window)
 {
     SDL_Renderer *newRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);

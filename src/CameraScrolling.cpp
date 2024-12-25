@@ -1,5 +1,7 @@
 #include "CameraScrolling.hpp"
 
+using namespace LeoEngine;
+
 CameraScrolling::CameraScrolling(double startX, double startY, double velocityX, double velocityY)
     : _velocity(velocityX, velocityY)
 {

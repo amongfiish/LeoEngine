@@ -12,6 +12,8 @@
 #include "Saver.hpp"
 #include "Logger.hpp"
 
+using namespace LeoEngine;
+
 bool running = true;
 
 Engine::Engine(EngineSettings& settings)

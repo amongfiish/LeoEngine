@@ -13,6 +13,8 @@
 #include "Graphics.hpp"
 #include "Pair.hpp"
 
+using namespace LeoEngine;
+
 Graphics::Graphics()
         : _window("", 800, 600),
           _renderer(_window.getSDLWindowObject()),

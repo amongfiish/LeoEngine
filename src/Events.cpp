@@ -21,6 +21,8 @@
 #include "EventWindowResize.hpp"
 using namespace std;
 
+using namespace LeoEngine;
+
 Events::Events()
 {
     if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)

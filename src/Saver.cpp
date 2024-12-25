@@ -1,5 +1,7 @@
 #include "Saver.hpp"
 
+using namespace LeoEngine;
+
 string Saver::_organizationName = "LeoEngineDefaultOrg";
 string Saver::_applicationName = "LeoEngineDefaultApp";
 

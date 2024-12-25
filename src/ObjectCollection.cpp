@@ -1,5 +1,7 @@
 #include "ObjectCollection.hpp"
 
+using namespace LeoEngine;
+
 ObjectCollection::ObjectCollection()
 {
 

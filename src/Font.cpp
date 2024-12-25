@@ -1,6 +1,8 @@
 #include <stdexcept>
 #include "Font.hpp"
 
+using namespace LeoEngine;
+
 Font::Font(string filepath)
 {
     TTF_Font *newFont = TTF_OpenFont(filepath.c_str(), 10);

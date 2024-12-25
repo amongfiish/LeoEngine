@@ -1,5 +1,7 @@
 #include "CameraFollow.hpp"
 
+using namespace LeoEngine;
+
 CameraFollow::CameraFollow(const Pair<double, double> *targetPosition)
     : _targetPosition(targetPosition)
 {

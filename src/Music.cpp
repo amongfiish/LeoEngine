@@ -1,6 +1,8 @@
 #include <stdexcept>
 #include "Music.hpp"
 
+using namespace LeoEngine;
+
 Music::Music(string filepath)
 {
     Mix_Music *newMusic = Mix_LoadMUS(filepath.c_str());

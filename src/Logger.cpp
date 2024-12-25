@@ -6,6 +6,8 @@
 
 #include "Logger.hpp"
 
+using namespace LeoEngine;
+
 string Logger::_organizationName = "LeoEngineDefaultOrg";
 string Logger::_applicationName = "LeoEngineDefaultApp";
 

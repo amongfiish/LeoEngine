@@ -2,6 +2,8 @@
 #include "Services.hpp"
 #include "Logger.hpp"
 
+using namespace LeoEngine;
+
 Animation::Animation(string filename, int width, int height)
     : _filename(filename),
       _dimensions(width, height)
