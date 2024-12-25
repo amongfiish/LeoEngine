@@ -38,6 +38,17 @@ void Sprite::setPosition(int x, int y)
     _textureDrawData.destinationRectangle->y = y;
 }
 
+void Sprite::setSize(int width, int height)
+{
+    if (_textureDrawData.destinationRectangle == nullptr)
+    {
+        return;
+    }
+
+    _textureDrawData.destinationRectangle->width = width;
+    _textureDrawData.destinationRectangle->height = height;
+}
+
 void Sprite::setSourceRectangle(shared_ptr<Rectangle> sourceRectangle)
 {
     _textureDrawData.sourceRectangle = sourceRectangle;
