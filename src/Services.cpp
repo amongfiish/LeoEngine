@@ -1,74 +1,76 @@
-#include "Services.hpp"
-#include "Events.hpp"
-#include "Input.hpp"
-#include "Audio.hpp"
-#include "Graphics.hpp"
-#include "Logger.hpp"
-#include "Saver.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Events.hpp"
+#include "LeoEngine/Input.hpp"
+#include "LeoEngine/Audio.hpp"
+#include "LeoEngine/Graphics.hpp"
+#include "LeoEngine/Logger.hpp"
+#include "LeoEngine/Saver.hpp"
 
-using namespace LeoEngine;
-
-Services *Services::_instance = nullptr;
-
-Services &Services::get()
+namespace LeoEngine
 {
-    if (_instance == nullptr) 
+
+    Services *Services::_instance = nullptr;
+
+    Services &Services::get()
     {
-        _instance = new Services;
+        if (_instance == nullptr) 
+        {
+            _instance = new Services;
+        }
+
+        return *_instance;
     }
 
-    return *_instance;
+    Events *Services::getEvents()
+    {
+        return _events;
+    }
+
+    Input *Services::getInput()
+    {
+        return _input;
+    }
+
+    Audio *Services::getAudio()
+    {
+        return _audio;
+    }
+
+    Graphics *Services::getGraphics()
+    {
+        return _graphics;
+    }
+
+    Logger *Services::getLogger()
+    {
+        return _logger;
+    }
+
+    Saver *Services::getSaver()
+    {
+        return _saver;
+    }
+
+    Services::Services()
+            : _logger(new Logger),
+            _events(new Events),
+            _graphics(new Graphics),
+            _audio(new Audio),
+            _input(new Input(_events)),
+            _saver(new Saver("savedata"))
+    {
+
+    }
+
+    Services::~Services()
+    {
+        delete _events;
+        delete _input;
+        delete _audio;
+        delete _graphics;
+        delete _logger;
+
+        delete _instance;
+    }
+
 }
-
-LeoEngine::Events *Services::getEvents()
-{
-    return _events;
-}
-
-LeoEngine::Input *Services::getInput()
-{
-    return _input;
-}
-
-LeoEngine::Audio *Services::getAudio()
-{
-    return _audio;
-}
-
-LeoEngine::Graphics *Services::getGraphics()
-{
-    return _graphics;
-}
-
-LeoEngine::Logger *Services::getLogger()
-{
-    return _logger;
-}
-
-LeoEngine::Saver *Services::getSaver()
-{
-    return _saver;
-}
-
-Services::Services()
-        : _logger(new Logger),
-          _events(new Events),
-          _graphics(new Graphics),
-          _audio(new Audio),
-          _input(new Input(_events)),
-          _saver(new Saver("savedata"))
-{
-
-}
-
-Services::~Services()
-{
-    delete _events;
-    delete _input;
-    delete _audio;
-    delete _graphics;
-    delete _logger;
-
-    delete _instance;
-}
-

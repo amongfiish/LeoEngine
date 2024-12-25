@@ -1,26 +1,28 @@
 #include <stdexcept>
-#include "Music.hpp"
+#include "LeoEngine/Music.hpp"
 
-using namespace LeoEngine;
-
-Music::Music(string filepath)
+namespace LeoEngine
 {
-    Mix_Music *newMusic = Mix_LoadMUS(filepath.c_str());
-    if (newMusic == nullptr)
+
+    Music::Music(string filepath)
     {
-        throw runtime_error("Couldn't load music object.");
+        Mix_Music *newMusic = Mix_LoadMUS(filepath.c_str());
+        if (newMusic == nullptr)
+        {
+            throw runtime_error("Couldn't load music object.");
+        }
+
+        _music = newMusic;
     }
 
-    _music = newMusic;
-}
+    Music::~Music()
+    {
+        Mix_FreeMusic(_music);
+    }
 
-Music::~Music()
-{
-    Mix_FreeMusic(_music);
-}
+    Mix_Music *Music::getSDLMusicObject()
+    {
+        return _music;
+    }
 
-Mix_Music *Music::getSDLMusicObject()
-{
-    return _music;
 }
-

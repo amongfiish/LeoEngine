@@ -1,45 +1,47 @@
-#include "Animation.hpp"
-#include "Services.hpp"
-#include "Logger.hpp"
+#include "LeoEngine/Animation.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 
-using namespace LeoEngine;
-
-Animation::Animation(string filename, int width, int height)
-    : _filename(filename),
-      _dimensions(width, height)
+namespace LeoEngine
 {
 
-}
-
-Animation::~Animation()
-{
-    
-}
-
-const Pair<int, int>& Animation::getDimensions() const
-{
-    return _dimensions;
-}
-
-const AnimationFrameData Animation::getFrameData(int frame) const
-{
-    if (frame < 0 || frame >= _frameData.size())
+    Animation::Animation(string filename, int width, int height)
+        : _filename(filename),
+        _dimensions(width, height)
     {
-        Services::get().getLogger()->error("Animation", "Frame number provided was out of range.");
 
-        return AnimationFrameData(-1, -1, -1);
     }
 
-    return _frameData[frame];
-}
+    Animation::~Animation()
+    {
+        
+    }
 
-void Animation::addFrame(int sheetX, int sheetY, int displayTime)
-{
-    _frameData.emplace_back(sheetX, sheetY, displayTime);   
-}
+    const Pair<int, int>& Animation::getDimensions() const
+    {
+        return _dimensions;
+    }
 
-void Animation::addFrame(AnimationFrameData& frameData)
-{
-    addFrame(frameData.sheetX, frameData.sheetY, frameData.displayTime);
-}
+    const AnimationFrameData Animation::getFrameData(int frame) const
+    {
+        if (frame < 0 || frame >= _frameData.size())
+        {
+            Services::get().getLogger()->error("Animation", "Frame number provided was out of range.");
 
+            return AnimationFrameData(-1, -1, -1);
+        }
+
+        return _frameData[frame];
+    }
+
+    void Animation::addFrame(int sheetX, int sheetY, int displayTime)
+    {
+        _frameData.emplace_back(sheetX, sheetY, displayTime);   
+    }
+
+    void Animation::addFrame(AnimationFrameData& frameData)
+    {
+        addFrame(frameData.sheetX, frameData.sheetY, frameData.displayTime);
+    }
+
+}

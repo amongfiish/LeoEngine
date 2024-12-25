@@ -1,26 +1,28 @@
 #include <stdexcept>
-#include "Font.hpp"
+#include "LeoEngine/Font.hpp"
 
-using namespace LeoEngine;
-
-Font::Font(string filepath)
+namespace LeoEngine
 {
-    TTF_Font *newFont = TTF_OpenFont(filepath.c_str(), 10);
-    if (newFont == nullptr)
+
+    Font::Font(string filepath)
     {
-        throw runtime_error("Couldn't load font.");
+        TTF_Font *newFont = TTF_OpenFont(filepath.c_str(), 10);
+        if (newFont == nullptr)
+        {
+            throw runtime_error("Couldn't load font.");
+        }
+
+        _font = newFont;
     }
 
-    _font = newFont;
-}
+    Font::~Font()
+    {
+        TTF_CloseFont(_font);
+    }
 
-Font::~Font()
-{
-    TTF_CloseFont(_font);
-}
+    TTF_Font *Font::getSDLFontObject()
+    {
+        return _font;
+    }
 
-TTF_Font *Font::getSDLFontObject()
-{
-    return _font;
 }
-

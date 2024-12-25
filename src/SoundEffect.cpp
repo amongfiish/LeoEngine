@@ -1,26 +1,28 @@
 #include <stdexcept>
-#include "SoundEffect.hpp"
+#include "LeoEngine/SoundEffect.hpp"
 
-using namespace LeoEngine;
-
-SoundEffect::SoundEffect(string filepath)
+namespace LeoEngine
 {
-    Mix_Chunk *newChunk = Mix_LoadWAV(filepath.c_str());
-    if (newChunk == nullptr)
+
+    SoundEffect::SoundEffect(string filepath)
     {
-        throw runtime_error("Couldn't load new sdl chunk.");   
+        Mix_Chunk *newChunk = Mix_LoadWAV(filepath.c_str());
+        if (newChunk == nullptr)
+        {
+            throw runtime_error("Couldn't load new sdl chunk.");   
+        }
+
+        _chunk = newChunk;
     }
 
-    _chunk = newChunk;
-}
+    SoundEffect::~SoundEffect()
+    {
+        Mix_FreeChunk(_chunk);
+    }
 
-SoundEffect::~SoundEffect()
-{
-    Mix_FreeChunk(_chunk);
-}
+    Mix_Chunk *SoundEffect::getSDLChunkObject()
+    {
+        return _chunk;
+    }
 
-Mix_Chunk *SoundEffect::getSDLChunkObject()
-{
-    return _chunk;
 }
-

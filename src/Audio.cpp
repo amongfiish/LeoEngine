@@ -1,79 +1,81 @@
 #include <stdexcept>
 #include <string>
-#include "Audio.hpp"
+#include "LeoEngine/Audio.hpp"
 
-using namespace LeoEngine;
-
-Audio::Audio()
-    : _musicLoader("music"),
-      _soundEffectLoader("sfx")
+namespace LeoEngine
 {
-    if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
+
+    Audio::Audio()
+        : _musicLoader("music"),
+        _soundEffectLoader("sfx")
     {
-        throw runtime_error("Couldn't initialize SDL audio.");
+        if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
+        {
+            throw runtime_error("Couldn't initialize SDL audio.");
+        }
+
+        if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+        {
+            throw runtime_error("Couldn't start SDL mixer.");
+        }
     }
 
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    Audio::~Audio()
     {
-        throw runtime_error("Couldn't start SDL mixer.");
+        Mix_CloseAudio();
+        SDL_QuitSubSystem(SDL_INIT_AUDIO);
     }
-}
 
-Audio::~Audio()
-{
-    Mix_CloseAudio();
-    SDL_QuitSubSystem(SDL_INIT_AUDIO);
-}
-
-void Audio::playMusic(string filename, int loops, int fadeInMilliseconds, double startPosition)
-{
-    Mix_FadeInMusicPos(_musicLoader.get(filename).getSDLMusicObject(), loops, fadeInMilliseconds, startPosition);
-}
-
-void Audio::pauseMusic()
-{
-    Mix_PauseMusic();
-}
-
-void Audio::resumeMusic()
-{
-    Mix_ResumeMusic();
-}
-
-void Audio::restartMusic()
-{
-    Mix_RewindMusic();
-}
-
-void Audio::stopMusic(int fadeOutMilliseconds)
-{
-    if (fadeOutMilliseconds <= 0)
+    void Audio::playMusic(string filename, int loops, int fadeInMilliseconds, double startPosition)
     {
-        Mix_HaltMusic();
+        Mix_FadeInMusicPos(_musicLoader.get(filename).getSDLMusicObject(), loops, fadeInMilliseconds, startPosition);
     }
-    else
+
+    void Audio::pauseMusic()
     {
-        Mix_FadeOutMusic(fadeOutMilliseconds);
+        Mix_PauseMusic();
     }
-}
 
-void Audio::setMusicVolume(double volume)
-{
-    Mix_VolumeMusic(static_cast<int>(MIX_MAX_VOLUME * volume));
-}
+    void Audio::resumeMusic()
+    {
+        Mix_ResumeMusic();
+    }
 
-void Audio::setMusicPosition(double position)
-{
-    Mix_SetMusicPosition(position);
-}
+    void Audio::restartMusic()
+    {
+        Mix_RewindMusic();
+    }
 
-void Audio::playSoundEffect(string filename, int loops)
-{
-    Mix_PlayChannel(-1, _soundEffectLoader.get(filename).getSDLChunkObject(), loops);
-}
+    void Audio::stopMusic(int fadeOutMilliseconds)
+    {
+        if (fadeOutMilliseconds <= 0)
+        {
+            Mix_HaltMusic();
+        }
+        else
+        {
+            Mix_FadeOutMusic(fadeOutMilliseconds);
+        }
+    }
 
-void Audio::setSoundEffectVolume(string filename, double volume)
-{
-    Mix_VolumeChunk(_soundEffectLoader.get(filename).getSDLChunkObject(), static_cast<int>(MIX_MAX_VOLUME * volume));
-}
+    void Audio::setMusicVolume(double volume)
+    {
+        Mix_VolumeMusic(static_cast<int>(MIX_MAX_VOLUME * volume));
+    }
 
+    void Audio::setMusicPosition(double position)
+    {
+        Mix_SetMusicPosition(position);
+    }
+
+    void Audio::playSoundEffect(string filename, int loops)
+    {
+        Mix_PlayChannel(-1, _soundEffectLoader.get(filename).getSDLChunkObject(), loops);
+    }
+
+    void Audio::setSoundEffectVolume(string filename, double volume)
+    {
+        Mix_VolumeChunk(_soundEffectLoader.get(filename).getSDLChunkObject(), static_cast<int>(MIX_MAX_VOLUME * volume));
+    }
+
+}

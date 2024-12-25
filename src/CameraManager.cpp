@@ -1,107 +1,109 @@
 #include <iostream>
-#include "CameraManager.hpp"
-#include "Camera.hpp"
+#include "LeoEngine/CameraManager.hpp"
+#include "LeoEngine/Camera.hpp"
 using namespace std;
 
-using namespace LeoEngine;
-
-CameraManager::CameraManager()
+namespace LeoEngine
 {
 
-}
-
-CameraManager::~CameraManager()
-{
-    for (auto camera : _cameras)
+    CameraManager::CameraManager()
     {
-        delete camera;
-    }
-}
 
-void CameraManager::update()
-{
-    if (_currentCamera == nullptr)
-    {
-        return;
     }
 
-    _currentCamera->update();
-}
-
-int CameraManager::addCamera(Camera *camera)
-{
-    _cameras.push_back(camera);
-    return _cameras.size() - 1;
-}
-
-void CameraManager::setCamera(int cameraID)
-{
-    _currentCamera = _cameras.at(cameraID);
-}
-
-void CameraManager::setCameraPosition(double x, double y)
-{
-    if (_currentCamera == nullptr)
+    CameraManager::~CameraManager()
     {
-        return;
+        for (auto camera : _cameras)
+        {
+            delete camera;
+        }
     }
 
-    _currentCamera->setPosition(x, y);
-}
-
-void CameraManager::setCameraPosition(const Pair<int, int>& position)
-{
-    if (_currentCamera == nullptr)
+    void CameraManager::update()
     {
-        return;
+        if (_currentCamera == nullptr)
+        {
+            return;
+        }
+
+        _currentCamera->update();
     }
 
-    _currentCamera->setPosition(position);
-}
-
-void CameraManager::setCameraPosition(const Pair<double, double>& position)
-{
-    if (_currentCamera == nullptr)
+    int CameraManager::addCamera(Camera *camera)
     {
-        return;
+        _cameras.push_back(camera);
+        return _cameras.size() - 1;
     }
 
-    _currentCamera->setPosition(position);
-}
-
-const Pair<double, double>& CameraManager::getPosition() const
-{
-    if (_currentCamera == nullptr)
+    void CameraManager::setCamera(int cameraID)
     {
-        return _fallbackPosition;
+        _currentCamera = _cameras.at(cameraID);
     }
 
-    return _currentCamera->getPosition();
-}
-
-void CameraManager::adjustPosition(Pair<int, int>& position)
-{
-    if (_currentCamera == nullptr)
+    void CameraManager::setCameraPosition(double x, double y)
     {
-        return;
+        if (_currentCamera == nullptr)
+        {
+            return;
+        }
+
+        _currentCamera->setPosition(x, y);
     }
 
-    const Pair<double, double>& cameraPosition = _currentCamera->getPosition();
-
-    position.first -= cameraPosition.first;
-    position.second -= cameraPosition.second;
-}
-
-void CameraManager::adjustPosition(Pair<double, double>& position)
-{
-    if (_currentCamera == nullptr)
+    void CameraManager::setCameraPosition(const Pair<int, int>& position)
     {
-        return;
+        if (_currentCamera == nullptr)
+        {
+            return;
+        }
+
+        _currentCamera->setPosition(position);
     }
 
-    const Pair<double, double>& cameraPosition = _currentCamera->getPosition();
+    void CameraManager::setCameraPosition(const Pair<double, double>& position)
+    {
+        if (_currentCamera == nullptr)
+        {
+            return;
+        }
 
-    position.first -= cameraPosition.first;
-    position.second -= cameraPosition.second;
+        _currentCamera->setPosition(position);
+    }
+
+    const Pair<double, double>& CameraManager::getPosition() const
+    {
+        if (_currentCamera == nullptr)
+        {
+            return _fallbackPosition;
+        }
+
+        return _currentCamera->getPosition();
+    }
+
+    void CameraManager::adjustPosition(Pair<int, int>& position)
+    {
+        if (_currentCamera == nullptr)
+        {
+            return;
+        }
+
+        const Pair<double, double>& cameraPosition = _currentCamera->getPosition();
+
+        position.first -= cameraPosition.first;
+        position.second -= cameraPosition.second;
+    }
+
+    void CameraManager::adjustPosition(Pair<double, double>& position)
+    {
+        if (_currentCamera == nullptr)
+        {
+            return;
+        }
+
+        const Pair<double, double>& cameraPosition = _currentCamera->getPosition();
+
+        position.first -= cameraPosition.first;
+        position.second -= cameraPosition.second;
+    }
+
 }
-
