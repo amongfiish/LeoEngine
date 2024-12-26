@@ -5,7 +5,7 @@ Debug/
 x64/
 Build/
 
-LeoEngine*
+LeoEngine.*
 *.vcxproj
 *.xcodeproj
 *.filters
