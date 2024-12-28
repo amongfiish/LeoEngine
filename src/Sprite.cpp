@@ -5,6 +5,11 @@
 namespace LeoEngine
 {
 
+    Sprite::Sprite()
+    {
+
+    }
+
     Sprite::Sprite(string textureFilename)
         : _textureFilename(textureFilename)
     {
@@ -13,7 +18,7 @@ namespace LeoEngine
 
     Sprite::Sprite(string textureFilename, TextureDrawData textureDrawData)
         : _textureFilename(textureFilename),
-        _textureDrawData(textureDrawData)
+          _textureDrawData(textureDrawData)
     {
 
     }
@@ -32,6 +37,7 @@ namespace LeoEngine
     {
         if (_textureDrawData.destinationRectangle == nullptr)
         {
+            _textureDrawData.destinationRectangle = make_shared<Rectangle>(x, y, 0, 0);
             return;
         }
 
@@ -43,6 +49,7 @@ namespace LeoEngine
     {
         if (_textureDrawData.destinationRectangle == nullptr)
         {
+            _textureDrawData.destinationRectangle = make_shared<Rectangle>(0, 0, width, height);
             return;
         }
 
@@ -73,6 +80,11 @@ namespace LeoEngine
     void Sprite::setFlip(FlipType flip)
     {
         _textureDrawData.flip = flip;
+    }
+
+    void Sprite::setTextureFilename(string filename)
+    {
+        _textureFilename = filename;
     }
 
 }

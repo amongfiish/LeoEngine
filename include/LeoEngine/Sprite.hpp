@@ -13,6 +13,7 @@ namespace LeoEngine
     class Sprite
     {
     public:
+        Sprite();
         Sprite(string textureFilename);
         Sprite(string textureFilename, TextureDrawData textureDrawData);
 
@@ -21,12 +22,15 @@ namespace LeoEngine
         const TextureDrawData *getDrawData() const;
 
         void setPosition(int x, int y);
+        void setSize(int width, int height);
 
         void setSourceRectangle(shared_ptr<Rectangle> sourceRectangle);
         void setDestinationRectangle(shared_ptr<Rectangle> destinationRectangle);
         void setAngle(double angle);
         void setCenter(shared_ptr<Pair<int, int>> center);
         void setFlip(FlipType flip);
+
+        void setTextureFilename(string filename);
 
     private:
         string _textureFilename;

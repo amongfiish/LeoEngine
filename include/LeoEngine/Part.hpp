@@ -8,14 +8,12 @@ namespace LeoEngine
     class Part
     {
     public:
-        virtual ~Part()
-        {
-        };
+        virtual ~Part() {}
 
-        virtual void update() = 0;
-        virtual void draw() = 0;
+        virtual void update() {}
+        virtual void draw() {}
 
-    private:
+    protected:
         Part() = default;
     };
 

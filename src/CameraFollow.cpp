@@ -3,21 +3,46 @@
 namespace LeoEngine
 {
 
-    CameraFollow::CameraFollow(const Pair<double, double> *targetPosition)
-        : _targetPosition(targetPosition)
-    {
-        
-    }
+    CameraFollow::CameraFollow()
+        : _targetPosition(nullptr),
+          _xLock(false),
+          _yLock(false)
+    {}
 
     CameraFollow::~CameraFollow()
-    {
+    {}
 
+    void CameraFollow::setTargetPosition(const Pair<double, double> *targetPosition)
+    {
+        _targetPosition = targetPosition;
+    }
+
+    void CameraFollow::lockX(bool xLock)
+    {
+        _xLock = xLock;
+    }
+
+    void CameraFollow::lockY(bool yLock)
+    {
+        _yLock = yLock;
     }
 
     void CameraFollow::update()
     {
-        _position.first = _targetPosition->first;
-        _position.second = _targetPosition->second;
+        if (!_targetPosition)
+        {
+            return;
+        }
+
+        if (!_xLock)
+        {
+            _position.first = _targetPosition->first;
+        }
+        
+        if (!_yLock)
+        {
+            _position.second = _targetPosition->second;
+        }
     }
 
 }

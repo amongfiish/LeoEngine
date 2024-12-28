@@ -10,13 +10,21 @@ namespace LeoEngine
     class CameraFollow : public Camera
     {
     public:
-        CameraFollow(const Pair<double, double> *targetPosition);
+        CameraFollow();
         ~CameraFollow();
+
+        void setTargetPosition(const Pair<double, double> *targetPosition);
+
+        void lockX(bool xLock);
+        void lockY(bool yLock);
 
         virtual void update();
 
     private:
         const Pair<double, double> *_targetPosition;
+
+        bool _xLock;
+        bool _yLock;
     };
 
 }

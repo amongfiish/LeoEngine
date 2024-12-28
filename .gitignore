@@ -15,3 +15,4 @@ LeoEngine.*
 CMakeCache.txt
 Makefile
 .DS_Store
+CMakeSettings.json
