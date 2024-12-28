@@ -51,6 +51,22 @@ namespace LeoEngine
         {
             idControllerPair.second.update();
         }
+
+        for (auto itKey = _keyStates.begin(); itKey != _keyStates.end(); itKey++)
+        {
+            if (itKey->second == KeyState::PRESSED)
+            {
+                itKey->second = KeyState::HELD;
+            }
+        }
+
+        for (auto itButton = _mouseButtons.begin(); itButton != _mouseButtons.end(); itButton++)
+        {
+            if (*itButton == KeyState::PRESSED)
+            {
+                *itButton = KeyState::HELD;
+            }
+        }
     }
 
     KeyState Input::getKeyState(KeyCode keyCode) const
