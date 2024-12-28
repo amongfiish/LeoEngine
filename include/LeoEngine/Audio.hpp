@@ -24,8 +24,8 @@ namespace LeoEngine
         Audio();
         ~Audio();
 
-        // start position is in seconds. loops=1 means the song will play once. -1 means forever.
-        void playMusic(string filename, int loops = 1, int fadeInMilliseconds = 0, double startPosition = 0);
+        // start position is in seconds. loops=0 means the song will play once. -1 means forever.
+        void playMusic(string filename, int loops = 0, int fadeInMilliseconds = 0, double startPosition = 0);
         void pauseMusic();
         void resumeMusic();
         void restartMusic();
@@ -37,7 +37,7 @@ namespace LeoEngine
         // see playMusic declaration above for position description
         void setMusicPosition(double position);
 
-        void playSoundEffect(string filename, int loops = 1);
+        void playSoundEffect(string filename, int loops = 0);
         void setSoundEffectVolume(string filename, double volume);
 
     private:

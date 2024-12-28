@@ -39,6 +39,12 @@ namespace LeoEngine
         _yOffset = yOffset;
     }
 
+    void CameraFollow::setOffset(int xOffset, int yOffset)
+    {
+        setXOffset(xOffset);
+        setYOffset(yOffset);
+    }
+
     void CameraFollow::update()
     {
         if (!_targetPosition)

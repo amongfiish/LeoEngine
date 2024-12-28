@@ -20,6 +20,7 @@ namespace LeoEngine
 
         void setXOffset(int xOffset);
         void setYOffset(int yOffset);
+        void setOffset(int xOffset, int yOffset);
 
         virtual void update();
 
