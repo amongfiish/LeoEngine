@@ -10,10 +10,14 @@ namespace LeoEngine
     {
     public:
         Camera()
+            : _position(0, 0)
         {
+
         }
+
         virtual ~Camera()
         {
+
         };
 
         void setPosition(double x, double y);
