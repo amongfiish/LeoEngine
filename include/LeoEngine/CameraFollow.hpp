@@ -18,10 +18,16 @@ namespace LeoEngine
         void lockX(bool xLock);
         void lockY(bool yLock);
 
+        void setXOffset(int xOffset);
+        void setYOffset(int yOffset);
+
         virtual void update();
 
     private:
         const Pair<double, double> *_targetPosition;
+
+        int _xOffset;
+        int _yOffset;
 
         bool _xLock;
         bool _yLock;

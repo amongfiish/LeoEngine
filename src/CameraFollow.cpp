@@ -5,6 +5,8 @@ namespace LeoEngine
 
     CameraFollow::CameraFollow()
         : _targetPosition(nullptr),
+          _xOffset(0),
+          _yOffset(0),
           _xLock(false),
           _yLock(false)
     {}
@@ -27,6 +29,16 @@ namespace LeoEngine
         _yLock = yLock;
     }
 
+    void CameraFollow::setXOffset(int xOffset)
+    {
+        _xOffset = xOffset;
+    }
+
+    void CameraFollow::setYOffset(int yOffset)
+    {
+        _yOffset = yOffset;
+    }
+
     void CameraFollow::update()
     {
         if (!_targetPosition)
@@ -36,12 +48,12 @@ namespace LeoEngine
 
         if (!_xLock)
         {
-            _position.first = _targetPosition->first;
+            _position.first = _targetPosition->first + _xOffset;
         }
         
         if (!_yLock)
         {
-            _position.second = _targetPosition->second;
+            _position.second = _targetPosition->second + _yOffset;
         }
     }
 
