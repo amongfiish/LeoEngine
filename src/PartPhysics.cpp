@@ -4,6 +4,9 @@ namespace LeoEngine
 {
 
     PartPhysics::PartPhysics()
+        : _velocity(0, 0),
+        _target(nullptr),
+        _acceleration(0, 0)
     {
 
     }
@@ -52,7 +55,7 @@ namespace LeoEngine
 
     void PartPhysics::update()
     {
-        if (_target != nullptr)
+        if (_target == nullptr)
         {
             return;
         }

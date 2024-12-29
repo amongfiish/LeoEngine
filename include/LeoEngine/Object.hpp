@@ -75,11 +75,11 @@ namespace LeoEngine
         }
 
         template<class T>
-        void *removePart()
+        void removePart()
         {
             for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++)
             {
-                T *castedPart = dynamic_cast<T *>(&(*itPart));
+                T *castedPart = dynamic_cast<T *>(*itPart);
                 if (castedPart != nullptr)
                 {
                     _parts.erase(itPart);
