@@ -13,12 +13,10 @@ namespace LeoEngine
         EventCustom(const string eventName)
             : Event(EventType::CUSTOM),
             eventName(eventName)
-        {
-        }
+        {}
 
-        virtual ~EventCustom() final
-        {
-        }
+        virtual ~EventCustom()
+        {}
 
         const string eventName;
     };
