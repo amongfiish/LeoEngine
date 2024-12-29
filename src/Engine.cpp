@@ -62,15 +62,21 @@ namespace LeoEngine
             totalUpdateLag += ticksBetweenFrames;
             previousFrameTicks = currentFrameTicks;
 
-            // input update (run before event loop and game update loop)
-            Services::get().getInput()->update();
+            //// input update (run before event loop and game update loop)
+            //Services::get().getInput()->update();
 
-            // SDL event loop
-            Services::get().getEvents()->sdlEventPoll();
+            //// SDL event loop
+            //Services::get().getEvents()->sdlEventPoll();
 
             // game update loop
             while (totalUpdateLag > MS_BETWEEN_UPDATES)
             {
+                // input update (run before event loop and game update loop)
+                Services::get().getInput()->update();
+
+                // SDL event loop
+                Services::get().getEvents()->sdlEventPoll();
+
                 game.update();
 
                 totalUpdateLag -= MS_BETWEEN_UPDATES;

@@ -19,6 +19,8 @@
 #include "LeoEngine/EventControllerButtonDown.hpp"
 #include "LeoEngine/EventControllerButtonUp.hpp"
 #include "LeoEngine/EventWindowResize.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 using namespace std;
 
 namespace LeoEngine
