@@ -74,6 +74,20 @@ namespace LeoEngine
             return nullptr;
         }
 
+        template<class T>
+        void *removePart()
+        {
+            for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++)
+            {
+                T *castedPart = dynamic_cast<T *>(&(*itPart));
+                if (castedPart != nullptr)
+                {
+                    _parts.erase(itPart);
+                    return;
+                }
+            }
+        }
+
     private:
         vector<Part *> _parts;
     };
