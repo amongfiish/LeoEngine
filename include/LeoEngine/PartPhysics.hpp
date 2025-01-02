@@ -1,6 +1,7 @@
 #ifndef PART_PHYSICS_HPP
 #define PART_PHYSICS_HPP
 
+#include <memory>
 #include "LeoEngine/Part.hpp"
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/PartTransform.hpp"
@@ -14,7 +15,7 @@ namespace LeoEngine
         PartPhysics();
         virtual ~PartPhysics();
 
-        void setTarget(PartTransform *target);
+        void setTarget(shared_ptr<PartTransform> target);
 
         void setVelocity(double x, double y);
         void setVelocity(const Pair<double, double> &velocity);
@@ -29,7 +30,7 @@ namespace LeoEngine
         virtual void update();
 
     private:
-        PartTransform *_target;
+        shared_ptr<PartTransform> _target;
 
         Pair<double, double> _velocity;
         Pair<double, double> _acceleration;

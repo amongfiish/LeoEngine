@@ -1,39 +1,39 @@
-#include "LeoEngine/Sprite.hpp"
+#include "LeoEngine/SpriteStatic.hpp"
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Services.hpp"
 
 namespace LeoEngine
 {
 
-    Sprite::Sprite()
+    SpriteStatic::SpriteStatic()
     {
 
     }
 
-    Sprite::Sprite(string textureFilename)
+    SpriteStatic::SpriteStatic(string textureFilename)
         : _textureFilename(textureFilename)
     {
         
     }
 
-    Sprite::Sprite(string textureFilename, TextureDrawData textureDrawData)
+    SpriteStatic::SpriteStatic(string textureFilename, TextureDrawData textureDrawData)
         : _textureFilename(textureFilename),
           _textureDrawData(textureDrawData)
     {
 
     }
 
-    void Sprite::draw()
+    void SpriteStatic::draw()
     {
         Services::get().getGraphics()->drawTexture(_textureFilename, _textureDrawData);
     }
 
-    const TextureDrawData *Sprite::getDrawData() const
+    const TextureDrawData *SpriteStatic::getDrawData() const
     {
         return &_textureDrawData;
     }
 
-    void Sprite::setPosition(int x, int y)
+    void SpriteStatic::setPosition(int x, int y)
     {
         if (_textureDrawData.destinationRectangle == nullptr)
         {
@@ -45,7 +45,7 @@ namespace LeoEngine
         _textureDrawData.destinationRectangle->y = y;
     }
 
-    void Sprite::setSize(int width, int height)
+    void SpriteStatic::setSize(int width, int height)
     {
         if (_textureDrawData.destinationRectangle == nullptr)
         {
@@ -57,32 +57,32 @@ namespace LeoEngine
         _textureDrawData.destinationRectangle->height = height;
     }
 
-    void Sprite::setSourceRectangle(shared_ptr<Rectangle> sourceRectangle)
+    void SpriteStatic::setSourceRectangle(shared_ptr<Rectangle> sourceRectangle)
     {
         _textureDrawData.sourceRectangle = sourceRectangle;
     }
 
-    void Sprite::setDestinationRectangle(shared_ptr<Rectangle> destinationRectangle)
+    void SpriteStatic::setDestinationRectangle(shared_ptr<Rectangle> destinationRectangle)
     {
         _textureDrawData.destinationRectangle = destinationRectangle;
     }
 
-    void Sprite::setAngle(double angle)
+    void SpriteStatic::setAngle(double angle)
     {
         _textureDrawData.angle = angle;
     }
 
-    void Sprite::setCenter(shared_ptr<Pair<int, int>> center)
+    void SpriteStatic::setCenter(shared_ptr<Pair<int, int>> center)
     {
         _textureDrawData.center = center;
     }
 
-    void Sprite::setFlip(FlipType flip)
+    void SpriteStatic::setFlip(FlipType flip)
     {
         _textureDrawData.flip = flip;
     }
 
-    void Sprite::setTextureFilename(string filename)
+    void SpriteStatic::setTextureFilename(string filename)
     {
         _textureFilename = filename;
     }

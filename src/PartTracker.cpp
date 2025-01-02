@@ -17,12 +17,12 @@ namespace LeoEngine
 
     }
 
-    void PartTracker::setSubject(PartTransform *subject)
+    void PartTracker::setSubject(shared_ptr<PartTransform> subject)
     {
         _subject = subject;
     }
 
-    void PartTracker::setFollower(PartTransform *follower)
+    void PartTracker::setFollower(shared_ptr<PartTransform> follower)
     {
         _follower = follower;
     }

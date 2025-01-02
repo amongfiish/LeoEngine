@@ -1,5 +1,5 @@
-#ifndef SPRITE_HPP
-#define SPRITE_HPP
+#ifndef SPRITE_STATIC_HPP
+#define SPRITE_STATIC_HPP
 
 #include <string>
 #include "LeoEngine/TextureDrawData.hpp"
@@ -10,12 +10,12 @@ using namespace std;
 namespace LeoEngine
 {
 
-    class Sprite
+    class SpriteStatic
     {
     public:
-        Sprite();
-        Sprite(string textureFilename);
-        Sprite(string textureFilename, TextureDrawData textureDrawData);
+        SpriteStatic();
+        SpriteStatic(string textureFilename);
+        SpriteStatic(string textureFilename, TextureDrawData textureDrawData);
 
         void draw();
 

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <memory>
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
 #include "LeoEngine/Part.hpp"
@@ -19,35 +20,30 @@ namespace LeoEngine
 
         ~Object()
         {
-            for (auto part : _parts) 
-            {
-                delete part;
-            }
-
             _parts.clear();
         }
 
         void update()
         {
-            for (auto part : _parts) 
+            for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++) 
             {
-                part->update();
+                (*itPart)->update();
             }
         }
 
         void draw()
         {
-            for (auto part : _parts)
+            for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++)
             {
-                part->draw();
+                (*itPart)->draw();
             }
         }
 
         template<class T>
-        T *addPart()
+        shared_ptr<T> addPart()
         {
-            T *newPart = new T;
-            Part *castedNewPart = dynamic_cast<Part *>(newPart);
+            shared_ptr<T> newPart = make_shared<T>();
+            shared_ptr<Part> castedNewPart = dynamic_pointer_cast<Part>(newPart);
             if (castedNewPart == nullptr)
             {
                 Services::get().getLogger()->error("Object", "Attempting to add non-part to an object.");
@@ -60,10 +56,11 @@ namespace LeoEngine
         }
 
         template<class T>
-        T *getPart()
+        shared_ptr<T> getPart()
         {
-            for (Part *part : _parts) {
-                T *castedPart = dynamic_cast<T *>(part);
+            for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++)
+            {
+                shared_ptr<T> castedPart = dynamic_pointer_cast<T>(*itPart);
                 if (castedPart != nullptr)
                 {
                     return castedPart;
@@ -79,7 +76,7 @@ namespace LeoEngine
         {
             for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++)
             {
-                T *castedPart = dynamic_cast<T *>(*itPart);
+                shared_ptr<T> castedPart = dynamic_pointer_cast<T>(*itPart);
                 if (castedPart != nullptr)
                 {
                     _parts.erase(itPart);
@@ -89,7 +86,7 @@ namespace LeoEngine
         }
 
     private:
-        vector<Part *> _parts;
+        vector<shared_ptr<Part>> _parts;
     };
 
 }

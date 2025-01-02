@@ -16,7 +16,7 @@ namespace LeoEngine
 
     }
 
-    void PartPhysics::setTarget(PartTransform *target)
+    void PartPhysics::setTarget(shared_ptr<PartTransform> target)
     {
         _target = target;
     }

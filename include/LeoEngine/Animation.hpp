@@ -14,6 +14,7 @@ namespace LeoEngine
         AnimationFrameData(int sheetX, int sheetY, int displayTime)
             : sheetX(sheetX), sheetY(sheetY), displayTime(displayTime)
         {
+            
         }
 
         // location of sprite origin in sprite sheet
