@@ -1,6 +1,7 @@
 #include "LeoEngine/SpriteStatic.hpp"
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 
 namespace LeoEngine
 {
@@ -25,6 +26,12 @@ namespace LeoEngine
 
     void SpriteStatic::draw()
     {
+        if (_textureDrawData.destinationRectangle != nullptr && (_textureDrawData.destinationRectangle->width == 0 || _textureDrawData.destinationRectangle->height == 0))
+        {
+            Services::get().getLogger()->debug("SpriteStatic", "Size has not been set yet.");
+            return;
+        }
+
         Services::get().getGraphics()->drawTexture(_textureFilename, _textureDrawData);
     }
 

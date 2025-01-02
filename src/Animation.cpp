@@ -4,6 +4,26 @@
 
 namespace LeoEngine
 {
+    shared_ptr<Animation> createAnimationFromStripData(string filename, int cellWidth, int cellHeight, int numberOfCells, int displayTime)
+    {
+        if (numberOfCells < 0 || cellWidth < 0 || cellHeight < 0 || filename == "")
+        {
+            Services::get().getLogger()->error("Animation", "Attempting to create animation from invalid strip data.");
+            return nullptr;
+        }
+
+        shared_ptr<Animation> newAnimation = make_shared<Animation>(filename, cellWidth, cellHeight);
+    
+        int x = 0;
+        for (int i = 0; i < numberOfCells; i++)
+        {
+            AnimationFrameData newFrameData(x, 0, displayTime);
+            newAnimation->addFrame(newFrameData);
+            x += cellWidth;
+        }
+
+        return newAnimation;
+    }
 
     Animation::Animation(string filename, int width, int height)
         : _filename(filename),
@@ -17,7 +37,12 @@ namespace LeoEngine
         
     }
 
-    const Pair<int, int>& Animation::getDimensions() const
+    string Animation::getFilename() const
+    {
+        return _filename;
+    }
+
+    const Pair<int, int> &Animation::getDimensions() const
     {
         return _dimensions;
     }
@@ -32,6 +57,11 @@ namespace LeoEngine
         }
 
         return _frameData[frame];
+    }
+
+    int Animation::getNumberOfFrames() const
+    {
+        return _frameData.size();
     }
 
     void Animation::addFrame(int sheetX, int sheetY, int displayTime)

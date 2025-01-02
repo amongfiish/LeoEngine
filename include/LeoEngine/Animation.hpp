@@ -3,11 +3,16 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include "LeoEngine/Pair.hpp"
 using namespace std;
 
 namespace LeoEngine
 {
+
+    class Animation;
+
+    shared_ptr<Animation> createAnimationFromStripData(string filename, int cellWidth, int cellHeight, int numberOfCells, int displayTime);
 
     struct AnimationFrameData
     {
@@ -31,8 +36,11 @@ namespace LeoEngine
         Animation(string filename, int width, int height);
         ~Animation();
 
+        string getFilename() const;
         const Pair<int, int> &getDimensions() const;
         const AnimationFrameData getFrameData(int frame) const;
+
+        int getNumberOfFrames() const;
 
         void addFrame(int sheetX, int sheetY, int displayTime);
         void addFrame(AnimationFrameData &frameData);
