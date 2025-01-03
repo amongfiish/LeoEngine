@@ -24,6 +24,8 @@ namespace LeoEngine
         void unpauseAnimation();
         void restartAnimation();
 
+        void setCurrentFrame(int frame);
+
         // hmm...
         SpriteStatic &getSprite();
 

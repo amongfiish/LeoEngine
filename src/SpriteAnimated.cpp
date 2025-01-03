@@ -68,6 +68,11 @@ namespace LeoEngine
         _paused = false;
     }
 
+    void SpriteAnimated::setCurrentFrame(int frame)
+    {
+        _currentFrame = frame;
+    }
+
     SpriteStatic &SpriteAnimated::getSprite()
     {
         return _sprite;
