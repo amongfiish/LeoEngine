@@ -42,6 +42,12 @@ namespace LeoEngine
         template<class T>
         shared_ptr<T> addPart()
         {
+            shared_ptr<T> foundPart = getPart<T>();
+            if (foundPart != nullptr)
+            {
+                return foundPart;
+            }
+
             shared_ptr<T> newPart = make_shared<T>();
             shared_ptr<Part> castedNewPart = dynamic_pointer_cast<Part>(newPart);
             if (castedNewPart == nullptr)

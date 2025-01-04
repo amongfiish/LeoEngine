@@ -12,6 +12,7 @@
 #include <iostream>
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Pair.hpp"
+#include "LeoEngine/RenderTarget.hpp"
 
 namespace LeoEngine
 {
@@ -153,6 +154,19 @@ namespace LeoEngine
         drawTexture(filename, newDrawData);
     }
 
+    void Graphics::copyRenderTarget(RenderTarget &renderTarget, double opacity)
+    {
+        if (renderTarget.getSDLTextureObject() == nullptr)
+        {
+            Services::get().getLogger()->error("Graphics", "Attempted to copy render target that wasn't properly initialized.");
+            return;
+        }
+
+        SDL_SetTextureAlphaMod(renderTarget.getSDLTextureObject(), static_cast<int>(255 * opacity));
+        SDL_RenderCopy(_renderer.getSDLRendererObject(), renderTarget.getSDLTextureObject(), NULL, NULL);
+        SDL_SetTextureAlphaMod(renderTarget.getSDLTextureObject(), 255);
+    }
+
     void Graphics::setWindowDimensions(int width, int height)
     {
         _window.setDimensions(width, height);
@@ -218,6 +232,18 @@ namespace LeoEngine
         _renderer.setVSync(useVSync);
     }
 
+    void Graphics::setRenderTarget(RenderTarget *renderTarget)
+    {
+        SDL_Texture *target = nullptr;
+
+        if (renderTarget != nullptr)
+        {
+            target = renderTarget->getSDLTextureObject();
+        }
+
+        SDL_SetRenderTarget(_renderer.getSDLRendererObject(), target);
+    }
+
     void Graphics::drawText(string text, TextDrawData& data, int x, int y)
     {
         
@@ -226,6 +252,11 @@ namespace LeoEngine
     void Graphics::drawText(string text, TextDrawData& data, Pair<int, int> position)
     {
 
+    }
+
+    bool Graphics::cameraExists()
+    {
+        return _cameras.currentCameraExists();
     }
 
     int Graphics::addCamera(Camera *camera)

@@ -26,6 +26,8 @@ namespace LeoEngine
 
         void setCurrentFrame(int frame);
 
+        void setLoop(bool shouldLoop);
+
         // hmm...
         SpriteStatic &getSprite();
 
@@ -36,7 +38,10 @@ namespace LeoEngine
 
         SpriteStatic _sprite;
 
+        bool _loop;
         bool _paused;
+
+        int _startFrame;
         int _currentFrame;
         int _currentFrameTimer;
     };

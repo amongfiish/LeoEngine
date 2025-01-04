@@ -18,6 +18,8 @@ namespace LeoEngine
 
         void update();
 
+        bool currentCameraExists();
+
         int addCamera(Camera *camera);
 
         void setCamera(int cameraID);

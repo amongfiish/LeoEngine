@@ -19,6 +19,7 @@ namespace LeoEngine
         CONTROLLER_BUTTON_DOWN,
         CONTROLLER_BUTTON_UP,
         WINDOW_RESIZE,
+        CHANGE_SCENE,
         CUSTOM
     };
 

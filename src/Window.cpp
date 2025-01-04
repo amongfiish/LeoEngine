@@ -7,7 +7,7 @@ namespace LeoEngine
 
     Window::Window(string title, int width, int height)
     {
-        SDL_Window *newWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
+        SDL_Window *newWindow = SDL_CreateWindow(title.c_str(), 100, 100, width, height, SDL_WINDOW_SHOWN);
         if (newWindow == nullptr)
         {
             throw runtime_error("Window could not be created.");

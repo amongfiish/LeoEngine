@@ -15,6 +15,8 @@ using namespace std;
 namespace LeoEngine
 {
 
+    class RenderTarget;
+
     class Graphics
     {
     public:
@@ -37,6 +39,8 @@ namespace LeoEngine
 
         void drawTexture(string filename, const TextureDrawData &data);
         void drawTexture(string filename);
+
+        void copyRenderTarget(RenderTarget &renderTarget, double opacity);
 
         // window functions
         void setWindowDimensions(int width, int height);
@@ -61,11 +65,15 @@ namespace LeoEngine
 
         void setRenderVSync(bool useVSync);
 
+        void setRenderTarget(RenderTarget *renderTarget);
+
         // font functions
         void drawText(string text, TextDrawData &data, int x, int y);
         void drawText(string text, TextDrawData &data, Pair<int, int> position);
 
         // camera functions
+        bool cameraExists();
+
         int addCamera(Camera *camera);
         void setCamera(int cameraID);
 

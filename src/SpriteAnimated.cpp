@@ -8,7 +8,9 @@ namespace LeoEngine
         : _animation(nullptr),
         _currentFrame(0),
         _currentFrameTimer(0),
-        _paused(false)
+        _paused(false),
+        _loop(true),
+        _startFrame(0)
     {
 
     }
@@ -20,7 +22,7 @@ namespace LeoEngine
 
     void SpriteAnimated::update()
     {
-        if (_animation == nullptr)
+        if (_animation == nullptr || _paused)
         {
             return;
         }
@@ -28,7 +30,15 @@ namespace LeoEngine
         if (_currentFrameTimer <= 0)
         {
             _currentFrame = (_currentFrame + 1) % _animation->getNumberOfFrames();
-            fetchFrameData();
+            
+            if (!_loop && _currentFrame == _startFrame)
+            {
+                pauseAnimation();
+            }
+            else
+            {
+                fetchFrameData();
+            }
         }
         else
         {
@@ -71,6 +81,12 @@ namespace LeoEngine
     void SpriteAnimated::setCurrentFrame(int frame)
     {
         _currentFrame = frame;
+        _startFrame = frame;
+    }
+
+    void SpriteAnimated::setLoop(bool shouldLoop)
+    {
+        _loop = shouldLoop;
     }
 
     SpriteStatic &SpriteAnimated::getSprite()

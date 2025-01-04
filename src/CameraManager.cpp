@@ -7,6 +7,7 @@ namespace LeoEngine
 {
 
     CameraManager::CameraManager()
+        : _fallbackPosition()
     {
 
     }
@@ -29,6 +30,11 @@ namespace LeoEngine
         _currentCamera->update();
     }
 
+    bool CameraManager::currentCameraExists()
+    {
+        return _currentCamera != nullptr;
+    }
+
     int CameraManager::addCamera(Camera *camera)
     {
         _cameras.push_back(camera);
@@ -38,6 +44,7 @@ namespace LeoEngine
     void CameraManager::setCamera(int cameraID)
     {
         _currentCamera = _cameras.at(cameraID);
+        _currentCamera->update();
     }
 
     void CameraManager::setCameraPosition(double x, double y)
