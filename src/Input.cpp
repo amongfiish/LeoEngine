@@ -13,10 +13,11 @@ namespace LeoEngine
 {
 
     Input::Input(Events *events)
-        :   _events(events),
-            _mousePosition(0, 0),
-            _mouseButtons(10, KeyState::RELEASED),
-            _mouseWheelMotion(0, 0)
+        : _events(events),
+        _mousePosition(0, 0),
+        _mouseButtons(10, KeyState::RELEASED),
+        _mouseWheelMotion(0, 0),
+        _locked(false)
     {
         // initialize SDL joystick subsystem
         if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) < 0)
@@ -69,8 +70,23 @@ namespace LeoEngine
         }
     }
 
+    void Input::lockInput()
+    {
+        _locked = true;
+    }
+
+    void Input::unlockInput()
+    {
+        _locked = false;
+    }
+
     KeyState Input::getKeyState(KeyCode keyCode) const
     {
+        if (_locked)
+        {
+            return KeyState::RELEASED;
+        }
+
         auto foundKeyState = _keyStates.find(keyCode);
         if (foundKeyState != _keyStates.end())
         {
@@ -87,6 +103,11 @@ namespace LeoEngine
 
     KeyState Input::getMouseButtonState(int buttonID) const
     {
+        if (_locked)
+        {
+            return KeyState::RELEASED;
+        }
+
         return _mouseButtons.at(buttonID);
     }
 
@@ -97,6 +118,11 @@ namespace LeoEngine
 
     KeyState Input::getControllerButtonState(SDL_JoystickID controllerID, int buttonID) const
     {
+        if (_locked)
+        {
+            return KeyState::RELEASED;
+        }
+
         return _controllers.at(controllerID).getButtonState(buttonID);
     }
 

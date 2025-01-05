@@ -27,6 +27,10 @@ namespace LeoEngine
 
         void update();
 
+        // if input state is requested RELEASED will always be returned when locked
+        void lockInput();
+        void unlockInput();
+
         KeyState getKeyState(KeyCode keyCode) const;
 
         const Pair<int, int> &getMousePosition() const;
@@ -40,6 +44,8 @@ namespace LeoEngine
         void keyCallback(Event *event);
         void mouseCallback(Event *event);
         void controllerCallback(Event *event);
+
+        bool _locked;
 
         Events *_events;
 

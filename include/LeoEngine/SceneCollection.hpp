@@ -5,6 +5,7 @@
 #include <functional>
 #include "LeoEngine/Scene.hpp"
 #include "LeoEngine/Services.hpp"
+#include "LeoEngine/Input.hpp"
 #include "LeoEngine/Events.hpp"
 #include "LeoEngine/Logger.hpp"
 #include "LeoEngine/Graphics.hpp"
@@ -79,6 +80,8 @@ namespace LeoEngine
             {
                 return;
             }
+
+            Services::get().getInput()->lockInput();
 
             _nextScene = _scenes.at(sceneID);
 
@@ -158,7 +161,6 @@ namespace LeoEngine
             if (!_transitionSecondHalf && _transitionElapsedFrames >= static_cast<double>(_transitionTotalFrames) / 2)
             {
                 setCurrentScene(_nextScene);
-                _currentScene->update();
                 _transitionSecondHalf = true;
                 _transitionElapsedFrames = 0;
             }
@@ -166,7 +168,11 @@ namespace LeoEngine
             {
                 update = bind(&SceneCollection::normalUpdate, this);
                 draw = bind(&SceneCollection::normalDraw, this);
+
+                Services::get().getInput()->unlockInput();
             }
+
+            normalUpdate();
         }
 
         void fadeDraw()
