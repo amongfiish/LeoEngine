@@ -14,10 +14,9 @@ namespace LeoEngine
     {
     public:
         Rectangle()
-            : x(0), y(0),
-            width(0),
-            height(0)
+            : Rectangle(0, 0, 0, 0)
         {
+
         }
 
         Rectangle(int x, int y, int width, int height)
@@ -25,6 +24,7 @@ namespace LeoEngine
             width(width),
             height(height)
         {
+
         }
 
         SDL_Rect toSDLRect() const
