@@ -34,6 +34,16 @@ namespace LeoEngine
             return newRect;
         }
 
+        int getRight() const
+        {
+            return x + width;
+        }
+
+        int getBottom() const
+        {
+            return y + height;
+        }
+
         int x;
         int y;
         int width;

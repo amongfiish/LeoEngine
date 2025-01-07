@@ -1,6 +1,8 @@
 #ifndef CIRCLE_HPP
 #define CIRCLE_HPP
 
+#include "LeoEngine/Pair.hpp"
+
 namespace LeoEngine
 {
 
@@ -22,6 +24,11 @@ namespace LeoEngine
         ~Circle()
         {
 
+        }
+
+        const Pair<int, int> getCenter() const
+        {
+            return Pair<int, int>(x + radius, y + radius);
         }
 
         int x;
