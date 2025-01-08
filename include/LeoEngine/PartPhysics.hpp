@@ -27,6 +27,8 @@ namespace LeoEngine
 
         const Pair<double, double> &getAcceleration();
 
+        bool isInMotion();
+
         virtual void update();
 
     private:

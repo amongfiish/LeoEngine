@@ -53,6 +53,11 @@ namespace LeoEngine
         return _acceleration;
     }
 
+    bool PartPhysics::isInMotion()
+    {
+        return _velocity.first != 0 || _velocity.second != 0;
+    }
+
     void PartPhysics::update()
     {
         if (_target == nullptr)
