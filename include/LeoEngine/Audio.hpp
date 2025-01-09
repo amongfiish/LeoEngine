@@ -38,6 +38,7 @@ namespace LeoEngine
         void setMusicPosition(double position);
 
         void playSoundEffect(string filename, int loops = 0);
+        void stopAllSoundEffects();
         void setSoundEffectVolume(string filename, double volume);
 
     private:

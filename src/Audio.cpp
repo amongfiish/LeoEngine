@@ -78,4 +78,9 @@ namespace LeoEngine
         Mix_VolumeChunk(_soundEffectLoader.get(filename).getSDLChunkObject(), static_cast<int>(MIX_MAX_VOLUME * volume));
     }
 
+    void Audio::stopAllSoundEffects()
+    {
+        Mix_HaltChannel(-1);
+    }
+
 }
