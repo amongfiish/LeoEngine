@@ -69,7 +69,10 @@ namespace LeoEngine
                 return;
             }
 
-            _currentScene->onDeactivate();
+            if (_currentScene)
+            {
+                _currentScene->onDeactivate();
+            }
 
             _currentScene = _scenes.at(sceneID);
             _currentScene->onActivate();
@@ -130,6 +133,11 @@ namespace LeoEngine
             if (!sceneIsValid(scene))
             {
                 return;
+            }
+
+            if (_currentScene)
+            {
+                _currentScene->onDeactivate();
             }
 
             _currentScene = scene;
