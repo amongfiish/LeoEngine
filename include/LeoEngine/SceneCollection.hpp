@@ -69,6 +69,8 @@ namespace LeoEngine
                 return;
             }
 
+            _currentScene->onDeactivate();
+
             _currentScene = _scenes.at(sceneID);
             _currentScene->onActivate();
         }
