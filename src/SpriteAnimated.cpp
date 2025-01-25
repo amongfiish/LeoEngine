@@ -51,7 +51,7 @@ namespace LeoEngine
         _sprite.draw();
     }
 
-    void SpriteAnimated::setAnimation(shared_ptr<Animation> animation)
+    void SpriteAnimated::setAnimation(std::shared_ptr<Animation> animation)
     {
         _animation = animation;
 
@@ -100,7 +100,7 @@ namespace LeoEngine
         const Pair<int, int> &frameDimensions = _animation->getDimensions();
 
         _sprite.setTextureFilename(_animation->getFilename());
-        _sprite.setSourceRectangle(make_shared<Rectangle>(currentFrameData.sheetX, currentFrameData.sheetY, frameDimensions.first, frameDimensions.second));
+        _sprite.setSourceRectangle(std::make_shared<Rectangle>(currentFrameData.sheetX, currentFrameData.sheetY, frameDimensions.first, frameDimensions.second));
         _currentFrameTimer = currentFrameData.displayTime;
     }
 

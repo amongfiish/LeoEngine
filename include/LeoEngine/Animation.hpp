@@ -5,14 +5,13 @@
 #include <vector>
 #include <memory>
 #include "LeoEngine/Pair.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
 
     class Animation;
 
-    shared_ptr<Animation> createAnimationFromStripData(string filename, int cellWidth, int cellHeight, int numberOfCells, int displayTime);
+    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, int displayTime);
 
     struct AnimationFrameData
     {
@@ -33,10 +32,10 @@ namespace LeoEngine
     class Animation
     {
     public:
-        Animation(string filename, int width, int height);
+        Animation(std::string filename, int width, int height);
         ~Animation();
 
-        string getFilename() const;
+        std::string getFilename() const;
         const Pair<int, int> &getDimensions() const;
         const AnimationFrameData getFrameData(int frame) const;
 
@@ -46,9 +45,9 @@ namespace LeoEngine
         void addFrame(AnimationFrameData &frameData);
 
     private:
-        string _filename;
+        std::string _filename;
 
-        vector<AnimationFrameData> _frameData;
+        std::vector<AnimationFrameData> _frameData;
         Pair<int, int> _dimensions;
     };
 

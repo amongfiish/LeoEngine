@@ -10,7 +10,6 @@
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/Rectangle.hpp"
 #include "LeoEngine/Colour.hpp"
-using namespace std;
 
 namespace LeoEngine
 {

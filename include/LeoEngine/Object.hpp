@@ -7,7 +7,6 @@
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
 #include "LeoEngine/Part.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -40,16 +39,16 @@ namespace LeoEngine
         }
 
         template<class T>
-        shared_ptr<T> addPart()
+        std::shared_ptr<T> addPart()
         {
-            shared_ptr<T> foundPart = getPart<T>();
+            std::shared_ptr<T> foundPart = getPart<T>();
             if (foundPart != nullptr)
             {
                 return foundPart;
             }
 
-            shared_ptr<T> newPart = make_shared<T>();
-            shared_ptr<Part> castedNewPart = dynamic_pointer_cast<Part>(newPart);
+            std::shared_ptr<T> newPart = make_shared<T>();
+            std::shared_ptr<Part> castedNewPart = dynamic_pointer_cast<Part>(newPart);
             if (castedNewPart == nullptr)
             {
                 Services::get().getLogger()->error("Object", "Attempting to add non-part to an object.");
@@ -62,11 +61,11 @@ namespace LeoEngine
         }
 
         template<class T>
-        shared_ptr<T> getPart()
+        std::shared_ptr<T> getPart()
         {
             for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++)
             {
-                shared_ptr<T> castedPart = dynamic_pointer_cast<T>(*itPart);
+                std::shared_ptr<T> castedPart = dynamic_pointer_cast<T>(*itPart);
                 if (castedPart != nullptr)
                 {
                     return castedPart;
@@ -82,7 +81,7 @@ namespace LeoEngine
         {
             for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++)
             {
-                shared_ptr<T> castedPart = dynamic_pointer_cast<T>(*itPart);
+                std::shared_ptr<T> castedPart = dynamic_pointer_cast<T>(*itPart);
                 if (castedPart != nullptr)
                 {
                     _parts.erase(itPart);
@@ -92,7 +91,7 @@ namespace LeoEngine
         }
 
     private:
-        vector<shared_ptr<Part>> _parts;
+        std::vector<std::shared_ptr<Part>> _parts;
     };
 
 }

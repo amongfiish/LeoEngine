@@ -9,7 +9,6 @@
 
 #include <unordered_map>
 #include <string>
-using namespace std;
 
 namespace LeoEngine
 {
@@ -24,9 +23,9 @@ namespace LeoEngine
     class Loader
     {
     public:
-        Loader(string subdirectory)
+        Loader(std::string subdirectory)
         {
-            string basePath = SDL_GetBasePath();
+            std::string basePath = SDL_GetBasePath();
 
             for (char c : subdirectory) {
                 if ((c == '\\' || c == '/') && c != PATH_SEPARATOR) {
@@ -42,9 +41,9 @@ namespace LeoEngine
 
         }
 
-        T &get(string filename)
+        T &get(std::string filename)
         {
-            string pathToFile = _path + filename;
+            std::string pathToFile = _path + filename;
 
             auto foundResource = _resources.find(filename);
             if (foundResource == _resources.end()) {
@@ -55,9 +54,9 @@ namespace LeoEngine
         }
 
     private:
-        string _path;
+        std::string _path;
 
-        unordered_map<string, T> _resources;
+        std::unordered_map<std::string, T> _resources;
     };
 
 }

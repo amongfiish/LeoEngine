@@ -3,12 +3,12 @@
 namespace LeoEngine
 {
 
-    string Saver::_organizationName = "LeoEngineDefaultOrg";
-    string Saver::_applicationName = "LeoEngineDefaultApp";
+    std::string Saver::_organizationName = "LeoEngineDefaultOrg";
+    std::string Saver::_applicationName = "LeoEngineDefaultApp";
 
-    Saver::Saver(string filename)
+    Saver::Saver(std::string filename)
     {
-        string path = SDL_GetPrefPath(_organizationName.c_str(), _applicationName.c_str());
+        std::string path = SDL_GetPrefPath(_organizationName.c_str(), _applicationName.c_str());
         path += filename;
 
         _file.open(path.c_str());
@@ -21,24 +21,24 @@ namespace LeoEngine
 
     void Saver::moveTo(int position)
     {
-        _file.seekp(static_cast<streampos>(position));
-        _file.seekg(static_cast<streampos>(position));
+        _file.seekp(static_cast<std::streampos>(position));
+        _file.seekg(static_cast<std::streampos>(position));
     }
 
-    void Saver::setOrgAndAppName(string organizationName, string applicationName)
+    void Saver::setOrgAndAppName(std::string organizationName, std::string applicationName)
     {
         _organizationName = organizationName;
         _applicationName = applicationName;
     }
 
-    string Saver::getLine()
+    std::string Saver::getLine()
     {
         _file.getline(_buffer, BUFFER_SIZE);
 
-        return string(_buffer);
+        return std::string(_buffer);
     }
 
-    string Saver::getCharacters(int numberOfCharacters)
+    std::string Saver::getCharacters(int numberOfCharacters)
     {
         if (numberOfCharacters >= BUFFER_SIZE)
         {
@@ -47,10 +47,10 @@ namespace LeoEngine
 
         _file.get(_buffer, numberOfCharacters);
 
-        return string(_buffer);
+        return std::string(_buffer);
     }
 
-    void Saver::writeCharacters(string characters)
+    void Saver::writeCharacters(std::string characters)
     {
         _file.write(characters.c_str(), characters.size());
     }

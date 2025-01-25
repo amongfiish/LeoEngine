@@ -15,7 +15,7 @@ namespace LeoEngine
         PartPhysics();
         virtual ~PartPhysics();
 
-        void setTarget(shared_ptr<PartTransform> target);
+        void setTarget(std::shared_ptr<PartTransform> target);
 
         void setVelocity(double x, double y);
         void setVelocity(const Pair<double, double> &velocity);
@@ -32,7 +32,7 @@ namespace LeoEngine
         virtual void update();
 
     private:
-        shared_ptr<PartTransform> _target;
+        std::shared_ptr<PartTransform> _target;
 
         Pair<double, double> _velocity;
         Pair<double, double> _acceleration;

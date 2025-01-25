@@ -4,12 +4,12 @@
 namespace LeoEngine
 {
 
-    Font::Font(string filepath)
+    Font::Font(std::string filepath)
     {
         TTF_Font *newFont = TTF_OpenFont(filepath.c_str(), 10);
         if (newFont == nullptr)
         {
-            throw runtime_error("Couldn't load font.");
+            throw std::runtime_error("Couldn't load font.");
         }
 
         _font = newFont;

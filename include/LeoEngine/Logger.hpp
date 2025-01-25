@@ -6,7 +6,6 @@
 #include <string>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
-using namespace std;
 
 namespace LeoEngine
 {
@@ -17,27 +16,26 @@ namespace LeoEngine
         Logger();
         ~Logger();
 
-        static void setOrgAndAppName(string organizationName, string applicationName);
+        static void setOrgAndAppName(std::string organizationName, std::string applicationName);
 
-        void trace(string id, string content);
-        void debug(string id, string content);
-        void info(string id, string content);
-        void warn(string id, string content);
-        void error(string id, string content);
-        void critical(string id, string content);
+        void trace(std::string id, std::string content);
+        void debug(std::string id, std::string content);
+        void info(std::string id, std::string content);
+        void warn(std::string id, std::string content);
+        void error(std::string id, std::string content);
+        void critical(std::string id, std::string content);
 
         void flush();
 
     private:
-        shared_ptr<spdlog::logger> getLogger(string id);
+        std::shared_ptr<spdlog::logger> getLogger(std::string id);
 
-        unordered_map<string, shared_ptr<spdlog::logger>> _spdLoggers;
+        std::unordered_map<std::string, std::shared_ptr<spdlog::logger>> _spdLoggers;
 
-        static string _organizationName;
-        static string _applicationName;
+        static std::string _organizationName;
+        static std::string _applicationName;
     };
 
 }
 
 #endif
-

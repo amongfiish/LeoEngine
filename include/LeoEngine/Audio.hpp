@@ -13,7 +13,6 @@
 #include "LeoEngine/Music.hpp"
 #include "LeoEngine/SoundEffect.hpp"
 #include "LeoEngine/Loader.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -25,7 +24,7 @@ namespace LeoEngine
         ~Audio();
 
         // start position is in seconds. loops=0 means the song will play once. -1 means forever.
-        void playMusic(string filename, int loops = 0, int fadeInMilliseconds = 0, double startPosition = 0);
+        void playMusic(std::string filename, int loops = 0, int fadeInMilliseconds = 0, double startPosition = 0);
         void pauseMusic();
         void resumeMusic();
         void restartMusic();
@@ -37,9 +36,9 @@ namespace LeoEngine
         // see playMusic declaration above for position description
         void setMusicPosition(double position);
 
-        void playSoundEffect(string filename, int loops = 0);
+        void playSoundEffect(std::string filename, int loops = 0);
         void stopAllSoundEffects();
-        void setSoundEffectVolume(string filename, double volume);
+        void setSoundEffectVolume(std::string filename, double volume);
 
     private:
         Loader<Music> _musicLoader;

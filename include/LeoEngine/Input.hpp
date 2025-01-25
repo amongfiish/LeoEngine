@@ -14,7 +14,6 @@
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/Events.hpp"
 #include "LeoEngine/Controller.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -49,13 +48,13 @@ namespace LeoEngine
 
         Events *_events;
 
-        unordered_map<KeyCode, KeyState> _keyStates;
+        std::unordered_map<KeyCode, KeyState> _keyStates;
 
         Pair<int, int> _mousePosition;
-        vector<KeyState> _mouseButtons;
+        std::vector<KeyState> _mouseButtons;
         Pair<int, int> _mouseWheelMotion;
 
-        unordered_map<SDL_JoystickID, Controller> _controllers;
+        std::unordered_map<SDL_JoystickID, Controller> _controllers;
     };
 
 }

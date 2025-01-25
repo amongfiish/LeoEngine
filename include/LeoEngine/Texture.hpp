@@ -16,7 +16,7 @@ namespace LeoEngine
     class Texture
     {
     public:
-        Texture(string path);
+        Texture(std::string path);
         ~Texture();
 
         SDL_Texture *getSDLTextureObject();

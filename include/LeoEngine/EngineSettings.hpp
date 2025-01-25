@@ -2,7 +2,6 @@
 #define ENGINE_SETTINGS_HPP
 
 #include <string>
-using namespace std;
 
 namespace LeoEngine
 {
@@ -10,9 +9,9 @@ namespace LeoEngine
     class EngineSettings
     {
     public:
-        string organizationName = "LeoEngineDefaultOrg";
-        string applicationName = "LeoEngineDefaultApp";
-        string defaultWindowTitle = "Leo Engine Project";
+        std::string organizationName = "LeoEngineDefaultOrg";
+        std::string applicationName = "LeoEngineDefaultApp";
+        std::string defaultWindowTitle = "Leo Engine Project";
 
         int defaultWindowWidth = 800;
         int defaultWindowHeight = 600;

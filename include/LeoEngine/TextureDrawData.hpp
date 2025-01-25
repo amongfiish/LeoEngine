@@ -4,7 +4,6 @@
 #include <memory>
 #include "LeoEngine/Rectangle.hpp"
 #include "LeoEngine/Pair.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -28,7 +27,7 @@ namespace LeoEngine
         {
         }
 
-        TextureDrawData(shared_ptr<Rectangle> srcRect, shared_ptr<Rectangle> destRect, double angle, shared_ptr<Pair<int, int>> center, FlipType flip)
+        TextureDrawData(std::shared_ptr<Rectangle> srcRect, std::shared_ptr<Rectangle> destRect, double angle, std::shared_ptr<Pair<int, int>> center, FlipType flip)
             : sourceRectangle(srcRect),
             destinationRectangle(destRect),
             angle(angle), center(center),
@@ -36,10 +35,10 @@ namespace LeoEngine
         {
         }
 
-        shared_ptr<Rectangle> sourceRectangle;
-        shared_ptr<Rectangle> destinationRectangle;
+        std::shared_ptr<Rectangle> sourceRectangle;
+        std::shared_ptr<Rectangle> destinationRectangle;
         double angle;
-        shared_ptr<Pair<int, int>> center;
+        std::shared_ptr<Pair<int, int>> center;
         FlipType flip;
     };
 

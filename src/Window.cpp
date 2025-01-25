@@ -1,16 +1,15 @@
 #include <stdexcept>
 #include "LeoEngine/Window.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
 
-    Window::Window(string title, int width, int height)
+    Window::Window(std::string title, int width, int height)
     {
         SDL_Window *newWindow = SDL_CreateWindow(title.c_str(), 100, 100, width, height, SDL_WINDOW_SHOWN);
         if (newWindow == nullptr)
         {
-            throw runtime_error("Window could not be created.");
+            throw std::runtime_error("Window could not be created.");
         }
 
         _dimensions.first = width;
@@ -65,7 +64,7 @@ namespace LeoEngine
         SDL_SetWindowResizable(_window, static_cast<SDL_bool>(isResizable));
     }
 
-    void Window::setTitle(string title)
+    void Window::setTitle(std::string title)
     {
         SDL_SetWindowTitle(_window, title.c_str());
     }

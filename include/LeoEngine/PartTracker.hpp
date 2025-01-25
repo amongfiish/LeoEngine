@@ -14,8 +14,8 @@ namespace LeoEngine
         PartTracker();
         virtual ~PartTracker();
 
-        void setSubject(shared_ptr<PartTransform> subject);
-        void setFollower(shared_ptr<PartTransform> follower);
+        void setSubject(std::shared_ptr<PartTransform> subject);
+        void setFollower(std::shared_ptr<PartTransform> follower);
 
         void setOffset(int x, int y);
         void setOffset(const Pair<int, int>& offset);
@@ -23,8 +23,8 @@ namespace LeoEngine
         virtual void update();
 
     private:
-        shared_ptr<PartTransform> _subject;
-        shared_ptr<PartTransform> _follower;
+        std::shared_ptr<PartTransform> _subject;
+        std::shared_ptr<PartTransform> _follower;
 
         int _offsetX;
         int _offsetY;

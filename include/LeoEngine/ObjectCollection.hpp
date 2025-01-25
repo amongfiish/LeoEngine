@@ -3,7 +3,6 @@
 
 #include <map>
 #include "LeoEngine/Object.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -22,7 +21,7 @@ namespace LeoEngine
         void destroy(int id);
 
     private:
-        map<int, Object> _objects;
+        std::map<int, Object> _objects;
         int _nextID = 0;
     };
 

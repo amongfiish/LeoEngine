@@ -9,7 +9,6 @@
 
 #include <string>
 #include <fstream>
-using namespace std;
 
 namespace LeoEngine
 {
@@ -23,26 +22,26 @@ namespace LeoEngine
     class Saver
     {
     public:
-        Saver(string filename);
+        Saver(std::string filename);
         ~Saver();
 
         // scan around the file
         void moveTo(int position);
 
-        static void setOrgAndAppName(string organizationName, string appName);
+        static void setOrgAndAppName(std::string organizationName, std::string appName);
 
         // read and write characters from the file
         // NOTE: read operations only work up to 100 characters.
         //       If more are needed increase BUFFER_SIZE.
-        string getLine();
-        string getCharacters(int numberOfCharacters);
-        void writeCharacters(string characters);
+        std::string getLine();
+        std::string getCharacters(int numberOfCharacters);
+        void writeCharacters(std::string characters);
 
     private:
-        fstream _file;
+        std::fstream _file;
 
-        static string _organizationName;
-        static string _applicationName;
+        static std::string _organizationName;
+        static std::string _applicationName;
 
         static constexpr int BUFFER_SIZE = 100;
         char _buffer[BUFFER_SIZE];

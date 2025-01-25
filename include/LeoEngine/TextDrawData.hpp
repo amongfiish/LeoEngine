@@ -3,7 +3,6 @@
 
 #include <string>
 #include "LeoEngine/Colour.hpp"
-using namespace std;
 
 namespace LeoEngine
 {

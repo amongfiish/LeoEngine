@@ -8,7 +8,6 @@
 #endif
 
 #include <string>
-using namespace std;
 
 namespace LeoEngine
 {
@@ -16,7 +15,7 @@ namespace LeoEngine
     class Font
     {
     public:
-        Font(string filepath);
+        Font(std::string filepath);
         ~Font();
 
         TTF_Font *getSDLFontObject();

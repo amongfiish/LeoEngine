@@ -10,7 +10,7 @@ namespace LeoEngine
     class EventCustom : public Event
     {
     public:
-        EventCustom(const string eventName)
+        EventCustom(const std::string eventName)
             : Event(EventType::CUSTOM),
             eventName(eventName)
         {}
@@ -18,7 +18,7 @@ namespace LeoEngine
         virtual ~EventCustom()
         {}
 
-        const string eventName;
+        const std::string eventName;
     };
 
 }

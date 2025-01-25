@@ -1,6 +1,5 @@
 #include <stdexcept>
 #include "LeoEngine/Renderer.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -10,7 +9,7 @@ namespace LeoEngine
         SDL_Renderer *newRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
         if (newRenderer == nullptr)
         {
-            throw runtime_error("Renderer could not be created.");
+            throw std::runtime_error("Renderer could not be created.");
         }
 
         SDL_SetRenderDrawBlendMode(newRenderer, SDL_BLENDMODE_BLEND);

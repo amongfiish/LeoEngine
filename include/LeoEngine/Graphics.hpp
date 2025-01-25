@@ -10,7 +10,6 @@
 #include "LeoEngine/TextDrawData.hpp"
 #include "LeoEngine/Loader.hpp"
 #include "LeoEngine/CameraManager.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -35,10 +34,10 @@ namespace LeoEngine
         void drawRectangle(const Colour &colour, bool fill, const Rectangle &rectangle);
 
         // texture functions
-        Texture &getTexture(string filename);
+        Texture &getTexture(std::string filename);
 
-        void drawTexture(string filename, const TextureDrawData &data);
-        void drawTexture(string filename);
+        void drawTexture(std::string filename, const TextureDrawData &data);
+        void drawTexture(std::string filename);
 
         void copyRenderTarget(RenderTarget &renderTarget, double opacity);
 
@@ -52,7 +51,7 @@ namespace LeoEngine
         void setWindowBordered(bool isBordered);
         void setWindowResizable(bool isResizable);
 
-        void setWindowTitle(string title);
+        void setWindowTitle(std::string title);
 
         // renderer functions
         void setRenderDimensions(int width, int height);
@@ -68,8 +67,8 @@ namespace LeoEngine
         void setRenderTarget(RenderTarget *renderTarget);
 
         // font functions
-        void drawText(string text, TextDrawData &data, int x, int y);
-        void drawText(string text, TextDrawData &data, Pair<int, int> position);
+        void drawText(std::string text, TextDrawData &data, int x, int y);
+        void drawText(std::string text, TextDrawData &data, Pair<int, int> position);
 
         // camera functions
         bool cameraExists();

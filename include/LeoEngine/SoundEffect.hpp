@@ -8,7 +8,6 @@
 #endif
 
 #include <string>
-using namespace std;
 
 namespace LeoEngine
 {
@@ -16,7 +15,7 @@ namespace LeoEngine
     class SoundEffect
     {
     public:
-        SoundEffect(string filepath);
+        SoundEffect(std::string filepath);
         ~SoundEffect();
 
         Mix_Chunk *getSDLChunkObject();

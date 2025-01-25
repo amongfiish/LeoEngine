@@ -11,7 +11,6 @@
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/EventChangeScene.hpp"
 #include "LeoEngine/RenderTarget.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -25,8 +24,9 @@ namespace LeoEngine
             _transitionElapsedFrames(0),
             _transitionTotalFrames(0),
             _fadeRenderTarget(100, 100),
-            update(bind(&SceneCollection::normalUpdate, this)),
-            draw(bind(&SceneCollection::normalDraw, this))
+            _transitionSecondHalf(false),
+            update(std::bind(&SceneCollection::normalUpdate, this)),
+            draw(std::bind(&SceneCollection::normalDraw, this))
         {
             Services::get().getEvents()->addCallback(EventType::CHANGE_SCENE, bind(&SceneCollection::sceneChangeCallback, this, placeholders::_1));
             Services::get().getGraphics()->setRenderTarget(&_fadeRenderTarget);
@@ -93,12 +93,12 @@ namespace LeoEngine
             _transitionElapsedFrames = 0;
             _transitionTotalFrames = transitionFrames;
             _transitionSecondHalf = false;
-            update = bind(&SceneCollection::fadeUpdate, this);
-            draw = bind(&SceneCollection::fadeDraw, this);
+            update = std::bind(&SceneCollection::fadeUpdate, this);
+            draw = std::bind(&SceneCollection::fadeDraw, this);
         }
 
-        function<void()> update;
-        function<void()> draw;
+        std::function<void()> update;
+        std::function<void()> draw;
 
     private:
         bool sceneIsValid(int sceneID)
@@ -176,8 +176,8 @@ namespace LeoEngine
             }
             else if (_transitionElapsedFrames >= static_cast<double>(_transitionTotalFrames) / 2 && _transitionSecondHalf)
             {
-                update = bind(&SceneCollection::normalUpdate, this);
-                draw = bind(&SceneCollection::normalDraw, this);
+                update = std::bind(&SceneCollection::normalUpdate, this);
+                draw = std::bind(&SceneCollection::normalDraw, this);
 
                 Services::get().getInput()->unlockInput();
             }
@@ -216,7 +216,7 @@ namespace LeoEngine
         }
 
         // scenes
-        vector<Scene *> _scenes;
+        std::vector<Scene *> _scenes;
         Scene *_currentScene;
 
         // stuff for transitions

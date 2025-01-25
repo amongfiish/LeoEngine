@@ -6,7 +6,6 @@
 #elif defined(_WIN32)
     #include <SDL.h>
 #endif
-using namespace std;
 
 namespace LeoEngine
 {

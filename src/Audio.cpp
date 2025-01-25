@@ -11,12 +11,12 @@ namespace LeoEngine
     {
         if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
         {
-            throw runtime_error("Couldn't initialize SDL audio.");
+            throw std::runtime_error("Couldn't initialize SDL audio.");
         }
 
         if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
         {
-            throw runtime_error("Couldn't start SDL mixer.");
+            throw std::runtime_error("Couldn't start SDL mixer.");
         }
     }
 
@@ -26,7 +26,7 @@ namespace LeoEngine
         SDL_QuitSubSystem(SDL_INIT_AUDIO);
     }
 
-    void Audio::playMusic(string filename, int loops, int fadeInMilliseconds, double startPosition)
+    void Audio::playMusic(std::string filename, int loops, int fadeInMilliseconds, double startPosition)
     {
         Mix_FadeInMusicPos(_musicLoader.get(filename).getSDLMusicObject(), loops, fadeInMilliseconds, startPosition);
     }
@@ -68,12 +68,12 @@ namespace LeoEngine
         Mix_SetMusicPosition(position);
     }
 
-    void Audio::playSoundEffect(string filename, int loops)
+    void Audio::playSoundEffect(std::string filename, int loops)
     {
         Mix_PlayChannel(-1, _soundEffectLoader.get(filename).getSDLChunkObject(), loops);
     }
 
-    void Audio::setSoundEffectVolume(string filename, double volume)
+    void Audio::setSoundEffectVolume(std::string filename, double volume)
     {
         Mix_VolumeChunk(_soundEffectLoader.get(filename).getSDLChunkObject(), static_cast<int>(MIX_MAX_VOLUME * volume));
     }

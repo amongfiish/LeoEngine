@@ -8,7 +8,6 @@
 #endif
 
 #include <string>
-using namespace std;
 
 namespace LeoEngine
 {
@@ -16,7 +15,7 @@ namespace LeoEngine
     class Music
     {
     public:
-        Music(string filepath);
+        Music(std::string filepath);
         ~Music();
 
         Mix_Music *getSDLMusicObject();

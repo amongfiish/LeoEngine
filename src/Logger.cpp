@@ -9,8 +9,8 @@
 namespace LeoEngine
 {
 
-    string Logger::_organizationName = "LeoEngineDefaultOrg";
-    string Logger::_applicationName = "LeoEngineDefaultApp";
+    std::string Logger::_organizationName = "LeoEngineDefaultOrg";
+    std::string Logger::_applicationName = "LeoEngineDefaultApp";
 
     Logger::Logger()
     {
@@ -22,43 +22,43 @@ namespace LeoEngine
 
     }
 
-    void Logger::setOrgAndAppName(string organizationName, string applicationName)
+    void Logger::setOrgAndAppName(std::string organizationName, std::string applicationName)
     {
         _organizationName = organizationName;
         _applicationName = applicationName;
     }
 
-    void Logger::trace(string id, string content)
+    void Logger::trace(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->trace(content);
     }
 
-    void Logger::debug(string id, string content)
+    void Logger::debug(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->debug(content);
     }
 
-    void Logger::info(string id, string content)
+    void Logger::info(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->info(content);
     }
 
-    void Logger::warn(string id, string content)
+    void Logger::warn(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->warn(content);
     }
 
-    void Logger::error(string id, string content)
+    void Logger::error(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->error(content);
     }
 
-    void Logger::critical(string id, string content)
+    void Logger::critical(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->critical(content);
@@ -72,13 +72,13 @@ namespace LeoEngine
         }
     }
 
-    shared_ptr<spdlog::logger> Logger::getLogger(string id)
+    std::shared_ptr<spdlog::logger> Logger::getLogger(std::string id)
     {
         // create a logger with this ID, if one doesn't already exist
         auto logger = _spdLoggers.find(id);
         if (logger == _spdLoggers.end())
         {
-            string path = SDL_GetPrefPath(_organizationName.c_str(), _applicationName.c_str());
+            std::string path = SDL_GetPrefPath(_organizationName.c_str(), _applicationName.c_str());
             path += "log.txt";
             return _spdLoggers.insert(make_pair(id, spdlog::basic_logger_mt(id, path))).first->second;
         }

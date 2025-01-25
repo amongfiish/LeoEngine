@@ -5,7 +5,6 @@
 #include "LeoEngine/TextureDrawData.hpp"
 #include "LeoEngine/Rectangle.hpp"
 #include "LeoEngine/Pair.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -14,8 +13,8 @@ namespace LeoEngine
     {
     public:
         SpriteStatic();
-        SpriteStatic(string textureFilename);
-        SpriteStatic(string textureFilename, TextureDrawData textureDrawData);
+        SpriteStatic(std::string textureFilename);
+        SpriteStatic(std::string textureFilename, TextureDrawData textureDrawData);
 
         void draw();
 
@@ -24,16 +23,16 @@ namespace LeoEngine
         void setPosition(int x, int y);
         void setSize(int width, int height);
 
-        void setSourceRectangle(shared_ptr<Rectangle> sourceRectangle);
-        void setDestinationRectangle(shared_ptr<Rectangle> destinationRectangle);
+        void setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle);
+        void setDestinationRectangle(std::shared_ptr<Rectangle> destinationRectangle);
         void setAngle(double angle);
-        void setCenter(shared_ptr<Pair<int, int>> center);
+        void setCenter(std::shared_ptr<Pair<int, int>> center);
         void setFlip(FlipType flip);
 
-        void setTextureFilename(string filename);
+        void setTextureFilename(std::string filename);
 
     private:
-        string _textureFilename;
+        std::string _textureFilename;
         TextureDrawData _textureDrawData;
     };
 

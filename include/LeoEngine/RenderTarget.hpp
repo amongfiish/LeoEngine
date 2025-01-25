@@ -11,7 +11,6 @@
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Logger.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -25,7 +24,7 @@ namespace LeoEngine
             if (_texture == nullptr)
             {
                 Services::get().getLogger()->critical("RenderTarget", "Failed to create new RenderTarget texture.");
-                throw runtime_error("Failed to create render target.");
+                throw std::runtime_error("Failed to create render target.");
             }
 
             SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);

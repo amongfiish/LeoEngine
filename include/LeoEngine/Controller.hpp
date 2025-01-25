@@ -9,7 +9,6 @@
 
 #include <vector>
 #include "LeoEngine/KeyState.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -31,8 +30,8 @@ namespace LeoEngine
     private:
         SDL_Joystick *_sdlJoystick;
 
-        vector<KeyState> _buttons;
-        vector<int> _axes;
+        std::vector<KeyState> _buttons;
+        std::vector<int> _axes;
     };
 
 }

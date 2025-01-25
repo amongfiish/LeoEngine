@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "LeoEngine/Pair.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -34,7 +33,7 @@ namespace LeoEngine
 
     private:
         Camera *_currentCamera = nullptr;
-        vector<Camera *> _cameras;
+        std::vector<Camera *> _cameras;
 
         Pair<double, double> _fallbackPosition;
     };

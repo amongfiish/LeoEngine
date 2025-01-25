@@ -9,7 +9,6 @@
 #include <string>
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/Colour.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -18,7 +17,7 @@ namespace LeoEngine
     class Window
     {
     public:
-        Window(string title, int width, int height);
+        Window(std::string title, int width, int height);
         ~Window();
 
         SDL_Window *getSDLWindowObject() const;
@@ -31,7 +30,7 @@ namespace LeoEngine
         void setBordered(bool isBordered);
         void setResizable(bool isResizable);
 
-        void setTitle(string title);
+        void setTitle(std::string title);
 
     private:
         SDL_Window *_window = nullptr;

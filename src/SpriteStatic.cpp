@@ -11,13 +11,13 @@ namespace LeoEngine
 
     }
 
-    SpriteStatic::SpriteStatic(string textureFilename)
+    SpriteStatic::SpriteStatic(std::string textureFilename)
         : _textureFilename(textureFilename)
     {
         
     }
 
-    SpriteStatic::SpriteStatic(string textureFilename, TextureDrawData textureDrawData)
+    SpriteStatic::SpriteStatic(std::string textureFilename, TextureDrawData textureDrawData)
         : _textureFilename(textureFilename),
           _textureDrawData(textureDrawData)
     {
@@ -44,7 +44,7 @@ namespace LeoEngine
     {
         if (_textureDrawData.destinationRectangle == nullptr)
         {
-            _textureDrawData.destinationRectangle = make_shared<Rectangle>(x, y, 0, 0);
+            _textureDrawData.destinationRectangle = std::make_shared<Rectangle>(x, y, 0, 0);
             return;
         }
 
@@ -56,7 +56,7 @@ namespace LeoEngine
     {
         if (_textureDrawData.destinationRectangle == nullptr)
         {
-            _textureDrawData.destinationRectangle = make_shared<Rectangle>(0, 0, width, height);
+            _textureDrawData.destinationRectangle = std::make_shared<Rectangle>(0, 0, width, height);
             return;
         }
 
@@ -64,12 +64,12 @@ namespace LeoEngine
         _textureDrawData.destinationRectangle->height = height;
     }
 
-    void SpriteStatic::setSourceRectangle(shared_ptr<Rectangle> sourceRectangle)
+    void SpriteStatic::setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle)
     {
         _textureDrawData.sourceRectangle = sourceRectangle;
     }
 
-    void SpriteStatic::setDestinationRectangle(shared_ptr<Rectangle> destinationRectangle)
+    void SpriteStatic::setDestinationRectangle(std::shared_ptr<Rectangle> destinationRectangle)
     {
         _textureDrawData.destinationRectangle = destinationRectangle;
     }
@@ -79,7 +79,7 @@ namespace LeoEngine
         _textureDrawData.angle = angle;
     }
 
-    void SpriteStatic::setCenter(shared_ptr<Pair<int, int>> center)
+    void SpriteStatic::setCenter(std::shared_ptr<Pair<int, int>> center)
     {
         _textureDrawData.center = center;
     }
@@ -89,7 +89,7 @@ namespace LeoEngine
         _textureDrawData.flip = flip;
     }
 
-    void SpriteStatic::setTextureFilename(string filename)
+    void SpriteStatic::setTextureFilename(std::string filename)
     {
         _textureFilename = filename;
     }

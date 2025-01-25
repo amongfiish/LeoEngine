@@ -6,16 +6,16 @@
 namespace LeoEngine
 {
 
-    SoundEffect::SoundEffect(string filepath)
+    SoundEffect::SoundEffect(std::string filepath)
     {
         Mix_Chunk *newChunk = Mix_LoadWAV(filepath.c_str());
         if (newChunk == nullptr)
         {
-            string message = "Couldn't load new sound effect from file at '";
+            std::string message = "Couldn't load new sound effect from file at '";
             message = message + filepath + "'. SDL error: '" + Mix_GetError() + "'.";
             Services::get().getLogger()->critical("SoundEffect", message);
             Services::get().getLogger()->flush();
-            throw runtime_error("Couldn't load new sdl chunk.");   
+            throw std::runtime_error("Couldn't load new sdl chunk.");
         }
 
         _chunk = newChunk;

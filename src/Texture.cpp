@@ -9,21 +9,20 @@
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Logger.hpp"
 #include "LeoEngine/Services.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
 
-    Texture::Texture(string path)
+    Texture::Texture(std::string path)
     {
         SDL_Surface *newTextureSurface = IMG_Load(path.c_str());
         if (newTextureSurface == nullptr)
         {
-            string message = "File '";
+            std::string message = "File '";
             message = message + path + "' not found";
             Services::get().getLogger()->critical("Texture", message);
             Services::get().getLogger()->flush();
-            throw runtime_error("Couldn't load new texture from file.");
+            throw std::runtime_error("Couldn't load new texture from file.");
         }
 
         SDL_Texture *newTexture = SDL_CreateTextureFromSurface(Services::get().getGraphics()->getRenderer().getSDLRendererObject(), newTextureSurface);
@@ -32,7 +31,7 @@ namespace LeoEngine
         {
             Services::get().getLogger()->critical("Texture", "Couldn't create new texture from surface.");
             Services::get().getLogger()->flush();
-            throw runtime_error("Couldn't create new texture from surface.");
+            throw std::runtime_error("Couldn't create new texture from surface.");
         }
 
         _texture = newTexture;

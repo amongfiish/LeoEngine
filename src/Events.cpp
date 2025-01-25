@@ -21,7 +21,6 @@
 #include "LeoEngine/EventWindowResize.hpp"
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -30,7 +29,7 @@ namespace LeoEngine
     {
         if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
         {
-            throw runtime_error("Couldn't initialize SDL events subsystem.");
+            throw std::runtime_error("Couldn't initialize SDL events subsystem.");
         }
     }
 

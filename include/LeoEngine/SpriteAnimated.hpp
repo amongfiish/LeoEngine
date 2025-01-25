@@ -4,7 +4,6 @@
 #include <memory>
 #include "LeoEngine/Animation.hpp"
 #include "LeoEngine/SpriteStatic.hpp"
-using namespace std;
 
 namespace LeoEngine
 {
@@ -18,7 +17,7 @@ namespace LeoEngine
         void update();
         void draw();
 
-        void setAnimation(shared_ptr<Animation> animation);
+        void setAnimation(std::shared_ptr<Animation> animation);
 
         void pauseAnimation();
         void unpauseAnimation();
@@ -34,7 +33,7 @@ namespace LeoEngine
     private:
         void fetchFrameData();
 
-        shared_ptr<Animation> _animation;
+        std::shared_ptr<Animation> _animation;
 
         SpriteStatic _sprite;
 

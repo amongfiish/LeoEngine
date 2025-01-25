@@ -4,12 +4,12 @@
 namespace LeoEngine
 {
 
-    Music::Music(string filepath)
+    Music::Music(std::string filepath)
     {
         Mix_Music *newMusic = Mix_LoadMUS(filepath.c_str());
         if (newMusic == nullptr)
         {
-            throw runtime_error("Couldn't load music object.");
+            throw std::runtime_error("Couldn't load music object.");
         }
 
         _music = newMusic;

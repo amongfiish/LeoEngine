@@ -4,7 +4,7 @@
 
 namespace LeoEngine
 {
-    shared_ptr<Animation> createAnimationFromStripData(string filename, int cellWidth, int cellHeight, int numberOfCells, int displayTime)
+    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, int displayTime)
     {
         if (numberOfCells < 0 || cellWidth < 0 || cellHeight < 0 || filename == "")
         {
@@ -12,7 +12,7 @@ namespace LeoEngine
             return nullptr;
         }
 
-        shared_ptr<Animation> newAnimation = make_shared<Animation>(filename, cellWidth, cellHeight);
+        std::shared_ptr<Animation> newAnimation = std::make_shared<Animation>(filename, cellWidth, cellHeight);
     
         int x = 0;
         for (int i = 0; i < numberOfCells; i++)
@@ -25,7 +25,7 @@ namespace LeoEngine
         return newAnimation;
     }
 
-    Animation::Animation(string filename, int width, int height)
+    Animation::Animation(std::string filename, int width, int height)
         : _filename(filename),
           _dimensions(width, height)
     {
@@ -37,7 +37,7 @@ namespace LeoEngine
         
     }
 
-    string Animation::getFilename() const
+    std::string Animation::getFilename() const
     {
         return _filename;
     }
