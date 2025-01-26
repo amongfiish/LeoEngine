@@ -103,9 +103,13 @@ namespace LeoEngine
     private:
         bool sceneIsValid(int sceneID)
         {
-            Services::get().getLogger()->error("Game", "Provided sceneID is out of range.");
+            bool sceneIsValid = sceneID >= 0 && sceneID < _scenes.size();
+            if (!sceneIsValid)
+            {
+                Services::get().getLogger()->error("Game", "Provided sceneID is out of range.");
+            }
 
-            return sceneID >= 0 && sceneID < _scenes.size();
+            return sceneIsValid;
         }
 
         bool sceneIsValid(Scene *scene)
