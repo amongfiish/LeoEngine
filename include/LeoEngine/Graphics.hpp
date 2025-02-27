@@ -10,6 +10,7 @@
 #include "LeoEngine/TextDrawData.hpp"
 #include "LeoEngine/Loader.hpp"
 #include "LeoEngine/CameraManager.hpp"
+#include "LeoEngine/Line.hpp"
 
 namespace LeoEngine
 {
@@ -28,6 +29,7 @@ namespace LeoEngine
 
         void drawLine(const Colour &colour, const int x0, const int y0, const int x1, const int y1);
         void drawLine(const Colour &colour, const Pair<int, int> &start, const Pair<int, int> &end);
+        void drawLine(const Colour &colour, const Line &line);
 
         void drawRectangle(const Colour &colour, bool fill, const int x, const int y, const int width, const int height);
         void drawRectangle(const Colour &colour, bool fill, const Pair<int, int> &origin, const Pair<int, int> &opposite);

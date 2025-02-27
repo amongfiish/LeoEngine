@@ -70,6 +70,11 @@ namespace LeoEngine
         drawLine(colour, start.first, start.second, end.first, end.second);
     }
 
+    void Graphics::drawLine(const Colour &colour, const Line &line)
+    {
+        drawLine(colour, line.start, line.end);
+    }
+
     void Graphics::drawRectangle(const Colour& colour, bool fill, const int x, const int y, const int width, const int height)
     {
         Pair<int, int> adjustedOrigin(x, y);
