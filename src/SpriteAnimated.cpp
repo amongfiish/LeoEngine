@@ -58,13 +58,13 @@ namespace LeoEngine
         if (_animation != nullptr)
         {
             restartAnimation();
-            fetchFrameData();
         }
     }
 
     void SpriteAnimated::restartAnimation()
     {
-        _currentFrame = 0;
+        _currentFrame = _startFrame;
+        unpauseAnimation();
         fetchFrameData();
     }
 
