@@ -13,6 +13,8 @@ namespace LeoEngine
         virtual void update() {}
         virtual void draw() {}
 
+        virtual void reset() {}
+
     protected:
         Part() = default;
     };

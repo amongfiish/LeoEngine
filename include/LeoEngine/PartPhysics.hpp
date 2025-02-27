@@ -29,7 +29,9 @@ namespace LeoEngine
 
         bool isInMotion();
 
-        virtual void update();
+        virtual void update() override;
+
+        virtual void reset() override;
 
     private:
         std::shared_ptr<PartTransform> _target;

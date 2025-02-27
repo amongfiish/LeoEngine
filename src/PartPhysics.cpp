@@ -71,4 +71,10 @@ namespace LeoEngine
         _target->move(_velocity);
     }
 
+    void PartPhysics::reset()
+    {
+        setVelocity(0, 0);
+        setAcceleration(0, 0);
+    }
+
 }

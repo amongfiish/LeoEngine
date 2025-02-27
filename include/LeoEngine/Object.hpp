@@ -38,6 +38,14 @@ namespace LeoEngine
             }
         }
 
+        void reset()
+        {
+            for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++)
+            {
+                (*itPart)->reset();
+            }
+        }
+
         template<class T>
         std::shared_ptr<T> addPart()
         {
