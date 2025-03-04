@@ -1,4 +1,5 @@
 #include "LeoEngine/Collision.hpp"
+#include <cmath>
 
 namespace LeoEngine
 {

@@ -10,6 +10,8 @@ set(PROJECT_NAME "LeoEngine")
 
 project(${PROJECT_NAME})
 
+set(SDL2MIXER_VENDORED ON)
+
 add_subdirectory(lib/sdl)
 add_subdirectory(lib/sdl_image)
 add_subdirectory(lib/sdl_mixer)
