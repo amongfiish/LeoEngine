@@ -13,7 +13,6 @@ LeoEngine.*
 *.cmake
 *.user
 CMakeCache.txt
-Makefile
 .DS_Store
 CMakeSettings.json
 tatusq
