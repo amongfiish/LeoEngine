@@ -6,8 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Turbo City'
-copyright = '2025, Lucas James'
+project = 'Leo Engine'
+copyright = '2024-%Y, Lucas James'
 author = 'Lucas James'
 release = '0.1'
 
@@ -33,10 +33,10 @@ html_sidebars = {
 }
 
 html_theme_options = {
-    "description": "Test",
+    "description": "Engine for two-dimensional games written in C++. Developed by Turbo City Games.",
     "github_user": "amongfiish",
     "github_repo": "LeoEngine",
     "fixed_sidebar": True,
-    "github_banner": True,
+    "github_banner": False,
 }
 
