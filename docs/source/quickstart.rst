@@ -1,7 +1,7 @@
 Quickstart
 ==========
 
-This page will outline the creation of a minimal Leo Engine project. All Leo Engine projects consists of a ``Engine`` object and a ``Game`` object containing any number of ``Scene`` objects.
+This page will outline the creation of a minimal Leo Engine project. All Leo Engine projects consist of an ``Engine`` object and a ``Game`` object containing any number of ``Scene`` objects.
 
 Creating a Leo Engine Project
 -----------------------------
@@ -82,9 +82,13 @@ The 'official' way to build a Leo Engine project is with `CMake <https://www.cma
 As an example, the project structure that I've used in the past is as follows:
 
 * a **lib** directory for libraries
+
   * the LeoEngine library
+
 * a **src** directory for source files
+
   * *main.cpp*
+
 * *CMakeLists.txt*
 
 Then, you can populate *CMakeLists.txt* with something like this:
