@@ -1,6 +1,6 @@
 Turbo City's *Leo Engine*.
 
-This engine was originally created for a remake of Minecart Madness (which ultimately led to nothing) but has since been repurposed for a number of in-development projects.
+This engine was originally created for a remake of [Minecart Madness](https://store.steampowered.com/app/1876750/MinecartMadness/) (which ultimately led to nothing) but has since been repurposed for a number of in-development projects.
 
 # Dependencies
 Leo Engine's build process uses [CMake](https://cmake.org/download/) and as such it is necessary that you have it installed on your system. Every other dependency is included in this repository.
@@ -11,6 +11,7 @@ Leo Engine's build process uses [CMake](https://cmake.org/download/) and as such
  - [SDL Mixer](https://github.com/libsdl-org/SDL_mixer)
  - [SDL TTF](https://github.com/libsdl-org/SDL_ttf)
  - [spdlog](https://github.com/gabime/spdlog)
+ - [boost](https://github.com/boostorg/boost)
 
 # Building from Source
 To build the engine from source:
