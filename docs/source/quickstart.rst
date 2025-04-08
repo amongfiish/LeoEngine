@@ -9,11 +9,13 @@ Creating a Leo Engine Project
 For the purposes of this guide everything we do will take place in our main function. We'll begin by including *EngineSettings.hpp*.
 
 .. code-block:: C++
+
     #include "LeoEngine/EngineSettings.hpp"
 
 Next, we'll create an ``EngineSettings`` object.
 
 .. code-block:: C++
+
     ...
 
     int main(int argc, char *argv[])
@@ -26,6 +28,7 @@ Note that all Leo Engine classes and functions exist within the ``LeoEngine`` na
 An ``EngineSettings`` object is passed to the ``Engine`` constructor. It provides the engine with details about your application, like the properties of the window that should be created for it. These details are stored as public data members within the object, so we can easily set them with the ``.`` and ``=`` operators. Any of these properties can be ignored and will be default initialized. As such, you *can* provide an unmodified ``EngineSettings`` object to the ``Engine`` constructor, though this would be odd thing to do.
 
 .. code-block:: C++
+
     ...
 
         myEngineSettings.defaultWindowWidth = 512;
@@ -38,6 +41,7 @@ An ``EngineSettings`` object is passed to the ``Engine`` constructor. It provide
 Once all desired engine settings have been set, we can create an ``Engine`` object. Ensure you also include *Engine.hpp*
 
 .. code-block:: C++
+
     #include "LeoEngine/Engine.hpp"
 
     ...
@@ -51,6 +55,7 @@ Once the ``Engine`` object has been created, the ``EngineSettings`` object is no
 Next, we'll create a ``Game`` object. The ``Game`` object holds all of the ``Scene`` objects that make up your game. The ``Scene`` class will be explained in detail in another guide.
 
 .. code-block:: C++
+
     #include "LeoEngine/Game.hpp"
 
     ...
@@ -62,6 +67,7 @@ Next, we'll create a ``Game`` object. The ``Game`` object holds all of the ``Sce
 With this, we now have a complete Leo Engine project! To run our newly created game, we need to add one final line.
 
 .. code-block:: C++
+
     ...
 
     myEngine.runGame(myGame);
