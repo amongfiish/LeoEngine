@@ -74,8 +74,43 @@ With this, we now have a complete Leo Engine project! To run our newly created g
 
     ...
 
-Building the Project
---------------------
+Building the Project with CMake
+-------------------------------
 
-TBA
+The 'official' way to build a Leo Engine project is with `CMake <https://www.cmake.org>`_.
+
+As an example, the project structure that I've used in the past is as follows:
+
+* a **lib** directory for libraries
+  * the LeoEngine library
+* a **src** directory for source files
+  * *main.cpp*
+* *CMakeLists.txt*
+
+Then, you can populate *CMakeLists.txt* with something like this:
+
+.. code-block:: cmake
+
+    cmake_minimum_required(VERSION 3.11)
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    
+    project(MyGame)
+
+    add_subdirectory(lib/LeoEngine)
+
+    file(GLOB SOURCES src/*)
+
+    add_executable(MyGame ${SOURCES})
+
+    target_link_libraries(MyGame PRIVATE LeoEngine)
+    target_include_directories(MyGame PRIVATE lib/LeoEngine/include)
+
+If you're on MacOS it may be useful to include an *Info.plist* file as well, as it allows you to configure SDL's ``GetBasePath()`` and ``GetPrefPath()`` functions in a more Mac friendly way. I'll leave that up to you to figure out.
+
+Now, you can run ``cmake . -B build`` from the project's root directory. This will create the **build** directory and fill it with build files: a Visual Studio project on Windows or a Makefile on Unix.
+
+That's about all there is to know about building a Leo Engine project.
+
+Next, I'd recommend checking out :doc:`scene`.
 
