@@ -33,10 +33,10 @@ html_sidebars = {
 }
 
 html_theme_options = {
-    "description": "2D C++ game engine by Turbo City Games",
+    "description": "C++ 2D game engine by Turbo City Games",
     "github_user": "amongfiish",
     "github_repo": "LeoEngine",
     "fixed_sidebar": True,
-    "github_banner": False,
+    "github_banner": True,
 }
 
