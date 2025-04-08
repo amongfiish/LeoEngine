@@ -19,10 +19,24 @@ extensions = []
 templates_path = ['_templates']
 exclude_patterns = []
 
-
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
+html_sidebars = {
+    "**": [
+        "about.html",
+        "localtoc.html",
+        "searchbox.html",
+    ]
+}
+
+html_theme_options = {
+    "description": "Test",
+    "github_user": "amongfiish",
+    "github_repo": "LeoEngine",
+    "fixed_sidebar": True,
+    "github_banner": True,
+}
+
