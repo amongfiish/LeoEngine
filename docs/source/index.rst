@@ -6,7 +6,9 @@
 Leo Engine documentation
 ========================
 
-Welcome to the Leo Engine documentation. This site, as well as the software that it is documenting, are currently in development.
+Welcome to the Leo Engine documentation. This site, as well as the software that it is documenting, are currently in development. Please excuse any rough or incomplete pages.
+
+Get started with :doc:`setup`. Then, take a look at :doc:`quickstart`.
 
 .. toctree::
    :maxdepth: 2
