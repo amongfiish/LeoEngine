@@ -33,7 +33,7 @@ html_sidebars = {
 }
 
 html_theme_options = {
-    "description": "Engine for two-dimensional games written in C++. Developed by Turbo City Games.",
+    "description": "2D C++ game engine by Turbo City Games"
     "github_user": "amongfiish",
     "github_repo": "LeoEngine",
     "fixed_sidebar": True,
