@@ -28,7 +28,7 @@ However, of these three, only the ``Rectangle`` and ``Line`` can be drawn with L
 Scenes and Drawing
 ------------------
 
-The `Game` class, like many Leo Engine classes, has an ``update`` method and a ``draw`` method. These don't do anything other than calling the current scene's ``update`` and ``draw`` functions. So, anything we want to be drawn on the screen must be drawn during a scene's draw method.
+The ``Game`` class, like many Leo Engine classes, has an ``update`` method and a ``draw`` method. These don't do anything other than calling the current scene's ``update`` and ``draw`` functions. So, anything we want to be drawn on the screen must be drawn during a scene's draw method.
 
 So, let's start by creating a new class derived from ``Scene``.
 
@@ -42,7 +42,8 @@ So, let's start by creating a new class derived from ``Scene``.
         Scene() = default;
         virtual ~Scene() = default;
 
-        // we don't care about the update function right now, but it's good to know it's there!
+        // we don't care about the update function right now,
+        // but it's good to know it's there!
         virtual void update() override {}
 
         virtual void draw() override
