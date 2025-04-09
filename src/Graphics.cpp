@@ -20,8 +20,7 @@ namespace LeoEngine
     Graphics::Graphics()
             : _window("", 800, 600),
             _renderer(_window.getSDLWindowObject()),
-            _textureLoader("textures"),
-            _fontLoader("fonts")
+            _textureLoader("textures")
     {
         if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
         {
@@ -249,14 +248,12 @@ namespace LeoEngine
         SDL_SetRenderTarget(_renderer.getSDLRendererObject(), target);
     }
 
-    void Graphics::drawText(string text, TextDrawData& data, int x, int y)
+    Texture *Graphics::renderText(string text, TextDrawData& data)
     {
-        
-    }
+        // to be filled in
+        // need a new font-manager-type class as well
 
-    void Graphics::drawText(string text, TextDrawData& data, Pair<int, int> position)
-    {
-
+        return nullptr;   
     }
 
     bool Graphics::cameraExists()

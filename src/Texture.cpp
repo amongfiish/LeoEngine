@@ -42,6 +42,18 @@ namespace LeoEngine
         SDL_DestroyTexture(_texture);
     }
 
+    Pair<int, int> Texture::getDimensions() const
+    {
+        Pair<int, int> textureDimensions;
+
+        if (_texture != nullptr)
+        {
+            SDL_QueryTexture(_texture, nullptr, nullptr, &textureDimensions.first, &textureDimensions.second);
+        }
+
+        return textureDimensions;
+    }
+
     SDL_Texture *Texture::getSDLTextureObject()
     {
         return _texture;

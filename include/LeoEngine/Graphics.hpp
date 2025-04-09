@@ -6,7 +6,6 @@
 #include "LeoEngine/Renderer.hpp"
 #include "LeoEngine/Texture.hpp"
 #include "LeoEngine/TextureDrawData.hpp"
-#include "LeoEngine/Font.hpp"
 #include "LeoEngine/TextDrawData.hpp"
 #include "LeoEngine/Loader.hpp"
 #include "LeoEngine/CameraManager.hpp"
@@ -69,8 +68,7 @@ namespace LeoEngine
         void setRenderTarget(RenderTarget *renderTarget);
 
         // font functions
-        void drawText(std::string text, TextDrawData &data, int x, int y);
-        void drawText(std::string text, TextDrawData &data, Pair<int, int> position);
+        Texture *renderText(string text, TextDrawData& data);
 
         // camera functions
         bool cameraExists();
@@ -99,7 +97,6 @@ namespace LeoEngine
         Renderer _renderer;
 
         Loader<Texture> _textureLoader;
-        Loader<Font> _fontLoader;
 
         CameraManager _cameras;
     };

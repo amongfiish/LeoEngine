@@ -8,6 +8,7 @@
 #endif
 
 #include <string>
+#include "LeoEngine/Pair.hpp"
 using namespace std;
 
 namespace LeoEngine
@@ -18,6 +19,8 @@ namespace LeoEngine
     public:
         Texture(std::string path);
         ~Texture();
+
+        Pair<int, int> getDimensions() const;
 
         SDL_Texture *getSDLTextureObject();
 

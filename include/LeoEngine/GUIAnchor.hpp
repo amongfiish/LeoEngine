@@ -1,10 +1,10 @@
-#ifndef GUI_ANCHORS_HPP
-#define GUI_ANCHORS_HPP
+#ifndef GUI_ANCHOR_HPP
+#define GUI_ANCHOR_HPP
 
 namespace LeoEngine
 {
 
-    enum class GUIAnchors
+    enum class GUIAnchor
     {
         TOP_LEFT,
         TOP_MIDDLE,
