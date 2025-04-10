@@ -40,6 +40,8 @@ namespace LeoEngine
 
         void drawTexture(std::string filename, const TextureDrawData &data);
         void drawTexture(std::string filename);
+        void drawTexture(Texture *texture, const TextureDrawData &data);
+        void drawTexture(Texture *texture);
 
         void copyRenderTarget(RenderTarget &renderTarget, double opacity);
 

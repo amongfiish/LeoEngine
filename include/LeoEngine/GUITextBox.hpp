@@ -22,6 +22,8 @@ namespace LeoEngine
         void setText(std::string text);
 
     protected:
+        std::string _currentText;
+
         TextDrawData _textDrawData;
         Texture *_renderedText;
     };

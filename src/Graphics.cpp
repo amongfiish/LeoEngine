@@ -108,6 +108,17 @@ namespace LeoEngine
 
     void Graphics::drawTexture(std::string filename, const TextureDrawData& data)
     {
+        drawTexture(&getTexture(filename), data);
+    }
+
+    void Graphics::drawTexture(std::string filename)
+    {
+        TextureDrawData newDrawData;
+        drawTexture(&getTexture(filename), newDrawData);
+    }
+
+    void Graphics::drawTexture(Texture *texture, const TextureDrawData& data)
+    {
         SDL_Rect srcRect;
         SDL_Rect *p_srcRect;
         if (data.sourceRectangle == nullptr)
@@ -149,13 +160,13 @@ namespace LeoEngine
             p_center = &center;
         }
 
-        SDL_RenderCopyEx(_renderer.getSDLRendererObject(), getTexture(filename).getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
+        SDL_RenderCopyEx(_renderer.getSDLRendererObject(), texture->getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
     }
 
-    void Graphics::drawTexture(std::string filename)
+    void Graphics::drawTexture(Texture *texture)
     {
         TextureDrawData newDrawData;
-        drawTexture(filename, newDrawData);
+        drawTexture(texture, newDrawData);
     }
 
     void Graphics::copyRenderTarget(RenderTarget &renderTarget, double opacity)
