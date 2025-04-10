@@ -1,8 +1,8 @@
 #ifndef GUI_OBJECT_HPP
 #define GUI_OBJECT_HPP
 
-#include "LeoEngine/Pair.hpp"
 #include "LeoEngine/GUIAnchor.hpp"
+#include "LeoEngine/Pair.hpp"
 
 namespace LeoEngine
 {

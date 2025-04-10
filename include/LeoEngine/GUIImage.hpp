@@ -1,0 +1,35 @@
+#ifndef GUI_IMAGE_HPP
+#define GUI_IMAGE_HPP
+
+#include <memory>
+#include "LeoEngine/GUIObject.hpp"
+#include "LeoEngine/Texture.hpp"
+#include "LeoEngine/TextureDrawData.hpp"
+
+namespace LeoEngine
+{
+
+    class GUIImage : public GUIObject
+    {
+    public:
+        GUIImage(Texture *texture);
+        virtual ~GUIImage();
+
+        virtual void update();
+        virtual void draw();
+
+        void setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle);
+        void setDestinationRectangle(std::shared_ptr<Rectangle> destinationRectangle);
+        void setAngle(double angle);
+        void setCenter(std::shared_ptr<Pair<int, int>> center);
+        void setFlip(FlipType flip);
+
+    private:
+        Texture *_texture;
+        TextureDrawData _textureDrawData;
+    };
+
+}
+
+#endif
+
