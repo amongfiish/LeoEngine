@@ -9,7 +9,6 @@
 
 #include <string>
 #include "LeoEngine/Pair.hpp"
-using namespace std;
 
 namespace LeoEngine
 {

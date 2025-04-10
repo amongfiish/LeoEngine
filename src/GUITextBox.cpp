@@ -14,7 +14,8 @@ namespace LeoEngine
 
     GUITextBox::~GUITextBox()
     {
-
+        // might cause problems but we'll see...
+        delete _renderedText;
     }
 
     void GUITextBox::update()

@@ -24,12 +24,12 @@ namespace LeoEngine
     {
         if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
         {
-            throw runtime_error("Couldn't initialize SDL video subsystem.");
+            throw std::runtime_error("Couldn't initialize SDL video subsystem.");
         }
 
         if (TTF_Init() < 0)
         {
-            throw runtime_error("Couldn't initialize SDL TTF.");
+            throw std::runtime_error("Couldn't initialize SDL TTF.");
         }
     }
 
@@ -101,12 +101,12 @@ namespace LeoEngine
         drawRectangle(colour, fill, rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
 
-    Texture& Graphics::getTexture(string filename)
+    Texture& Graphics::getTexture(std::string filename)
     {
         return _textureLoader.get(filename);
     }
 
-    void Graphics::drawTexture(string filename, const TextureDrawData& data)
+    void Graphics::drawTexture(std::string filename, const TextureDrawData& data)
     {
         SDL_Rect srcRect;
         SDL_Rect *p_srcRect;
@@ -152,7 +152,7 @@ namespace LeoEngine
         SDL_RenderCopyEx(_renderer.getSDLRendererObject(), getTexture(filename).getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
     }
 
-    void Graphics::drawTexture(string filename)
+    void Graphics::drawTexture(std::string filename)
     {
         TextureDrawData newDrawData;
         drawTexture(filename, newDrawData);
@@ -201,7 +201,7 @@ namespace LeoEngine
         _window.setResizable(isResizable);
     }
 
-    void Graphics::setWindowTitle(string title)
+    void Graphics::setWindowTitle(std::string title)
     {
         _window.setTitle(title);
     }
@@ -248,7 +248,7 @@ namespace LeoEngine
         SDL_SetRenderTarget(_renderer.getSDLRendererObject(), target);
     }
 
-    Texture *Graphics::renderText(string text, TextDrawData& data)
+    Texture *Graphics::renderText(std::string text, TextDrawData& data)
     {
         // to be filled in
         // need a new font-manager-type class as well

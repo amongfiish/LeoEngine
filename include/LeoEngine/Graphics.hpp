@@ -68,7 +68,7 @@ namespace LeoEngine
         void setRenderTarget(RenderTarget *renderTarget);
 
         // font functions
-        Texture *renderText(string text, TextDrawData& data);
+        Texture *renderText(std::string text, TextDrawData& data);
 
         // camera functions
         bool cameraExists();
