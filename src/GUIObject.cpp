@@ -40,39 +40,39 @@ namespace LeoEngine
             break;
 
         case GUIAnchor::TOP_MIDDLE:
-            xOffset = _objectDimensions.first / 2;
+            xOffset = -_objectDimensions.first / 2;
             break;
 
         case GUIAnchor::TOP_RIGHT:
-            xOffset = _objectDimensions.first;
+            xOffset = -_objectDimensions.first;
             break;
 
         case GUIAnchor::MIDDLE_LEFT:
-            yOffset = _objectDimensions.second / 2;
+            yOffset = -_objectDimensions.second / 2;
             break;
 
         case GUIAnchor::MIDDLE:
-            xOffset = _objectDimensions.first / 2;
-            yOffset = _objectDimensions.second / 2;
+            xOffset = -_objectDimensions.first / 2;
+            yOffset = -_objectDimensions.second / 2;
             break;
 
         case GUIAnchor::MIDDLE_RIGHT:
-            xOffset = _objectDimensions.first;
-            yOffset = _objectDimensions.second / 2;
+            xOffset = -_objectDimensions.first;
+            yOffset = -_objectDimensions.second / 2;
             break;
 
         case GUIAnchor::BOTTOM_LEFT:
-            yOffset = _objectDimensions.second;
+            yOffset = -_objectDimensions.second;
             break;
 
         case GUIAnchor::BOTTOM_MIDDLE:
-            xOffset = _objectDimensions.first / 2;
-            yOffset = _objectDimensions.second;
+            xOffset = -_objectDimensions.first / 2;
+            yOffset = -_objectDimensions.second;
             break;
 
         case GUIAnchor::BOTTOM_RIGHT:
-            xOffset = _objectDimensions.first;
-            yOffset = _objectDimensions.second;
+            xOffset = -_objectDimensions.first;
+            yOffset = -_objectDimensions.second;
             break;
 
         default:
