@@ -250,10 +250,16 @@ namespace LeoEngine
 
     Texture *Graphics::renderText(std::string text, TextDrawData& data)
     {
-        // to be filled in
-        // need a new font-manager-type class as well
+        TTF_Font *font = _fontManager.getFont(data.fontFilename, data.pointSize);
+        SDL_Surface *renderedText = TTF_RenderText_Solid(font, text.c_str(), data.colour.toSDLColor());
+        if (renderedText == nullptr)
+        {
+            Services::get().getLogger()->error("Graphics", "Failed to render text.");
+            return nullptr;
+        }
 
-        return nullptr;   
+        Texture *newTexture = new Texture(renderedText);
+        return newTexture;
     }
 
     bool Graphics::cameraExists()

@@ -14,8 +14,7 @@ namespace LeoEngine
             : fontFilename(fontFilename),
             pointSize(pointSize),
             colour(colour)
-        {
-        }
+        {}
 
         std::string fontFilename;
         int pointSize;

@@ -8,6 +8,7 @@
 #include "LeoEngine/TextureDrawData.hpp"
 #include "LeoEngine/TextDrawData.hpp"
 #include "LeoEngine/Loader.hpp"
+#include "LeoEngine/FontManager.hpp"
 #include "LeoEngine/CameraManager.hpp"
 #include "LeoEngine/Line.hpp"
 
@@ -97,6 +98,7 @@ namespace LeoEngine
         Renderer _renderer;
 
         Loader<Texture> _textureLoader;
+        FontManager _fontManager;
 
         CameraManager _cameras;
     };

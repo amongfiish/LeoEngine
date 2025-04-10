@@ -37,6 +37,25 @@ namespace LeoEngine
         _texture = newTexture;
     }
 
+    Texture::Texture(SDL_Texture *texture)
+    {
+        _texture = texture;
+    }
+
+    Texture::Texture(SDL_Surface *surface)
+    {
+        SDL_Texture *newTexture = SDL_CreateTextureFromSurface(Services::get().getGraphics()->getRenderer().getSDLRendererObject(), surface);
+        if (newTexture == nullptr)
+        {
+            Services::get().getLogger()->critical("Texture", "Failed to create texture from surface.");
+
+            Services::get().getLogger()->flush();
+            throw std::runtime_error("Failed to create texture from surface.");
+        }
+
+        _texture = newTexture;
+    }
+
     Texture::~Texture()
     {
         SDL_DestroyTexture(_texture);

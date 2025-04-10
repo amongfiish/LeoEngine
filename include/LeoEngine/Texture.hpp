@@ -16,7 +16,12 @@ namespace LeoEngine
     class Texture
     {
     public:
+        // fancy, standard constructor
         Texture(std::string path);
+        // raw (?) constructors
+        Texture(SDL_Texture *sdlTexture);
+        // DOES NOT FREE THE SURFACE!!!! BE CAREFUL!!!!
+        Texture(SDL_Surface *sdlTexture);
         ~Texture();
 
         Pair<int, int> getDimensions() const;
