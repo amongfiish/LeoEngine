@@ -45,6 +45,13 @@ namespace LeoEngine
 
             return insertResult.first->second;
         }
+
+        auto insertResult0 = _fonts.insert(std::make_pair(filename, std::map<int, TTF_Font *>()));
+        std::string fullPath = _path + filename;
+        TTF_Font *newFontSize = TTF_OpenFont(fullPath.c_str(), pointSize);
+
+        auto insertResult1 = insertResult0.first->second.insert(std::make_pair(pointSize, newFontSize));
+        return insertResult1.first->second;
     }
 
 }

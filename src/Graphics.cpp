@@ -169,6 +169,22 @@ namespace LeoEngine
         drawTexture(texture, newDrawData);
     }
 
+    void Graphics::drawTextureCameraless(Texture *texture, const TextureDrawData &data)
+    {
+        const Pair<double, double> cameraPosition = _cameras.getPosition();
+        _cameras.setCameraPosition(0, 0);
+
+        drawTexture(texture, data);
+
+        _cameras.setCameraPosition(cameraPosition);
+    }
+
+    void Graphics::drawTextureCameraless(Texture *texture)
+    {
+        TextureDrawData newDrawData;
+        drawTextureCameraless(texture, newDrawData);
+    }
+
     void Graphics::copyRenderTarget(RenderTarget &renderTarget, double opacity)
     {
         if (renderTarget.getSDLTextureObject() == nullptr)

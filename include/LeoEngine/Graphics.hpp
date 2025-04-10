@@ -43,6 +43,9 @@ namespace LeoEngine
         void drawTexture(Texture *texture, const TextureDrawData &data);
         void drawTexture(Texture *texture);
 
+        void drawTextureCameraless(Texture *texture, const TextureDrawData &data);
+        void drawTextureCameraless(Texture *texture);
+
         void copyRenderTarget(RenderTarget &renderTarget, double opacity);
 
         // window functions

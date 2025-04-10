@@ -1,8 +1,10 @@
 #include <memory>
+#include <stdexcept>
 #include "LeoEngine/GUITextBox.hpp"
 #include "LeoEngine/Rectangle.hpp"
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Graphics.hpp"
+#include "LeoEngine/Logger.hpp"
 
 namespace LeoEngine
 {
@@ -31,7 +33,7 @@ namespace LeoEngine
         {
             std::shared_ptr<Rectangle> destRect = std::make_shared<Rectangle>(getDrawPosition(), _objectDimensions);
             TextureDrawData textDrawData(nullptr, destRect, 0, nullptr, FlipType::NONE);
-            Services::get().getGraphics()->drawTexture(_renderedText, textDrawData);
+            Services::get().getGraphics()->drawTextureCameraless(_renderedText, textDrawData);
         }
     }
 
@@ -49,6 +51,14 @@ namespace LeoEngine
         }
 
         _renderedText = Services::get().getGraphics()->renderText(text, _textDrawData);
+        if (_renderedText == nullptr)
+        {
+            Services::get().getLogger()->error("GUITextBox", "Failed to render text.");
+
+            Services::get().getLogger()->flush();
+            throw std::runtime_error("Failed to render text.");
+        }
+
         _currentText = text;
 
         Pair<int, int> objectDimensions = _renderedText->getDimensions();

@@ -81,6 +81,8 @@ namespace LeoEngine
 
         drawPosition.first = _anchorPosition.first + xOffset;
         drawPosition.second = _anchorPosition.second + yOffset;
+
+        return drawPosition;
     }
 
 }
