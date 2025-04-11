@@ -13,7 +13,9 @@ namespace LeoEngine
         GUIObject();
         virtual ~GUIObject();
 
-        virtual void update() = 0;
+        void update();
+        virtual void update(Pair<int, int>& offset) = 0;
+
         void draw();
         virtual void draw(Pair<int, int>& offset) = 0;
 

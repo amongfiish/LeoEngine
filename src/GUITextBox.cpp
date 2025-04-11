@@ -22,7 +22,7 @@ namespace LeoEngine
         delete _renderedText;
     }
 
-    void GUITextBox::update()
+    void GUITextBox::update(Pair<int, int>& offset)
     {
 
     }

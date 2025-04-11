@@ -16,7 +16,7 @@ namespace LeoEngine
         GUIImage(Texture *texture);
         virtual ~GUIImage();
 
-        virtual void update();
+        virtual void update(Pair<int, int>& offset);
         virtual void draw(Pair<int, int>& offset);
 
         void setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle);

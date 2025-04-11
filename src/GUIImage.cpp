@@ -18,9 +18,9 @@ namespace LeoEngine
 
     }
 
-    void GUIImage::update()
+    void GUIImage::update(Pair<int, int>& offset)
     {
-
+        
     }
 
     void GUIImage::draw(Pair<int, int>& offset)

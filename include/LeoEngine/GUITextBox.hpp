@@ -17,7 +17,7 @@ namespace LeoEngine
         GUITextBox(TextDrawData textDrawData);
         virtual ~GUITextBox();
 
-        virtual void update();
+        virtual void update(Pair<int, int>& offset);
         virtual void draw(Pair<int, int>& offset);
 
         void setText(std::string text);
