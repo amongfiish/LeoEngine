@@ -23,14 +23,18 @@ namespace LeoEngine
 
     }
 
-    void GUIImage::draw()
+    void GUIImage::draw(Pair<int, int>& offset)
     {
         if (_texture == nullptr)
         {
             return;
         }
+
+        TextureDrawData updatedDrawData(_textureDrawData);
+        updatedDrawData.destinationRectangle->x += offset.first;
+        updatedDrawData.destinationRectangle->y += offset.second;
         
-        Services::get().getGraphics()->drawTextureCameraless(_texture, _textureDrawData);
+        Services::get().getGraphics()->drawTextureCameraless(_texture, updatedDrawData);
     }
 
     void GUIImage::setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle)

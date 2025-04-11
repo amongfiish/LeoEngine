@@ -27,11 +27,14 @@ namespace LeoEngine
 
     }
 
-    void GUITextBox::draw()
+    void GUITextBox::draw(Pair<int, int>& offset)
     {
         if (_renderedText != nullptr)
         {
             std::shared_ptr<Rectangle> destRect = std::make_shared<Rectangle>(getDrawPosition(), _objectDimensions);
+            destRect->x += offset.first;
+            destRect->y += offset.second;
+
             TextureDrawData textDrawData(nullptr, destRect, 0, nullptr, FlipType::NONE);
             Services::get().getGraphics()->drawTextureCameraless(_renderedText, textDrawData);
         }

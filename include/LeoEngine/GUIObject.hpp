@@ -14,7 +14,8 @@ namespace LeoEngine
         virtual ~GUIObject();
 
         virtual void update() = 0;
-        virtual void draw() = 0;
+        void draw();
+        virtual void draw(Pair<int, int>& offset) = 0;
 
         void setAnchor(GUIAnchor anchor);
 

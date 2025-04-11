@@ -4,6 +4,7 @@
 #include <string>
 #include "LeoEngine/GUIObject.hpp"
 #include "LeoEngine/TextDrawData.hpp"
+#include "LeoEngine/Pair.hpp"
 
 namespace LeoEngine
 {
@@ -17,7 +18,7 @@ namespace LeoEngine
         virtual ~GUITextBox();
 
         virtual void update();
-        virtual void draw();
+        virtual void draw(Pair<int, int>& offset);
 
         void setText(std::string text);
 

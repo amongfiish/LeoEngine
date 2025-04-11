@@ -5,6 +5,7 @@
 #include "LeoEngine/GUIObject.hpp"
 #include "LeoEngine/Texture.hpp"
 #include "LeoEngine/TextureDrawData.hpp"
+#include "LeoEngine/Pair.hpp"
 
 namespace LeoEngine
 {
@@ -16,7 +17,7 @@ namespace LeoEngine
         virtual ~GUIImage();
 
         virtual void update();
-        virtual void draw();
+        virtual void draw(Pair<int, int>& offset);
 
         void setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle);
         void setDestinationRectangle(std::shared_ptr<Rectangle> destinationRectangle);
