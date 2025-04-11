@@ -8,7 +8,7 @@
 #endif
 
 #include <string>
-using namespace std;
+#include "LeoEngine/Pair.hpp"
 
 namespace LeoEngine
 {
@@ -16,8 +16,15 @@ namespace LeoEngine
     class Texture
     {
     public:
+        // fancy, standard constructor
         Texture(std::string path);
+        // raw (?) constructors
+        Texture(SDL_Texture *sdlTexture);
+        // DOES NOT FREE THE SURFACE!!!! BE CAREFUL!!!!
+        Texture(SDL_Surface *sdlTexture);
         ~Texture();
+
+        Pair<int, int> getDimensions() const;
 
         SDL_Texture *getSDLTextureObject();
 

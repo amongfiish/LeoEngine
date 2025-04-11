@@ -7,6 +7,8 @@
     #include <SDL.h>
 #endif
 
+#include "LeoEngine/Pair.hpp"
+
 namespace LeoEngine
 {
 
@@ -23,6 +25,13 @@ namespace LeoEngine
             : x(x), y(y),
             width(width),
             height(height)
+        {
+
+        }
+
+        Rectangle(Pair<int, int> position, Pair<int, int> dimensions)
+            : x(position.first), y(position.second),
+            width(dimensions.first), height(dimensions.second)
         {
 
         }
