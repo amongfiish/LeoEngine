@@ -72,6 +72,7 @@ namespace LeoEngine
                 Services::get().getEvents()->sdlEventPoll();
 
                 game.update();
+                Services::get().getActions()->update();
 
                 totalUpdateLag -= MS_BETWEEN_UPDATES;
             }
