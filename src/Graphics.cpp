@@ -20,17 +20,16 @@ namespace LeoEngine
     Graphics::Graphics()
             : _window("", 800, 600),
             _renderer(_window.getSDLWindowObject()),
-            _textureLoader("textures"),
-            _fontLoader("fonts")
+            _textureLoader("textures")
     {
         if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
         {
-            throw runtime_error("Couldn't initialize SDL video subsystem.");
+            throw std::runtime_error("Couldn't initialize SDL video subsystem.");
         }
 
         if (TTF_Init() < 0)
         {
-            throw runtime_error("Couldn't initialize SDL TTF.");
+            throw std::runtime_error("Couldn't initialize SDL TTF.");
         }
     }
 
@@ -102,12 +101,23 @@ namespace LeoEngine
         drawRectangle(colour, fill, rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
 
-    Texture& Graphics::getTexture(string filename)
+    Texture& Graphics::getTexture(std::string filename)
     {
         return _textureLoader.get(filename);
     }
 
-    void Graphics::drawTexture(string filename, const TextureDrawData& data)
+    void Graphics::drawTexture(std::string filename, const TextureDrawData& data)
+    {
+        drawTexture(&getTexture(filename), data);
+    }
+
+    void Graphics::drawTexture(std::string filename)
+    {
+        TextureDrawData newDrawData;
+        drawTexture(&getTexture(filename), newDrawData);
+    }
+
+    void Graphics::drawTexture(Texture *texture, const TextureDrawData& data)
     {
         SDL_Rect srcRect;
         SDL_Rect *p_srcRect;
@@ -150,13 +160,29 @@ namespace LeoEngine
             p_center = &center;
         }
 
-        SDL_RenderCopyEx(_renderer.getSDLRendererObject(), getTexture(filename).getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
+        SDL_RenderCopyEx(_renderer.getSDLRendererObject(), texture->getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
     }
 
-    void Graphics::drawTexture(string filename)
+    void Graphics::drawTexture(Texture *texture)
     {
         TextureDrawData newDrawData;
-        drawTexture(filename, newDrawData);
+        drawTexture(texture, newDrawData);
+    }
+
+    void Graphics::drawTextureCameraless(Texture *texture, const TextureDrawData &data)
+    {
+        const Pair<double, double> cameraPosition = _cameras.getPosition();
+        _cameras.setCameraPosition(0, 0);
+
+        drawTexture(texture, data);
+
+        _cameras.setCameraPosition(cameraPosition);
+    }
+
+    void Graphics::drawTextureCameraless(Texture *texture)
+    {
+        TextureDrawData newDrawData;
+        drawTextureCameraless(texture, newDrawData);
     }
 
     void Graphics::copyRenderTarget(RenderTarget &renderTarget, double opacity)
@@ -202,7 +228,7 @@ namespace LeoEngine
         _window.setResizable(isResizable);
     }
 
-    void Graphics::setWindowTitle(string title)
+    void Graphics::setWindowTitle(std::string title)
     {
         _window.setTitle(title);
     }
@@ -249,14 +275,18 @@ namespace LeoEngine
         SDL_SetRenderTarget(_renderer.getSDLRendererObject(), target);
     }
 
-    void Graphics::drawText(string text, TextDrawData& data, int x, int y)
+    Texture *Graphics::renderText(std::string text, TextDrawData& data)
     {
-        
-    }
+        TTF_Font *font = _fontManager.getFont(data.fontFilename, data.pointSize);
+        SDL_Surface *renderedText = TTF_RenderText_Solid(font, text.c_str(), data.colour.toSDLColor());
+        if (renderedText == nullptr)
+        {
+            Services::get().getLogger()->error("Graphics", "Failed to render text.");
+            return nullptr;
+        }
 
-    void Graphics::drawText(string text, TextDrawData& data, Pair<int, int> position)
-    {
-
+        Texture *newTexture = new Texture(renderedText);
+        return newTexture;
     }
 
     bool Graphics::cameraExists()

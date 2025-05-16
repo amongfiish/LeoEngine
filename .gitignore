@@ -3,7 +3,6 @@ CMakeScripts/
 .vs/
 Debug/
 x64/
-Build/
 build/
 
 LeoEngine.*
