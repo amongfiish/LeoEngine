@@ -4,6 +4,7 @@ CMakeScripts/
 Debug/
 x64/
 Build/
+build/
 
 LeoEngine.*
 *.vcxproj
