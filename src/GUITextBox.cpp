@@ -27,6 +27,12 @@ namespace LeoEngine
 
     }
 
+    void GUITextBox::update()
+    {
+        Pair<int, int> offset(0, 0);
+        update(offset);
+    }
+
     void GUITextBox::draw(Pair<int, int>& offset)
     {
         if (_renderedText != nullptr)
@@ -38,6 +44,12 @@ namespace LeoEngine
             TextureDrawData textDrawData(nullptr, destRect, 0, nullptr, FlipType::NONE);
             Services::get().getGraphics()->drawTextureCameraless(_renderedText, textDrawData);
         }
+    }
+
+    void GUITextBox::draw()
+    {
+        Pair<int, int> offset(0, 0);
+        draw(offset);
     }
 
     void GUITextBox::setText(std::string text)
