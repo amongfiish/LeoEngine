@@ -5,6 +5,7 @@
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Logger.hpp"
 #include "LeoEngine/Saver.hpp"
+#include "LeoEngine/Actions.hpp"
 
 namespace LeoEngine
 {
@@ -51,13 +52,19 @@ namespace LeoEngine
         return _saver;
     }
 
+    Actions *Services::getActions()
+    {
+        return _actions;
+    }
+
     Services::Services()
             : _logger(new Logger),
             _events(new Events),
             _graphics(new Graphics),
             _audio(new Audio),
             _input(new Input(_events)),
-            _saver(new Saver("savedata"))
+            _saver(new Saver("savedata")),
+            _actions(new Actions())
     {
 
     }

@@ -11,6 +11,7 @@
 #include "LeoEngine/Input.hpp"
 #include "LeoEngine/Saver.hpp"
 #include "LeoEngine/Logger.hpp"
+#include "LeoEngine/Actions.hpp"
 
 namespace LeoEngine
 {

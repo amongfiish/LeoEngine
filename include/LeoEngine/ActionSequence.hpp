@@ -29,14 +29,14 @@ namespace LeoEngine
         template<class T>
         void addAction()
         {
-            std::unique_ptr<T> newT = std::make_unique<T>();
+            std::shared_ptr<T> newT = std::make_shared<T>();
             if (newT == nullptr)
             {
                 Services::get().getLogger()->error("ActionSequence", "Failed to add new action.");
                 return;
             }
 
-            _actions.push_back(std::move(newT));
+            _actions.push_back(newT);
         }
 
         void execute()
@@ -52,7 +52,7 @@ namespace LeoEngine
         }
 
     private:
-        std::vector<std::unique_ptr<Action>> _actions;
+        std::vector<std::shared_ptr<Action>> _actions;
         int _currentAction;
     };
 
