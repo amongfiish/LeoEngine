@@ -15,7 +15,7 @@ namespace LeoEngine
     void GUIObject::update()
     {
         Pair<int, int> offset(0, 0);
-        draw(offset);
+        update(offset);
     }
 
     void GUIObject::draw()
