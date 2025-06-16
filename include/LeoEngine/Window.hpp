@@ -9,6 +9,7 @@
 #include <string>
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/Colour.hpp"
+#include "LeoEngine/Event.hpp"
 
 namespace LeoEngine
 {
@@ -33,6 +34,8 @@ namespace LeoEngine
         void setTitle(std::string title);
 
     private:
+        void windowResizeCallback(Event *event);
+
         SDL_Window *_window = nullptr;
 
         Pair<int, int> _dimensions;

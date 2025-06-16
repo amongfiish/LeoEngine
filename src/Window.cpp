@@ -1,5 +1,8 @@
 #include <stdexcept>
 #include "LeoEngine/Window.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Events.hpp"
+#include "LeoEngine/EventWindowResize.hpp"
 
 namespace LeoEngine
 {
@@ -16,6 +19,8 @@ namespace LeoEngine
         _dimensions.second = height;
 
         _window = newWindow;
+
+        Services::get().getEvents()->addCallback(EventType::WINDOW_RESIZE, std::bind(&Window::windowResizeCallback, this, placeholders::_1));
     }
 
     Window::~Window()
@@ -67,6 +72,14 @@ namespace LeoEngine
     void Window::setTitle(std::string title)
     {
         SDL_SetWindowTitle(_window, title.c_str());
+    }
+
+    void Window::windowResizeCallback(Event *event)
+    {
+        EventWindowResize *castEvent = dynamic_cast<EventWindowResize *>(event);
+
+        _dimensions.first = castEvent->w;
+        _dimensions.second = castEvent->h;
     }
 
 }
