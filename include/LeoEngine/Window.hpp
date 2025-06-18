@@ -21,6 +21,8 @@ namespace LeoEngine
         Window(std::string title, int width, int height);
         ~Window();
 
+        void postInitialization();
+
         SDL_Window *getSDLWindowObject() const;
 
         void setDimensions(int width, int height);

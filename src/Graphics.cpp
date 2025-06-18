@@ -39,6 +39,11 @@ namespace LeoEngine
         TTF_Quit();
     }
 
+    void Graphics::postInitialization()
+    {
+        _window.postInitialization();
+    }
+
     void Graphics::drawPoint(const Colour& colour, const int x, const int y)
     {
         Pair<int, int> adjustedPoint(x, y);

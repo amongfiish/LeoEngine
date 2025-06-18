@@ -23,6 +23,8 @@ namespace LeoEngine
         Graphics();
         ~Graphics();
 
+        void postInitialization();
+
         // primitive drawing functions
         void drawPoint(const Colour &colour, const int x, const int y);
         void drawPoint(const Colour &colour, const Pair<int, int> &point);

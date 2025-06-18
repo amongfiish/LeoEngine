@@ -19,8 +19,6 @@ namespace LeoEngine
         _dimensions.second = height;
 
         _window = newWindow;
-
-        Services::get().getEvents()->addCallback(EventType::WINDOW_RESIZE, std::bind(&Window::windowResizeCallback, this, placeholders::_1));
     }
 
     Window::~Window()
@@ -29,6 +27,11 @@ namespace LeoEngine
         {
             SDL_DestroyWindow(_window);
         }
+    }
+
+    void Window::postInitialization()
+    {
+        Services::get().getEvents()->addCallback(EventType::WINDOW_RESIZE, std::bind(&Window::windowResizeCallback, this, placeholders::_1));
     }
 
     SDL_Window *Window::getSDLWindowObject() const
