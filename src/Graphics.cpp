@@ -248,6 +248,11 @@ namespace LeoEngine
         _renderer.setLogicalDimensions(dimensions);
     }
 
+    Pair<int, int> Graphics::getRenderDimensions() const
+    {
+        return _renderer.getLogicalDimensions();
+    }
+
     void Graphics::setRenderScalingFactor(float scalingX, float scalingY)
     {
         _renderer.setScalingFactor(scalingX, scalingY);

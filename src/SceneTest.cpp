@@ -29,7 +29,7 @@ namespace LeoEngine
 
     void SceneTest::update()
     {
-        Pair<int, int> windowDimensions = Services::get().getGraphics()->getWindowDimensions();
+        Pair<int, int> windowDimensions = Services::get().getGraphics()->getRenderDimensions();
 
         _rectangle.width = windowDimensions.first;
         _rectangle.height = windowDimensions.second;

@@ -45,6 +45,14 @@ namespace LeoEngine
         setLogicalDimensions(dimensions.first, dimensions.second);
     }
 
+    Pair<int, int> Renderer::getLogicalDimensions() const
+    {
+        Pair<int, int> dimensions;
+        SDL_RenderGetLogicalSize(_renderer, &dimensions.first, &dimensions.second);
+
+        return dimensions;
+    }
+
     void Renderer::setScalingFactor(float scalingX, float scalingY)
     {
         SDL_RenderSetScale(_renderer, scalingX, scalingY);

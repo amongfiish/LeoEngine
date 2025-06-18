@@ -26,6 +26,8 @@ namespace LeoEngine
         void setLogicalDimensions(int width, int height);
         void setLogicalDimensions(const Pair<int, int> &dimensions);
 
+        Pair<int, int> getLogicalDimensions() const;
+
         void setScalingFactor(float scalingX, float scalingY);
         void setScalingFactor(const Pair<float, float> &scalingFactors);
 
