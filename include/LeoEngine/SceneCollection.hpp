@@ -61,6 +61,16 @@ namespace LeoEngine
             return newSceneID;
         }
 
+        Scene *getScene(int sceneID)
+        {
+            if (!sceneIsValid(sceneID))
+            {
+                return nullptr;
+            }
+
+            return _scenes.at(sceneID);
+        }
+
         // immediate scene change, no effects
         void setCurrentScene(int sceneID)
         {
