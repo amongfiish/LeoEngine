@@ -1,5 +1,6 @@
 #include <ctime>
 #include "LeoEngine/RandomNumberGenerator.hpp"
+#include <boost/random/uniform_int_distribution.hpp>
 
 namespace LeoEngine
 {
