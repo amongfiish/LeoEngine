@@ -27,4 +27,9 @@ namespace LeoEngine
         return distribution(_generator);
     }
 
+    int RandomNumberGenerator::getNextNumber(Pair<int, int> range)
+    {
+        return getNextNumber(range.first, range.second);
+    }
+
 }
