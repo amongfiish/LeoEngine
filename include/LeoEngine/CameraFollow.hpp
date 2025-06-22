@@ -11,7 +11,7 @@ namespace LeoEngine
     {
     public:
         CameraFollow();
-        ~CameraFollow();
+        virtual ~CameraFollow();
 
         void setTargetPosition(const Pair<double, double> *targetPosition);
 
@@ -22,7 +22,7 @@ namespace LeoEngine
         void setYOffset(int yOffset);
         void setOffset(int xOffset, int yOffset);
 
-        virtual void update();
+        virtual void update() override;
 
     private:
         const Pair<double, double> *_targetPosition;
