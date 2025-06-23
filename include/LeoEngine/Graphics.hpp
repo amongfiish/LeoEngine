@@ -2,6 +2,7 @@
 #define GRAPHICS_HPP
 
 #include <string>
+#include <memory>
 #include "LeoEngine/Window.hpp"
 #include "LeoEngine/Renderer.hpp"
 #include "LeoEngine/Texture.hpp"
@@ -78,7 +79,7 @@ namespace LeoEngine
         void setRenderTarget(RenderTarget *renderTarget);
 
         // font functions
-        Texture *renderText(std::string text, TextDrawData& data);
+        std::shared_ptr<Texture> renderText(std::string text, TextDrawData& data);
 
         // camera functions
         bool cameraExists();

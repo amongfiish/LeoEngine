@@ -285,7 +285,7 @@ namespace LeoEngine
         SDL_SetRenderTarget(_renderer.getSDLRendererObject(), target);
     }
 
-    Texture *Graphics::renderText(std::string text, TextDrawData& data)
+    std::shared_ptr<Texture> Graphics::renderText(std::string text, TextDrawData& data)
     {
         TTF_Font *font = _fontManager.getFont(data.fontFilename, data.pointSize);
         SDL_Surface *renderedText = TTF_RenderText_Solid(font, text.c_str(), data.colour.toSDLColor());
@@ -295,7 +295,7 @@ namespace LeoEngine
             return nullptr;
         }
 
-        Texture *newTexture = new Texture(renderedText);
+        std::shared_ptr<Texture> newTexture = make_shared<Texture>(renderedText);
         return newTexture;
     }
 
