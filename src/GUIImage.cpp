@@ -5,7 +5,7 @@
 namespace LeoEngine
 {
 
-    GUIImage::GUIImage(Texture *texture)
+    GUIImage::GUIImage(std::shared_ptr<Texture> texture)
         : _texture(texture)
     {
         Pair<int, int> textureDimensions = _texture->getDimensions();

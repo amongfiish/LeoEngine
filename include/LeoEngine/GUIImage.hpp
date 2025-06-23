@@ -13,7 +13,7 @@ namespace LeoEngine
     class GUIImage : public GUIObject
     {
     public:
-        GUIImage(Texture *texture);
+        GUIImage(std::shared_ptr<Texture> texture);
         virtual ~GUIImage();
 
         virtual void update(Pair<int, int>& offset);
@@ -26,7 +26,7 @@ namespace LeoEngine
         void setFlip(FlipType flip);
 
     private:
-        Texture *_texture;
+        std::shared_ptr<Texture> _texture;
         TextureDrawData _textureDrawData;
     };
 

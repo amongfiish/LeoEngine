@@ -2,6 +2,7 @@
 #define GUI_TEXT_BOX_HPP
 
 #include <string>
+#include <memory>
 #include "LeoEngine/GUIObject.hpp"
 #include "LeoEngine/TextDrawData.hpp"
 #include "LeoEngine/Pair.hpp"
@@ -29,7 +30,7 @@ namespace LeoEngine
         std::string _currentText;
 
         TextDrawData _textDrawData;
-        Texture *_renderedText;
+        std::shared_ptr<Texture> _renderedText;
     };
 
 }

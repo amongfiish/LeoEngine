@@ -113,16 +113,16 @@ namespace LeoEngine
 
     void Graphics::drawTexture(std::string filename, const TextureDrawData& data)
     {
-        drawTexture(&getTexture(filename), data);
+        drawTexture(std::make_shared<LeoEngine::Texture>(getTexture(filename)), data);
     }
 
     void Graphics::drawTexture(std::string filename)
     {
         TextureDrawData newDrawData;
-        drawTexture(&getTexture(filename), newDrawData);
+        drawTexture(filename, newDrawData);
     }
 
-    void Graphics::drawTexture(Texture *texture, const TextureDrawData& data)
+    void Graphics::drawTexture(std::shared_ptr<Texture> texture, const TextureDrawData& data)
     {
         SDL_Rect srcRect;
         SDL_Rect *p_srcRect;
@@ -168,13 +168,13 @@ namespace LeoEngine
         SDL_RenderCopyEx(_renderer.getSDLRendererObject(), texture->getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
     }
 
-    void Graphics::drawTexture(Texture *texture)
+    void Graphics::drawTexture(std::shared_ptr<Texture> texture)
     {
         TextureDrawData newDrawData;
         drawTexture(texture, newDrawData);
     }
 
-    void Graphics::drawTextureCameraless(Texture *texture, const TextureDrawData &data)
+    void Graphics::drawTextureCameraless(std::shared_ptr<Texture> texture, const TextureDrawData &data)
     {
         const Pair<double, double> cameraPosition = _cameras.getPosition();
         _cameras.setCameraPosition(0, 0);
@@ -184,7 +184,7 @@ namespace LeoEngine
         _cameras.setCameraPosition(cameraPosition);
     }
 
-    void Graphics::drawTextureCameraless(Texture *texture)
+    void Graphics::drawTextureCameraless(std::shared_ptr<Texture> texture)
     {
         TextureDrawData newDrawData;
         drawTextureCameraless(texture, newDrawData);
@@ -295,7 +295,7 @@ namespace LeoEngine
             return nullptr;
         }
 
-        std::shared_ptr<Texture> newTexture = make_shared<Texture>(renderedText);
+        std::shared_ptr<Texture> newTexture = std::make_shared<Texture>(renderedText);
         return newTexture;
     }
 

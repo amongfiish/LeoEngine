@@ -43,11 +43,11 @@ namespace LeoEngine
 
         void drawTexture(std::string filename, const TextureDrawData &data);
         void drawTexture(std::string filename);
-        void drawTexture(Texture *texture, const TextureDrawData &data);
-        void drawTexture(Texture *texture);
+        void drawTexture(std::shared_ptr<Texture> texture, const TextureDrawData &data);
+        void drawTexture(std::shared_ptr<Texture> texture);
 
-        void drawTextureCameraless(Texture *texture, const TextureDrawData &data);
-        void drawTextureCameraless(Texture *texture);
+        void drawTextureCameraless(std::shared_ptr<Texture> texture, const TextureDrawData &data);
+        void drawTextureCameraless(std::shared_ptr<Texture> texture);
 
         void copyRenderTarget(RenderTarget &renderTarget, double opacity);
 

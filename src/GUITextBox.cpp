@@ -18,8 +18,7 @@ namespace LeoEngine
 
     GUITextBox::~GUITextBox()
     {
-        // might cause problems but we'll see...
-        delete _renderedText;
+
     }
 
     void GUITextBox::update(Pair<int, int>& offset)
@@ -45,12 +44,6 @@ namespace LeoEngine
         if (_currentText == text)
         {
             return;
-        }
-
-        if (_renderedText != nullptr)
-        {
-            delete _renderedText;
-            _renderedText = nullptr;
         }
 
         _renderedText = Services::get().getGraphics()->renderText(text, _textDrawData);
