@@ -17,8 +17,8 @@ namespace LeoEngine
         
         }
 
-        virtual void onActivate() = 0;
-        virtual void onDeactivate() = 0;
+        virtual void onActivate() {};
+        virtual void onDeactivate() {};
 
         virtual void update() = 0;
         virtual void draw() = 0;

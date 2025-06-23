@@ -13,13 +13,19 @@ namespace LeoEngine
     class Colour
     {
     public:
+        Colour()
+            : red(0x00),
+              green(0x00),
+              blue(0x00),
+              alpha(0xFF)
+        {}
+        
         Colour(int red, int green, int blue, int alpha)
             : red(red),
-            green(green),
-            blue(blue),
-            alpha(alpha)
-        {
-        }
+              green(green),
+              blue(blue),
+              alpha(alpha)
+        {}
 
         SDL_Color toSDLColor()
         {
