@@ -296,6 +296,8 @@ namespace LeoEngine
         }
 
         std::shared_ptr<Texture> newTexture = std::make_shared<Texture>(renderedText);
+        SDL_FreeSurface(renderedText);
+
         return newTexture;
     }
 
