@@ -101,7 +101,7 @@ namespace LeoEngine
         drawRectangle(colour, fill, origin.first, origin.second, opposite.first, opposite.second);
     }
 
-    void Graphics::drawRectangle(const Colour& colour, bool fill, const Rectangle& rectangle)
+    void Graphics::drawRectangle(const Colour& colour, bool fill, const Rectangle<int>& rectangle)
     {
         drawRectangle(colour, fill, rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
@@ -263,7 +263,7 @@ namespace LeoEngine
         _renderer.setScalingFactor(scalingFactors);
     }
 
-    void Graphics::setRenderViewport(const Rectangle& viewport)
+    void Graphics::setRenderViewport(const Rectangle<int>& viewport)
     {
         _renderer.setViewport(viewport);
     }

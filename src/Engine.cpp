@@ -31,6 +31,8 @@ namespace LeoEngine
 
         Services::get().getGraphics()->setRenderVSync(true);
 
+        _framerate = settings.framerate;
+
         Saver::setOrgAndAppName(settings.organizationName, settings.applicationName);
         Logger::setOrgAndAppName(settings.organizationName, settings.applicationName);
         
@@ -48,7 +50,7 @@ namespace LeoEngine
 
         int quitCallbackID = Services::get().getEvents()->addCallback(EventType::QUIT, bind(&Engine::quitCallback, this, placeholders::_1));
 
-        const int MS_BETWEEN_UPDATES = 1000 / 60; // maybe stop hardcoding this?
+        const int MS_BETWEEN_UPDATES = 1000 / _framerate; // maybe stop hardcoding this?
 
         int previousFrameTicks = SDL_GetTicks();
         int currentFrameTicks = 0, totalUpdateLag = 0, ticksBetweenFrames = 0;

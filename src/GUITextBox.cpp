@@ -30,7 +30,7 @@ namespace LeoEngine
     {
         if (_renderedText != nullptr)
         {
-            std::shared_ptr<Rectangle> destRect = std::make_shared<Rectangle>(getDrawPosition(), _objectDimensions);
+            std::shared_ptr<Rectangle<int>> destRect = std::make_shared<Rectangle<int>>(getDrawPosition(), _objectDimensions);
             destRect->x += offset.first;
             destRect->y += offset.second;
 

@@ -22,6 +22,8 @@ namespace LeoEngine
         bool defaultFullscreen = false;
         bool defaultBordered = true;
         bool defaultResizable = false;
+
+        int framerate = 60;
     };
 
 }

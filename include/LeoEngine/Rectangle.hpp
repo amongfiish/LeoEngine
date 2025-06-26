@@ -12,6 +12,7 @@
 namespace LeoEngine
 {
 
+    template<class T>
     class Rectangle
     {
     public:
@@ -21,17 +22,17 @@ namespace LeoEngine
 
         }
 
-        Rectangle(int x, int y, int width, int height)
+        Rectangle(T x, T y, T width, T height)
             : x(x), y(y),
-            width(width),
-            height(height)
+              width(width),
+              height(height)
         {
 
         }
 
-        Rectangle(Pair<int, int> position, Pair<int, int> dimensions)
+        Rectangle(Pair<T, T> position, Pair<T, T> dimensions)
             : x(position.first), y(position.second),
-            width(dimensions.first), height(dimensions.second)
+              width(dimensions.first), height(dimensions.second)
         {
 
         }
@@ -43,20 +44,20 @@ namespace LeoEngine
             return newRect;
         }
 
-        int getRight() const
+        T getRight() const
         {
             return x + width;
         }
 
-        int getBottom() const
+        T getBottom() const
         {
             return y + height;
         }
 
-        int x;
-        int y;
-        int width;
-        int height;
+        T x;
+        T y;
+        T width;
+        T height;
     };
 
 }

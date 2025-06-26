@@ -19,8 +19,8 @@ namespace LeoEngine
         virtual void update(Pair<int, int>& offset);
         virtual void draw(Pair<int, int>& offset);
 
-        void setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle);
-        void setDestinationRectangle(std::shared_ptr<Rectangle> destinationRectangle);
+        void setSourceRectangle(std::shared_ptr<Rectangle<int>> sourceRectangle);
+        void setDestinationRectangle(std::shared_ptr<Rectangle<int>> destinationRectangle);
         void setAngle(double angle);
         void setCenter(std::shared_ptr<Pair<int, int>> center);
         void setFlip(FlipType flip);

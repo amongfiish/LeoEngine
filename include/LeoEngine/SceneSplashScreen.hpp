@@ -24,7 +24,7 @@ namespace LeoEngine
         virtual void update();
         virtual void draw();
 
-        void setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle> position, int duration, Colour backgroundColour, std::string soundEffectFilename);
+        void setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle<int>> position, int duration, Colour backgroundColour, std::string soundEffectFilename);
 
         void setNextSceneID(int id);
 

@@ -37,12 +37,12 @@ namespace LeoEngine
         Services::get().getGraphics()->drawTextureCameraless(_texture, updatedDrawData);
     }
 
-    void GUIImage::setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle)
+    void GUIImage::setSourceRectangle(std::shared_ptr<Rectangle<int>> sourceRectangle)
     {
         _textureDrawData.sourceRectangle = sourceRectangle;
     }
 
-    void GUIImage::setDestinationRectangle(std::shared_ptr<Rectangle> destinationRectangle)
+    void GUIImage::setDestinationRectangle(std::shared_ptr<Rectangle<int>> destinationRectangle)
     {
         _textureDrawData.destinationRectangle = destinationRectangle;
         

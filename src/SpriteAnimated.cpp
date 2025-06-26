@@ -100,7 +100,7 @@ namespace LeoEngine
         const Pair<int, int> &frameDimensions = _animation->getDimensions();
 
         _sprite.setTextureFilename(_animation->getFilename());
-        _sprite.setSourceRectangle(std::make_shared<Rectangle>(currentFrameData.sheetX, currentFrameData.sheetY, frameDimensions.first, frameDimensions.second));
+        _sprite.setSourceRectangle(std::make_shared<Rectangle<int>>(currentFrameData.sheetX, currentFrameData.sheetY, frameDimensions.first, frameDimensions.second));
         _currentFrameTimer = currentFrameData.displayTime;
     }
 

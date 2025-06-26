@@ -31,7 +31,7 @@ namespace LeoEngine
         void setScalingFactor(float scalingX, float scalingY);
         void setScalingFactor(const Pair<float, float> &scalingFactors);
 
-        void setViewport(const Rectangle &viewport);
+        void setViewport(const Rectangle<int> &viewport);
 
         void setVSync(bool useVSync);
 

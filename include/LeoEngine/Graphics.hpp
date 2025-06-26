@@ -36,7 +36,7 @@ namespace LeoEngine
 
         void drawRectangle(const Colour &colour, bool fill, const int x, const int y, const int width, const int height);
         void drawRectangle(const Colour &colour, bool fill, const Pair<int, int> &origin, const Pair<int, int> &opposite);
-        void drawRectangle(const Colour &colour, bool fill, const Rectangle &rectangle);
+        void drawRectangle(const Colour &colour, bool fill, const Rectangle<int> &rectangle);
 
         // texture functions
         Texture &getTexture(std::string filename);
@@ -72,7 +72,7 @@ namespace LeoEngine
         void setRenderScalingFactor(float scalingX, float scalingY);
         void setRenderScalingFactor(const Pair<float, float> &scalingFactors);
 
-        void setRenderViewport(const Rectangle &viewport);
+        void setRenderViewport(const Rectangle<int> &viewport);
 
         void setRenderVSync(bool useVSync);
 

@@ -44,7 +44,7 @@ namespace LeoEngine
     {
         if (_textureDrawData.destinationRectangle == nullptr)
         {
-            _textureDrawData.destinationRectangle = std::make_shared<Rectangle>(x, y, 0, 0);
+            _textureDrawData.destinationRectangle = std::make_shared<Rectangle<int>>(x, y, 0, 0);
             return;
         }
 
@@ -56,7 +56,7 @@ namespace LeoEngine
     {
         if (_textureDrawData.destinationRectangle == nullptr)
         {
-            _textureDrawData.destinationRectangle = std::make_shared<Rectangle>(0, 0, width, height);
+            _textureDrawData.destinationRectangle = std::make_shared<Rectangle<int>>(0, 0, width, height);
             return;
         }
 
@@ -64,12 +64,12 @@ namespace LeoEngine
         _textureDrawData.destinationRectangle->height = height;
     }
 
-    void SpriteStatic::setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle)
+    void SpriteStatic::setSourceRectangle(std::shared_ptr<Rectangle<int>> sourceRectangle)
     {
         _textureDrawData.sourceRectangle = sourceRectangle;
     }
 
-    void SpriteStatic::setDestinationRectangle(std::shared_ptr<Rectangle> destinationRectangle)
+    void SpriteStatic::setDestinationRectangle(std::shared_ptr<Rectangle<int>> destinationRectangle)
     {
         _textureDrawData.destinationRectangle = destinationRectangle;
     }

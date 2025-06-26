@@ -21,7 +21,7 @@ namespace LeoEngine
         virtual void draw();
 
     private:
-        Rectangle _rectangle;
+        Rectangle<int> _rectangle;
         Colour _fillColour;
         Colour _outlineColour;
     };

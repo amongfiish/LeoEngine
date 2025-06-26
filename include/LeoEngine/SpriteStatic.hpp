@@ -23,8 +23,8 @@ namespace LeoEngine
         void setPosition(int x, int y);
         void setSize(int width, int height);
 
-        void setSourceRectangle(std::shared_ptr<Rectangle> sourceRectangle);
-        void setDestinationRectangle(std::shared_ptr<Rectangle> destinationRectangle);
+        void setSourceRectangle(std::shared_ptr<Rectangle<int>> sourceRectangle);
+        void setDestinationRectangle(std::shared_ptr<Rectangle<int>> destinationRectangle);
         void setAngle(double angle);
         void setCenter(std::shared_ptr<Pair<int, int>> center);
         void setFlip(FlipType flip);

@@ -22,6 +22,8 @@ namespace LeoEngine
         void quitCallback(Event *event);
 
         bool _running = true;
+
+        int _framerate;
     };
 
 }

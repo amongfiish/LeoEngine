@@ -63,7 +63,7 @@ namespace LeoEngine
         setScalingFactor(scalingFactors.first, scalingFactors.second);
     }
 
-    void Renderer::setViewport(const Rectangle& viewport)
+    void Renderer::setViewport(const Rectangle<int>& viewport)
     {
         SDL_Rect newRect = viewport.toSDLRect();
         SDL_RenderSetViewport(_renderer, &newRect);

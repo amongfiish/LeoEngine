@@ -66,7 +66,7 @@ namespace LeoEngine
         _animatedSprite.draw();
     }
 
-    void SceneSplashScreen::setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle> position, int duration, Colour backgroundColour, std::string soundEffectFilename)
+    void SceneSplashScreen::setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle<int>> position, int duration, Colour backgroundColour, std::string soundEffectFilename)
     {
         _animatedSprite.setAnimation(animation);
         _animatedSprite.setLoop(false);
