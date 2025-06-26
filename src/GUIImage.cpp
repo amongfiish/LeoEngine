@@ -5,10 +5,10 @@
 namespace LeoEngine
 {
 
-    GUIImage::GUIImage(std::shared_ptr<Texture> texture)
+    GUIImage::GUIImage(Texture& texture)
         : _texture(texture)
     {
-        Pair<int, int> textureDimensions = _texture->getDimensions();
+        Pair<int, int> textureDimensions = _texture.getDimensions();
         _objectDimensions.first = textureDimensions.first;
         _objectDimensions.second = textureDimensions.second;
     }
@@ -25,11 +25,6 @@ namespace LeoEngine
 
     void GUIImage::draw(Pair<int, int>& offset)
     {
-        if (_texture == nullptr)
-        {
-            return;
-        }
-
         TextureDrawData updatedDrawData(_textureDrawData);
         updatedDrawData.destinationRectangle->x += offset.first;
         updatedDrawData.destinationRectangle->y += offset.second;

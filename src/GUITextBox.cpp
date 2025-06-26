@@ -35,7 +35,7 @@ namespace LeoEngine
             destRect->y += offset.second;
 
             TextureDrawData textDrawData(nullptr, destRect, 0, nullptr, FlipType::NONE);
-            Services::get().getGraphics()->drawTextureCameraless(_renderedText, textDrawData);
+            Services::get().getGraphics()->drawTextureCameraless(*_renderedText, textDrawData);
         }
     }
 

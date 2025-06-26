@@ -113,7 +113,7 @@ namespace LeoEngine
 
     void Graphics::drawTexture(std::string filename, const TextureDrawData& data)
     {
-        drawTexture(std::make_shared<LeoEngine::Texture>(getTexture(filename)), data);
+        drawTexture(getTexture(filename), data);
     }
 
     void Graphics::drawTexture(std::string filename)
@@ -122,7 +122,7 @@ namespace LeoEngine
         drawTexture(filename, newDrawData);
     }
 
-    void Graphics::drawTexture(std::shared_ptr<Texture> texture, const TextureDrawData& data)
+    void Graphics::drawTexture(Texture& texture, const TextureDrawData& data)
     {
         SDL_Rect srcRect;
         SDL_Rect *p_srcRect;
@@ -147,7 +147,7 @@ namespace LeoEngine
             Pair<int, int> adjustedOrigin(data.destinationRectangle->x, data.destinationRectangle->y);
             _cameras.adjustPosition(adjustedOrigin);
 
-            Rectangle adjustedRectangle(adjustedOrigin.first, adjustedOrigin.second, data.destinationRectangle->width, data.destinationRectangle->height);
+            Rectangle<int> adjustedRectangle(adjustedOrigin.first, adjustedOrigin.second, data.destinationRectangle->width, data.destinationRectangle->height);
 
             destRect = adjustedRectangle.toSDLRect();
             p_destRect = &destRect;
@@ -165,16 +165,16 @@ namespace LeoEngine
             p_center = &center;
         }
 
-        SDL_RenderCopyEx(_renderer.getSDLRendererObject(), texture->getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
+        SDL_RenderCopyEx(_renderer.getSDLRendererObject(), texture.getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
     }
 
-    void Graphics::drawTexture(std::shared_ptr<Texture> texture)
+    void Graphics::drawTexture(Texture& texture)
     {
         TextureDrawData newDrawData;
         drawTexture(texture, newDrawData);
     }
 
-    void Graphics::drawTextureCameraless(std::shared_ptr<Texture> texture, const TextureDrawData &data)
+    void Graphics::drawTextureCameraless(Texture& texture, const TextureDrawData &data)
     {
         const Pair<double, double> cameraPosition = _cameras.getPosition();
         _cameras.setCameraPosition(0, 0);
@@ -184,7 +184,7 @@ namespace LeoEngine
         _cameras.setCameraPosition(cameraPosition);
     }
 
-    void Graphics::drawTextureCameraless(std::shared_ptr<Texture> texture)
+    void Graphics::drawTextureCameraless(Texture& texture)
     {
         TextureDrawData newDrawData;
         drawTextureCameraless(texture, newDrawData);

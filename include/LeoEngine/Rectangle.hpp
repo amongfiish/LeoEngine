@@ -39,7 +39,7 @@ namespace LeoEngine
 
         SDL_Rect toSDLRect() const
         {
-            SDL_Rect newRect = { x, y, width, height };
+            SDL_Rect newRect = { static_cast<int>(x), static_cast<int>(y), static_cast<int>(width), static_cast<int>(height) };
 
             return newRect;
         }
