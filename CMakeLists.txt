@@ -16,12 +16,13 @@ add_subdirectory(lib/sdl_mixer)
 add_subdirectory(lib/sdl_ttf)
 add_subdirectory(lib/spdlog)
 add_subdirectory(lib/boost)
+add_subdirectory(lib/tweeny)
 
 file(GLOB SOURCES src/*.cpp)
 
 add_library(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC SDL2 SDL2_image SDL2_mixer SDL2_ttf spdlog boost)
+target_link_libraries(${PROJECT_NAME} PUBLIC SDL2 SDL2_image SDL2_mixer SDL2_ttf spdlog boost tweeny)
 
-target_include_directories(${PROJECT_NAME} PUBLIC include lib/sdl/include lib/sdl_image/include lib/sdl_mixer/include lib/sdl_ttf lib/spdlog/include ${CMAKE_SOURCE_DIR}/lib/boost/include)
+target_include_directories(${PROJECT_NAME} PUBLIC include lib/sdl/include lib/sdl_image/include lib/sdl_mixer/include lib/sdl_ttf lib/spdlog/include lib/boost/include, lib/tweeny/include)
 

@@ -13,3 +13,6 @@
 [submodule "lib/spdlog"]
 	path = lib/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "lib/tweeny"]
+	path = lib/tweeny
+	url = https://github.com/mobius3/tweeny.git
