@@ -19,6 +19,7 @@ namespace LeoEngine
 
         bool currentCameraExists();
 
+        // change to be more like scene stuff?
         int addCamera(Camera *camera);
 
         void setCamera(int cameraID);

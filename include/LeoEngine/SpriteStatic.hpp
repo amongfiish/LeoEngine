@@ -23,6 +23,8 @@ namespace LeoEngine
         void setPosition(int x, int y);
         void setSize(int width, int height);
 
+        // should this be changed so that changes are made through calls to
+        // the TextureDrawData itself?
         void setSourceRectangle(std::shared_ptr<Rectangle<int>> sourceRectangle);
         void setDestinationRectangle(std::shared_ptr<Rectangle<int>> destinationRectangle);
         void setAngle(double angle);
