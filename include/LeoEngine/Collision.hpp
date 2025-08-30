@@ -7,6 +7,8 @@
 namespace LeoEngine
 {
 
+    bool checkForOverlap(const Rectangle<int> &r, const Pair<int, int> &p);
+    bool checkForOverlap(const Pair<int, int> &p, const Rectangle<int> &r);
     bool checkForOverlap(const Rectangle<int> &r1, const Rectangle<int> &r2);
     bool checkForOverlap(const Rectangle<int> &r, const Circle &c);
     bool checkForOverlap(const Circle &c, const Rectangle<int> &r);

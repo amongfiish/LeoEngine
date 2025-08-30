@@ -3,6 +3,22 @@
 
 namespace LeoEngine
 {
+
+    bool checkForOverlap(const Rectangle<int> &r, const Pair<int, int> &p)
+    {
+        if (p.first >= r.x && p.first < r.getRight() && p.second >= r.y && p.second < r.getBottom())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool checkForOverlap(const Pair<int, int> &p, const Rectangle<int> &r)
+    {
+        return checkForOverlap(r, p);
+    }
+
     bool checkForOverlap(const Rectangle<int> &r1, const Rectangle<int> &r2)
     {
         if (r1.getRight() > r2.x && r1.x < r2.getRight() && r1.getBottom() > r2.y && r1.y < r2.getBottom())

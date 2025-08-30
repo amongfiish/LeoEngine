@@ -91,9 +91,15 @@ namespace LeoEngine
         void setCameraY(double y);
         void setCameraPosition(double x, double y);
         void setCameraPosition(const Pair<double, double> &position);
-        const Pair<double, double> &getCameraPosition();
+
+        const Pair<double, double>& getCameraPosition() const;
+        Rectangle<int> getVisibleRegionRectangle() const;
 
         void updateCamera();
+
+        // visibility checks
+        bool checkPointVisibility(const Pair<int, int>& point) const;
+        bool checkRectangleVisibility(const Rectangle<int>& rectangle) const;
 
         // additional stuff
         void fill(const Colour &colour);

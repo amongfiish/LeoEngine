@@ -10,9 +10,11 @@
 
 #include <stdexcept>
 #include <iostream>
+
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/RenderTarget.hpp"
+#include "LeoEngine/Collision.hpp"
 
 namespace LeoEngine
 {
@@ -336,14 +338,33 @@ namespace LeoEngine
         _cameras.setCameraPosition(position);
     }
 
-    const Pair<double, double>& Graphics::getCameraPosition()
+    const Pair<double, double>& Graphics::getCameraPosition() const
     {
         return _cameras.getPosition();
+    }
+
+    Rectangle<int> Graphics::getVisibleRegionRectangle() const
+    {
+        const Pair<double, double>& cameraPosition = getCameraPosition();
+        Pair<int, int> cameraPositionAsIntegers(cameraPosition.first, cameraPosition.second);
+        Rectangle<int> visibleRegion(cameraPositionAsIntegers, getRenderDimensions());
+
+        return visibleRegion;
     }
 
     void Graphics::updateCamera()
     {
         _cameras.update();
+    }
+
+    bool Graphics::checkPointVisibility(const Pair<int, int>& point) const
+    {
+        return checkForOverlap(point, getVisibleRegionRectangle());
+    }
+
+    bool Graphics::checkRectangleVisibility(const Rectangle<int>& rectangle) const
+    {
+        return checkForOverlap(rectangle, getVisibleRegionRectangle());
     }
 
     void Graphics::fill(const Colour &colour)
