@@ -16,7 +16,7 @@ namespace LeoEngine
 
         void setExternalTransform(const Pair<double, double> *transform);
 
-        virtual void update() override;
+        virtual void update(double deltaTime) override;
         virtual void draw() override;
 
         SpriteStatic& getSprite();

@@ -19,7 +19,7 @@ namespace LeoEngine
         _externalTransform = transform;
     }
 
-    void PartSpriteStatic::update()
+    void PartSpriteStatic::update(double deltaTime)
     {
         if (_externalTransform != nullptr)
         {

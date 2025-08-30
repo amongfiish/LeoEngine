@@ -20,7 +20,7 @@ namespace LeoEngine
         void setOffset(int x, int y);
         void setOffset(const Pair<int, int>& offset);
 
-        virtual void update();
+        virtual void update(double deltaTime);
 
     private:
         std::shared_ptr<PartTransform> _subject;

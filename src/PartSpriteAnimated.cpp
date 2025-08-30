@@ -19,9 +19,9 @@ namespace LeoEngine
         _externalTransform = transform;
     }
 
-    void PartSpriteAnimated::update()
+    void PartSpriteAnimated::update(double deltaTime)
     {
-        _sprite.update();
+        _sprite.update(deltaTime);
 
         if (_externalTransform != nullptr)
         {

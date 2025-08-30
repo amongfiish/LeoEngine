@@ -22,11 +22,11 @@ namespace LeoEngine
             _parts.clear();
         }
 
-        void update()
+        void update(double deltaTime)
         {
             for (auto itPart = _parts.begin(); itPart != _parts.end(); itPart++) 
             {
-                (*itPart)->update();
+                (*itPart)->update(deltaTime);
             }
         }
 

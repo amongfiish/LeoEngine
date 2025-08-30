@@ -14,11 +14,11 @@ namespace LeoEngine
         SceneTest();
         virtual ~SceneTest();
 
-        virtual void onActivate();
-        virtual void onDeactivate();
+        virtual void onActivate() override;
+        virtual void onDeactivate() override;
 
-        virtual void update();
-        virtual void draw();
+        virtual void update(double deltaTime) override;
+        virtual void draw() override;
 
     private:
         Rectangle<int> _rectangle;

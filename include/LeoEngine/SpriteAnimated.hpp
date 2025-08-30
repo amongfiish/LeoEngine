@@ -14,7 +14,7 @@ namespace LeoEngine
         SpriteAnimated();
         ~SpriteAnimated();
 
-        void update();
+        void update(double deltaTime);
         void draw();
 
         void setAnimation(std::shared_ptr<Animation> animation);
@@ -42,7 +42,7 @@ namespace LeoEngine
 
         int _startFrame;
         int _currentFrame;
-        int _currentFrameTimer;
+        double _currentFrameTimer;
     };
 
 }

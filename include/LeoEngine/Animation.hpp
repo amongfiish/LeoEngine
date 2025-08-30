@@ -11,11 +11,11 @@ namespace LeoEngine
 
     class Animation;
 
-    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, int displayTime);
+    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, double displayTime);
 
     struct AnimationFrameData
     {
-        AnimationFrameData(int sheetX, int sheetY, int displayTime)
+        AnimationFrameData(int sheetX, int sheetY, double displayTime)
             : sheetX(sheetX), sheetY(sheetY), displayTime(displayTime)
         {
             
@@ -26,7 +26,7 @@ namespace LeoEngine
         int sheetY;
 
         // # of frames that the sprite should be displayed for
-        int displayTime;
+        double displayTime;
     };
 
     class Animation
@@ -41,7 +41,7 @@ namespace LeoEngine
 
         int getNumberOfFrames() const;
 
-        void addFrame(int sheetX, int sheetY, int displayTime);
+        void addFrame(int sheetX, int sheetY, double displayTime);
         void addFrame(AnimationFrameData &frameData);
 
     private:

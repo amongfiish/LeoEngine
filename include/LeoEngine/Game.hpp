@@ -19,9 +19,9 @@ namespace LeoEngine
             
         }
 
-        void update()
+        void update(double deltaTime)
         {
-            _scenes.update();
+            _scenes.update(deltaTime);
         }
 
         void draw()

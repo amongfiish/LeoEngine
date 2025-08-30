@@ -20,29 +20,32 @@ namespace LeoEngine
 
     }
 
-    void SpriteAnimated::update()
+    void SpriteAnimated::update(double deltaTime)
     {
         if (_animation == nullptr || _paused)
         {
             return;
         }
 
-        if (_currentFrameTimer <= 0)
+        if (_currentFrameTimer > 0)
+        {
+            _currentFrameTimer -= deltaTime;
+            return;
+        }
+
+        while (_currentFrameTimer <= 0)
         {
             _currentFrame = (_currentFrame + 1) % _animation->getNumberOfFrames();
             
             if (!_loop && _currentFrame == _startFrame)
             {
                 pauseAnimation();
+                break;
             }
-            else
-            {
-                fetchFrameData();
-            }
-        }
-        else
-        {
-            _currentFrameTimer--;
+
+            double resultingFrameTimer = _currentFrameTimer;
+            fetchFrameData();
+            _currentFrameTimer += resultingFrameTimer;
         }
     }
 

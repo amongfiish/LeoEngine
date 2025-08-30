@@ -14,7 +14,7 @@ namespace LeoEngine
         ObjectCollection();
         ~ObjectCollection();
 
-        void update();
+        void update(double deltaTime);
         void draw();
 
         Object *add();

@@ -4,7 +4,7 @@
 
 namespace LeoEngine
 {
-    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, int displayTime)
+    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, double displayTime)
     {
         if (numberOfCells < 0 || cellWidth < 0 || cellHeight < 0 || filename == "")
         {
@@ -56,7 +56,7 @@ namespace LeoEngine
             return AnimationFrameData(-1, -1, -1);
         }
 
-        return _frameData[frame];
+        return _frameData.at(frame);
     }
 
     int Animation::getNumberOfFrames() const
@@ -64,7 +64,7 @@ namespace LeoEngine
         return _frameData.size();
     }
 
-    void Animation::addFrame(int sheetX, int sheetY, int displayTime)
+    void Animation::addFrame(int sheetX, int sheetY, double displayTime)
     {
         _frameData.emplace_back(sheetX, sheetY, displayTime);   
     }

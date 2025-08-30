@@ -29,7 +29,7 @@ namespace LeoEngine
 
         bool isInMotion();
 
-        virtual void update() override;
+        virtual void update(double deltaTime) override;
 
         virtual void reset() override;
 

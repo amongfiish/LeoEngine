@@ -38,7 +38,7 @@ namespace LeoEngine
         setOffset(offset.first, offset.second);
     }
 
-    void PartTracker::update()
+    void PartTracker::update(double deltaTime)
     {
         if (_subject == nullptr || _follower == nullptr)
         {

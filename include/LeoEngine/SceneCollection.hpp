@@ -25,7 +25,7 @@ namespace LeoEngine
             _transitionTotalFrames(0),
             _fadeRenderTarget(100, 100),
             _transitionSecondHalf(false),
-            update(std::bind(&SceneCollection::normalUpdate, this)),
+            update(std::bind(&SceneCollection::normalUpdate, this, std::placeholders::_1)),
             draw(std::bind(&SceneCollection::normalDraw, this))
         {
             Services::get().getEvents()->addCallback(EventType::CHANGE_SCENE, bind(&SceneCollection::sceneChangeCallback, this, placeholders::_1));
@@ -103,11 +103,11 @@ namespace LeoEngine
             _transitionElapsedFrames = 0;
             _transitionTotalFrames = transitionFrames;
             _transitionSecondHalf = false;
-            update = std::bind(&SceneCollection::fadeUpdate, this);
+            update = std::bind(&SceneCollection::fadeUpdate, this, std::placeholders::_1);
             draw = std::bind(&SceneCollection::fadeDraw, this);
         }
 
-        std::function<void()> update;
+        std::function<void(double deltaTime)> update;
         std::function<void()> draw;
 
     private:
@@ -158,14 +158,14 @@ namespace LeoEngine
             _currentScene->onActivate();
         }
 
-        void normalUpdate()
+        void normalUpdate(double deltaTime)
         {
             if (_currentScene == nullptr)
             {
                 return;
             }
 
-            _currentScene->update();
+            _currentScene->update(deltaTime);
         }
 
         void normalDraw()
@@ -178,10 +178,8 @@ namespace LeoEngine
             _currentScene->draw();
         }
 
-        void fadeUpdate()
+        void fadeUpdate(double deltaTime)
         {
-            _transitionElapsedFrames++;
-
             if (!_transitionSecondHalf && _transitionElapsedFrames >= static_cast<double>(_transitionTotalFrames) / 2)
             {
                 setCurrentScene(_nextScene);
@@ -190,17 +188,19 @@ namespace LeoEngine
             }
             else if (_transitionElapsedFrames >= static_cast<double>(_transitionTotalFrames) / 2 && _transitionSecondHalf)
             {
-                update = std::bind(&SceneCollection::normalUpdate, this);
+                update = std::bind(&SceneCollection::normalUpdate, this, std::placeholders::_1);
                 draw = std::bind(&SceneCollection::normalDraw, this);
 
                 Services::get().getInput()->unlockInput();
             }
 
-            normalUpdate();
+            normalUpdate(deltaTime);
         }
 
         void fadeDraw()
         {
+            _transitionElapsedFrames++;
+
             normalDraw();
 
             double opacity;

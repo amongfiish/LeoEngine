@@ -21,8 +21,8 @@ namespace LeoEngine
         virtual void onActivate();
         virtual void onDeactivate();
 
-        virtual void update();
-        virtual void draw();
+        virtual void update(double deltaTime) override;
+        virtual void draw() override;
 
         void setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle<int>> position, int duration, Colour backgroundColour, std::string soundEffectFilename);
 
@@ -34,13 +34,13 @@ namespace LeoEngine
         std::string _soundEffectFilename;
 
         int _duration;
-        int _remainingFrames;
+        double _remainingFrames;
         bool _endEventSent;
 
         int _nextSceneID;
     };
 
-    }
+}
 
 #endif
 

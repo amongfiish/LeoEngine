@@ -50,47 +50,43 @@ namespace LeoEngine
 
         int quitCallbackID = Services::get().getEvents()->addCallback(EventType::QUIT, bind(&Engine::quitCallback, this, placeholders::_1));
 
-        const int MS_BETWEEN_UPDATES = 1000 / _framerate; // maybe stop hardcoding this?
+        const int MS_BETWEEN_FRAMES = 1000 / _framerate; // maybe stop hardcoding this?
 
-        int previousFrameTicks = SDL_GetTicks();
-        int currentFrameTicks = 0, totalUpdateLag = 0, ticksBetweenFrames = 0;
+        int previousUpdateTicks = SDL_GetTicks();
+        int previousDrawTicks = previousUpdateTicks;
+        int currentTicks = 0;
 
         Services::get().getLogger()->info("Core", "Entering main loop.");
         
         while (_running)
         {
-            // calculation to determine how far behind target UPS we are
-            currentFrameTicks = SDL_GetTicks();
-            ticksBetweenFrames = currentFrameTicks - previousFrameTicks;
-            totalUpdateLag += ticksBetweenFrames;
-            previousFrameTicks = currentFrameTicks;
+            currentTicks = SDL_GetTicks();
 
-            // game update loop
-            while (totalUpdateLag > MS_BETWEEN_UPDATES)
+            double deltaTime = (currentTicks - previousUpdateTicks) / 1000.0;
+            
+            // input update (run BEFORE event polling and game update)
+            Services::get().getInput()->update();
+            // SDL event loop
+            Services::get().getEvents()->sdlEventPoll();
+            game.update(deltaTime);
+            Services::get().getActions()->update();
+
+            previousUpdateTicks = currentTicks;
+
+            if (currentTicks - previousDrawTicks >= MS_BETWEEN_FRAMES)
             {
-                // input update (run BEFORE event polling and game update)
-                Services::get().getInput()->update();
+                // update camera
+                Services::get().getGraphics()->updateCamera();
 
-                // SDL event loop
-                Services::get().getEvents()->sdlEventPoll();
+                // clear screen
+                Services::get().getGraphics()->fill(BLACK);
+                // draw
+                game.draw();
+                // show on the screen
+                Services::get().getGraphics()->present();
 
-                game.update();
-                Services::get().getActions()->update();
-
-                totalUpdateLag -= MS_BETWEEN_UPDATES;
+                previousDrawTicks = currentTicks;
             }
-
-            // update camera
-            Services::get().getGraphics()->updateCamera();
-
-            // clear screen
-            Services::get().getGraphics()->fill(BLACK);
-
-            // draw
-            game.draw();
-
-            // show on the screen
-            Services::get().getGraphics()->present();
         }
 
         Services::get().getLogger()->info("Core", "Exited main loop.");

@@ -13,11 +13,11 @@ namespace LeoEngine
         _objects.clear();
     }
 
-    void ObjectCollection::update()
+    void ObjectCollection::update(double deltaTime)
     {
         for (auto& p : _objects)
         {
-            p.second.update();
+            p.second.update(deltaTime);
         }
     }
 

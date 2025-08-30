@@ -58,17 +58,17 @@ namespace LeoEngine
         return _velocity.first != 0 || _velocity.second != 0;
     }
 
-    void PartPhysics::update()
+    void PartPhysics::update(double deltaTime)
     {
         if (_target == nullptr)
         {
             return;
         }
 
-        _velocity.first += _acceleration.first;
-        _velocity.second += _acceleration.second;
+        _velocity.first += _acceleration.first * deltaTime;
+        _velocity.second += _acceleration.second * deltaTime;
 
-        _target->move(_velocity);
+        _target->move(_velocity.first * deltaTime, _velocity.second * deltaTime);
     }
 
     void PartPhysics::reset()

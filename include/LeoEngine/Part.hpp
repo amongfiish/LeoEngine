@@ -10,7 +10,7 @@ namespace LeoEngine
     public:
         virtual ~Part() {}
 
-        virtual void update() {}
+        virtual void update(double deltaTime) {}
         virtual void draw() {}
 
         virtual void reset() {}

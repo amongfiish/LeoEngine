@@ -27,7 +27,7 @@ namespace LeoEngine
 
     }
 
-    void SceneTest::update()
+    void SceneTest::update(double deltaTime)
     {
         Pair<int, int> windowDimensions = Services::get().getGraphics()->getRenderDimensions();
 

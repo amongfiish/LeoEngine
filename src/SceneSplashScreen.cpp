@@ -44,7 +44,7 @@ namespace LeoEngine
 
     }
 
-    void SceneSplashScreen::update()
+    void SceneSplashScreen::update(double deltaTime)
     {
         if (_remainingFrames <= 0 && !_endEventSent)
         {
@@ -55,8 +55,9 @@ namespace LeoEngine
             _endEventSent = true;
         }
 
-        _animatedSprite.update();
-        _remainingFrames--;
+        _animatedSprite.update(deltaTime);
+
+        _remainingFrames -= deltaTime;
     }
 
     void SceneSplashScreen::draw()
