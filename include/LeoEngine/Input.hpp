@@ -26,7 +26,7 @@ namespace LeoEngine
 
         void update();
 
-        // if input state is requested RELEASED will always be returned when locked
+        // RELEASED will always be returned by getKeyState() when _locked==true
         void lockInput();
         void unlockInput();
 
