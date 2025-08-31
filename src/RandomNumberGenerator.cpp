@@ -11,7 +11,7 @@ namespace LeoEngine
     }
 
     RandomNumberGenerator::RandomNumberGenerator()
-        : RandomNumberGenerator(time(0))
+        : RandomNumberGenerator(static_cast<int>(time(0)))
     {
 
     }

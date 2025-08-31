@@ -38,7 +38,7 @@ namespace LeoEngine
     int CameraManager::addCamera(Camera *camera)
     {
         _cameras.push_back(camera);
-        return _cameras.size() - 1;
+        return static_cast<int>(_cameras.size()) - 1;
     }
 
     void CameraManager::setCamera(int cameraID)

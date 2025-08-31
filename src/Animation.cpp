@@ -61,7 +61,7 @@ namespace LeoEngine
 
     int Animation::getNumberOfFrames() const
     {
-        return _frameData.size();
+        return static_cast<int>(_frameData.size());
     }
 
     void Animation::addFrame(int sheetX, int sheetY, double displayTime)

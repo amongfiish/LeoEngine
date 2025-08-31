@@ -18,8 +18,8 @@ namespace LeoEngine
         SceneSplashScreen();
         virtual ~SceneSplashScreen();
 
-        virtual void onActivate();
-        virtual void onDeactivate();
+        virtual void onActivate() override;
+        virtual void onDeactivate() override;
 
         virtual void update(double deltaTime) override;
         virtual void draw() override;
