@@ -1,5 +1,8 @@
 #include <stdexcept>
 
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
+
 #include "LeoEngine/Saver.hpp"
 
 namespace LeoEngine
@@ -17,9 +20,11 @@ namespace LeoEngine
         if (!_file.good())
         {
             _file.open(path.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
+            LeoEngine::Services::get().getLogger()->info("Saver", "File '" + path + "' does not exist. Attempting to create it.");
 
             if (!_file.good())
             {
+                LeoEngine::Services::get().getLogger()->critical("Saver", "Failed to create file. Exiting.");
                 throw std::runtime_error("Saver failed to open file.");
             }
         }
