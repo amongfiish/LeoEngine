@@ -21,8 +21,8 @@ namespace LeoEngine
         SceneCollection()
             : _currentScene(nullptr),
             _nextScene(nullptr),
-            _transitionElapsedFrames(0),
-            _transitionTotalFrames(0),
+            _transitionElapsedTime(0.0),
+            _transitionTotalTime(0.0),
             _fadeRenderTarget(100, 100),
             _transitionSecondHalf(false),
             update(std::bind(&SceneCollection::normalUpdate, this, std::placeholders::_1)),
@@ -89,7 +89,7 @@ namespace LeoEngine
         }
 
         // fade out (to black), call setCurrentScene, fade in
-        void fadeToScene(int sceneID, int transitionFrames)
+        void fadeToScene(int sceneID, double transitionTime)
         {
             if (!sceneIsValid(sceneID))
             {
@@ -100,8 +100,8 @@ namespace LeoEngine
 
             _nextScene = _scenes.at(sceneID);
 
-            _transitionElapsedFrames = 0;
-            _transitionTotalFrames = transitionFrames;
+            _transitionElapsedTime = 0;
+            _transitionTotalTime = transitionTime;
             _transitionSecondHalf = false;
             update = std::bind(&SceneCollection::fadeUpdate, this, std::placeholders::_1);
             draw = std::bind(&SceneCollection::fadeDraw, this);
@@ -180,13 +180,13 @@ namespace LeoEngine
 
         void fadeUpdate(double deltaTime)
         {
-            if (!_transitionSecondHalf && _transitionElapsedFrames >= static_cast<double>(_transitionTotalFrames) / 2)
+            if (!_transitionSecondHalf && _transitionElapsedTime >= static_cast<double>(_transitionTotalTime) / 2)
             {
                 setCurrentScene(_nextScene);
                 _transitionSecondHalf = true;
-                _transitionElapsedFrames = 0;
+                _transitionElapsedTime = 0;
             }
-            else if (_transitionElapsedFrames >= static_cast<double>(_transitionTotalFrames) / 2 && _transitionSecondHalf)
+            else if (_transitionElapsedTime >= static_cast<double>(_transitionTotalTime) / 2 && _transitionSecondHalf)
             {
                 update = std::bind(&SceneCollection::normalUpdate, this, std::placeholders::_1);
                 draw = std::bind(&SceneCollection::normalDraw, this);
@@ -195,22 +195,22 @@ namespace LeoEngine
             }
 
             normalUpdate(deltaTime);
+
+            _transitionElapsedTime += deltaTime;
         }
 
         void fadeDraw()
         {
-            _transitionElapsedFrames++;
-
             normalDraw();
 
             double opacity;
             if (!_transitionSecondHalf)
             {
-                opacity = _transitionElapsedFrames / (_transitionTotalFrames / 2.0);
+                opacity = _transitionElapsedTime / (_transitionTotalTime / 2.0);
             }
             else
             {
-                opacity = 1 - (_transitionElapsedFrames / (_transitionTotalFrames / 2.0));
+                opacity = 1 - (_transitionElapsedTime / (_transitionTotalTime / 2.0));
             }
             
             Services::get().getGraphics()->copyRenderTarget(_fadeRenderTarget, opacity);
@@ -225,7 +225,7 @@ namespace LeoEngine
             }
             else
             {
-                fadeToScene(castEvent->sceneID, 120);
+                fadeToScene(castEvent->sceneID, 2);
             }
         }
 
@@ -235,8 +235,8 @@ namespace LeoEngine
 
         // stuff for transitions
         Scene *_nextScene;
-        int _transitionElapsedFrames;
-        int _transitionTotalFrames;
+        double _transitionElapsedTime;
+        double _transitionTotalTime;
         bool _transitionSecondHalf;
 
         RenderTarget _fadeRenderTarget;
