@@ -7,12 +7,14 @@ namespace LeoEngine
 {
 
     SpriteStatic::SpriteStatic()
+        : _ignoreCamera(false)
     {
 
     }
 
     SpriteStatic::SpriteStatic(std::string textureFilename)
-        : _textureFilename(textureFilename)
+        : _textureFilename(textureFilename),
+          _ignoreCamera(false)
     {
         
     }
@@ -32,7 +34,14 @@ namespace LeoEngine
             return;
         }
 
-        Services::get().getGraphics()->drawTexture(_textureFilename, _textureDrawData);
+        if (_ignoreCamera)
+        {
+            Services::get().getGraphics()->drawTextureCameraless(_textureFilename, _textureDrawData);
+        }
+        else
+        {
+            Services::get().getGraphics()->drawTexture(_textureFilename, _textureDrawData);
+        }
     }
 
     const TextureDrawData *SpriteStatic::getDrawData() const
@@ -92,6 +101,11 @@ namespace LeoEngine
     void SpriteStatic::setTextureFilename(std::string filename)
     {
         _textureFilename = filename;
+    }
+
+    void SpriteStatic::setIgnoreCamera(bool value)
+    {
+        _ignoreCamera = value;
     }
 
 }

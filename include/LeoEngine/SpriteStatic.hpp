@@ -33,9 +33,13 @@ namespace LeoEngine
 
         void setTextureFilename(std::string filename);
 
+        void setIgnoreCamera(bool value);
+
     private:
         std::string _textureFilename;
         TextureDrawData _textureDrawData;
+
+        bool _ignoreCamera;
     };
 
 }

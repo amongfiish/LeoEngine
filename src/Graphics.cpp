@@ -201,6 +201,16 @@ namespace LeoEngine
         drawTexture(texture, newDrawData);
     }
 
+    void Graphics::drawTextureCameraless(std::string filename, const TextureDrawData &data)
+    {
+        drawTextureCameraless(getTexture(filename), data);
+    }
+
+    void Graphics::drawTextureCameraless(std::string filename)
+    {
+        drawTextureCameraless(getTexture(filename));
+    }
+
     void Graphics::drawTextureCameraless(Texture& texture, const TextureDrawData &data)
     {
         const Pair<double, double> cameraPosition = _cameras.getPosition();
