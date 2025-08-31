@@ -47,11 +47,6 @@ namespace LeoEngine
         return _logger;
     }
 
-    Saver *Services::getSaver()
-    {
-        return _saver;
-    }
-
     Actions *Services::getActions()
     {
         return _actions;
@@ -63,7 +58,6 @@ namespace LeoEngine
             _graphics(new Graphics),
             _audio(new Audio),
             _input(new Input(_events)),
-            _saver(new Saver("savedata")),
             _actions(new Actions())
     {
 

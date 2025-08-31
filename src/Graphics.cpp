@@ -108,6 +108,31 @@ namespace LeoEngine
         drawRectangle(colour, fill, rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
 
+    void Graphics::drawRectangleCameraless(const Colour &colour, bool fill, const int x, const int y, const int width, const int height)
+    {
+        SDL_Rect newRect = { x, y, width, height };
+        
+        _renderer.setDrawColour(colour);
+        if (fill)
+        {
+            SDL_RenderFillRect(_renderer.getSDLRendererObject(), &newRect);
+        }
+        else
+        {
+            SDL_RenderDrawRect(_renderer.getSDLRendererObject(), &newRect);
+        }
+    }
+
+    void Graphics::drawRectangleCameraless(const Colour &colour, bool fill, const Pair<int, int> &origin, const Pair<int, int> &opposite)
+    {
+        drawRectangleCameraless(colour, fill, origin.first, origin.second, opposite.first, opposite.second);
+    }
+
+    void Graphics::drawRectangleCameraless(const Colour &colour, bool fill, const Rectangle<int> &rectangle)
+    {
+        drawRectangleCameraless(colour, fill, rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+    }
+
     Texture& Graphics::getTexture(std::string filename)
     {
         return _textureLoader.get(filename);

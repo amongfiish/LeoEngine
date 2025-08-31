@@ -22,7 +22,6 @@ namespace LeoEngine
         Audio *getAudio();
         Graphics *getGraphics();
         Logger *getLogger();
-        Saver *getSaver();
         Actions *getActions();
 
     private:
@@ -36,7 +35,6 @@ namespace LeoEngine
         Graphics *_graphics = nullptr;
         Audio *_audio = nullptr;
         Input *_input = nullptr;
-        Saver *_saver = nullptr;
         Actions *_actions = nullptr;
     };
 

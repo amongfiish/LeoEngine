@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "LeoEngine/Saver.hpp"
 
 namespace LeoEngine
@@ -12,6 +14,15 @@ namespace LeoEngine
         path += filename;
 
         _file.open(path.c_str());
+        if (!_file.good())
+        {
+            _file.open(path.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
+
+            if (!_file.good())
+            {
+                throw std::runtime_error("Saver failed to open file.");
+            }
+        }
     }
 
     Saver::~Saver()

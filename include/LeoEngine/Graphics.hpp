@@ -38,6 +38,10 @@ namespace LeoEngine
         void drawRectangle(const Colour &colour, bool fill, const Pair<int, int> &origin, const Pair<int, int> &opposite);
         void drawRectangle(const Colour &colour, bool fill, const Rectangle<int> &rectangle);
 
+        void drawRectangleCameraless(const Colour &colour, bool fill, const int x, const int y, const int width, const int height);
+        void drawRectangleCameraless(const Colour &colour, bool fill, const Pair<int, int> &origin, const Pair<int, int> &opposite);
+        void drawRectangleCameraless(const Colour &colour, bool fill, const Rectangle<int> &rectangle);
+
         // texture functions
         Texture &getTexture(std::string filename);
 
