@@ -4,9 +4,9 @@
 
 namespace LeoEngine
 {
-    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, double displayTime)
+    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, double displayTime, int numberOfCellsPerRow)
     {
-        if (numberOfCells < 0 || cellWidth < 0 || cellHeight < 0 || filename == "")
+        if (numberOfCells < 0 || cellWidth < 0 || cellHeight < 0 || filename == "" || numberOfCellsPerRow == 0)
         {
             Services::get().getLogger()->error("Animation", "Attempting to create animation from invalid strip data.");
             return nullptr;
@@ -14,12 +14,30 @@ namespace LeoEngine
 
         std::shared_ptr<Animation> newAnimation = std::make_shared<Animation>(filename, cellWidth, cellHeight);
     
-        int x = 0;
-        for (int i = 0; i < numberOfCells; i++)
+        int x = 0, y = 0;
+        int processedCells = 0;
+        while (processedCells < numberOfCells)
         {
-            AnimationFrameData newFrameData(x, 0, displayTime);
-            newAnimation->addFrame(newFrameData);
-            x += cellWidth;
+            if (numberOfCellsPerRow < 0)
+            {
+                numberOfCellsPerRow = numberOfCells;
+            }
+
+            for (int i = 0; i < numberOfCellsPerRow; i++)
+            {
+                AnimationFrameData newFrameData(x, y, displayTime);
+                newAnimation->addFrame(newFrameData);
+                x += cellWidth;
+
+                processedCells++;
+                if (processedCells == numberOfCells)
+                {
+                    break;
+                }
+            }
+
+            x = 0;
+            y += cellHeight;
         }
 
         return newAnimation;

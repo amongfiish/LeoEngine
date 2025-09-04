@@ -29,7 +29,7 @@ namespace LeoEngine
         SDL_FreeSurface(newTextureSurface);
         if (newTexture == nullptr)
         {
-            Services::get().getLogger()->critical("Texture", "Couldn't create new texture from surface.");
+            Services::get().getLogger()->critical("Texture", "Couldn't create new texture from surface. From SDL: " + LeoEngine::Services::get().getLogger()->getSDLError());
             Services::get().getLogger()->flush();
             throw std::runtime_error("Couldn't create new texture from surface.");
         }

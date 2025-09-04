@@ -4,6 +4,7 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
+
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
 
@@ -24,6 +25,8 @@ namespace LeoEngine
         void warn(std::string id, std::string content);
         void error(std::string id, std::string content);
         void critical(std::string id, std::string content);
+
+        std::string getSDLError();
 
         void flush();
 

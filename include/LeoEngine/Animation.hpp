@@ -11,7 +11,7 @@ namespace LeoEngine
 
     class Animation;
 
-    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, double displayTime);
+    std::shared_ptr<Animation> createAnimationFromStripData(std::string filename, int cellWidth, int cellHeight, int numberOfCells, double displayTime, int numberOfCellsPerRow=-1);
 
     struct AnimationFrameData
     {

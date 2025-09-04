@@ -64,6 +64,11 @@ namespace LeoEngine
         logger->critical(content);
     }
 
+    std::string Logger::getSDLError()
+    {
+        return SDL_GetError();
+    }
+
     void Logger::flush()
     {
         for (auto logger : _spdLoggers) 
