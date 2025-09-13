@@ -27,7 +27,7 @@ namespace LeoEngine
         {
             std::string basePath = SDL_GetBasePath();
 
-            for (char c : subdirectory) {
+            for (char& c : subdirectory) {
                 if ((c == '\\' || c == '/') && c != PATH_SEPARATOR) {
                     c = PATH_SEPARATOR;
                 }
