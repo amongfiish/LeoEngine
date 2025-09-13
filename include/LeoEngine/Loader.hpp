@@ -10,6 +10,8 @@
 #include <unordered_map>
 #include <string>
 
+#include "LeoEngine/FileUtility.hpp"
+
 namespace LeoEngine
 {
 
@@ -52,6 +54,7 @@ namespace LeoEngine
 
             return (*foundResource).second;
         }
+
 
     private:
         std::string _path;
