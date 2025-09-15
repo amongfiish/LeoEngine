@@ -85,6 +85,7 @@ namespace LeoEngine
     {
         _currentFrame = frame;
         _startFrame = frame;
+        fetchFrameData();
     }
 
     void SpriteAnimated::setLoop(bool shouldLoop)

@@ -20,13 +20,13 @@ namespace LeoEngine
     public:
         SceneCollection()
             : _currentScene(nullptr),
-            _nextScene(nullptr),
-            _transitionElapsedTime(0.0),
-            _transitionTotalTime(0.0),
-            _fadeRenderTarget(100, 100),
-            _transitionSecondHalf(false),
-            update(std::bind(&SceneCollection::normalUpdate, this, std::placeholders::_1)),
-            draw(std::bind(&SceneCollection::normalDraw, this))
+              _nextScene(nullptr),
+              _transitionElapsedTime(0.0),
+              _transitionTotalTime(0.0),
+              _fadeRenderTarget(100, 100),
+              _transitionSecondHalf(false),
+              update(std::bind(&SceneCollection::normalUpdate, this, std::placeholders::_1)),
+              draw(std::bind(&SceneCollection::normalDraw, this))
         {
             Services::get().getEvents()->addCallback(EventType::CHANGE_SCENE, bind(&SceneCollection::sceneChangeCallback, this, placeholders::_1));
             Services::get().getGraphics()->setRenderTarget(&_fadeRenderTarget);
@@ -180,13 +180,13 @@ namespace LeoEngine
 
         void fadeUpdate(double deltaTime)
         {
-            if (!_transitionSecondHalf && _transitionElapsedTime >= static_cast<double>(_transitionTotalTime) / 2)
+            if (!_transitionSecondHalf && _transitionElapsedTime >= _transitionTotalTime / 2.0)
             {
                 setCurrentScene(_nextScene);
                 _transitionSecondHalf = true;
-                _transitionElapsedTime = 0;
+                _transitionElapsedTime = 0.0;
             }
-            else if (_transitionElapsedTime >= static_cast<double>(_transitionTotalTime) / 2 && _transitionSecondHalf)
+            else if (_transitionElapsedTime >= _transitionTotalTime / 2.0 && _transitionSecondHalf)
             {
                 update = std::bind(&SceneCollection::normalUpdate, this, std::placeholders::_1);
                 draw = std::bind(&SceneCollection::normalDraw, this);
@@ -210,7 +210,7 @@ namespace LeoEngine
             }
             else
             {
-                opacity = 1 - (_transitionElapsedTime / (_transitionTotalTime / 2.0));
+                opacity = 1.0 - (_transitionElapsedTime / (_transitionTotalTime / 2.0));
             }
             
             Services::get().getGraphics()->copyRenderTarget(_fadeRenderTarget, opacity);
@@ -225,7 +225,7 @@ namespace LeoEngine
             }
             else
             {
-                fadeToScene(castEvent->sceneID, 2);
+                fadeToScene(castEvent->sceneID, 2.0);
             }
         }
 
