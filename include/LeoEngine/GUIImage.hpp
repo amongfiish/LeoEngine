@@ -13,14 +13,16 @@ namespace LeoEngine
     class GUIImage : public GUIObject
     {
     public:
-        GUIImage(Texture& texture);
+        GUIImage(std::string textureFilename);
         virtual ~GUIImage();
 
+        using GUIObject::update;
         virtual void update(Pair<int, int>& offset);
+        using GUIObject::draw;
         virtual void draw(Pair<int, int>& offset);
 
         void setSourceRectangle(std::shared_ptr<Rectangle<int>> sourceRectangle);
-        void setDestinationRectangle(std::shared_ptr<Rectangle<int>> destinationRectangle);
+        void setSize(int width, int height);
         void setAngle(double angle);
         void setCenter(std::shared_ptr<Pair<int, int>> center);
         void setFlip(FlipType flip);

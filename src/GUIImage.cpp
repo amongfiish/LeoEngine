@@ -5,8 +5,8 @@
 namespace LeoEngine
 {
 
-    GUIImage::GUIImage(Texture& texture)
-        : _texture(texture)
+    GUIImage::GUIImage(std::string textureFilename)
+        : _texture(LeoEngine::Services::get().getGraphics()->getTexture(textureFilename))
     {
         Pair<int, int> textureDimensions = _texture.getDimensions();
         _objectDimensions.first = textureDimensions.first;
@@ -20,14 +20,18 @@ namespace LeoEngine
 
     void GUIImage::update(Pair<int, int>& offset)
     {
-        
+
     }
 
     void GUIImage::draw(Pair<int, int>& offset)
     {
         TextureDrawData updatedDrawData(_textureDrawData);
-        updatedDrawData.destinationRectangle->x += offset.first;
-        updatedDrawData.destinationRectangle->y += offset.second;
+
+        std::shared_ptr<LeoEngine::Rectangle<int>> destRect = std::make_shared<LeoEngine::Rectangle<int>>(getDrawPosition(), _objectDimensions);
+        destRect->x += offset.first;
+        destRect->y += offset.second;
+
+        updatedDrawData.destinationRectangle = destRect;
         
         Services::get().getGraphics()->drawTextureCameraless(_texture, updatedDrawData);
     }
@@ -37,12 +41,10 @@ namespace LeoEngine
         _textureDrawData.sourceRectangle = sourceRectangle;
     }
 
-    void GUIImage::setDestinationRectangle(std::shared_ptr<Rectangle<int>> destinationRectangle)
+    void GUIImage::setSize(int width, int height)
     {
-        _textureDrawData.destinationRectangle = destinationRectangle;
-        
-        _objectDimensions.first = destinationRectangle->width;
-        _objectDimensions.second = destinationRectangle->height;
+        _objectDimensions.first = width;
+        _objectDimensions.second = height;
     }
 
     void GUIImage::setAngle(double angle)
