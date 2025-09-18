@@ -9,10 +9,12 @@
     #include <SDL_mixer.h>
 #endif
 
+#include <array>
 #include <string>
 #include "LeoEngine/Music.hpp"
 #include "LeoEngine/SoundEffect.hpp"
 #include "LeoEngine/Loader.hpp"
+#include "LeoEngine/RandomNumberGenerator.hpp"
 
 namespace LeoEngine
 {
@@ -37,10 +39,13 @@ namespace LeoEngine
         void setMusicPosition(double position);
 
         void playSoundEffect(std::string filename, int loops = 0);
+        void playRandomSoundEffect(std::vector<std::string> effectFilenames);
         void stopAllSoundEffects();
         void setSoundEffectVolume(std::string filename, double volume);
 
     private:
+        RandomNumberGenerator _rng;
+
         Loader<Music> _musicLoader;
         Loader<SoundEffect> _soundEffectLoader;
     };

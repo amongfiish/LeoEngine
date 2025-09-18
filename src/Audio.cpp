@@ -73,6 +73,11 @@ namespace LeoEngine
         Mix_PlayChannel(-1, _soundEffectLoader.get(filename).getSDLChunkObject(), loops);
     }
 
+    void Audio::playRandomSoundEffect(std::vector<std::string> effectFilenames)
+    {
+        playSoundEffect(effectFilenames.at(_rng.getNextNumber(0, effectFilenames.size()-1)));
+    }
+
     void Audio::setSoundEffectVolume(std::string filename, double volume)
     {
         Mix_VolumeChunk(_soundEffectLoader.get(filename).getSDLChunkObject(), static_cast<int>(MIX_MAX_VOLUME * volume));
