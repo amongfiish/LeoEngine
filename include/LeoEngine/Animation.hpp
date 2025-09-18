@@ -25,7 +25,7 @@ namespace LeoEngine
         int sheetX;
         int sheetY;
 
-        // # of frames that the sprite should be displayed for
+        // # of secs that the sprite should be displayed for
         double displayTime;
     };
 

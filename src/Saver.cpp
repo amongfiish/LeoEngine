@@ -16,7 +16,7 @@ namespace LeoEngine
         std::string path = SDL_GetPrefPath(_organizationName.c_str(), _applicationName.c_str());
         path += filename;
 
-        _file.open(path.c_str());
+        _file.open(path.c_str(), std::fstream::in | std::fstream::out);
         if (!_file.good())
         {
             _file.open(path.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
