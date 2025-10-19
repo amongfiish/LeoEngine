@@ -8,7 +8,7 @@ set(PROJECT_NAME "LeoEngine")
 
 project(${PROJECT_NAME})
 
-set(SDL2MIXER_VENDORED ON)
+set(SDL3MIXER_VENDORED ON)
 
 add_subdirectory(lib/sdl)
 add_subdirectory(lib/sdl_image)
@@ -22,7 +22,7 @@ file(GLOB SOURCES src/*.cpp)
 
 add_library(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC SDL2 SDL2_image SDL2_mixer SDL2_ttf spdlog boost tweeny)
+target_link_libraries(${PROJECT_NAME} PUBLIC SDL3::SDL3 SDL3_image::SDL3_image SDL3_mixer::SDL3_mixer SDL3_ttf::SDL3_ttf spdlog boost)
 
-target_include_directories(${PROJECT_NAME} PUBLIC include lib/sdl/include lib/sdl_image/include lib/sdl_mixer/include lib/sdl_ttf lib/spdlog/include lib/boost/include, lib/tweeny/include)
+target_include_directories(${PROJECT_NAME} PUBLIC include lib/sdl/include lib/sdl_image/include lib/sdl_mixer/include lib/sdl_ttf/include lib/spdlog/include ${CMAKE_SOURCE_DIR}/lib/boost/include)
 

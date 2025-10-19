@@ -4,8 +4,6 @@
 #include "LeoEngine/Audio.hpp"
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Logger.hpp"
-#include "LeoEngine/Saver.hpp"
-#include "LeoEngine/Actions.hpp"
 
 namespace LeoEngine
 {
@@ -57,8 +55,7 @@ namespace LeoEngine
             _events(new Events),
             _graphics(new Graphics),
             _audio(new Audio),
-            _input(new Input(_events)),
-            _actions(new Actions())
+            _input(new Input(_events))
     {
 
     }

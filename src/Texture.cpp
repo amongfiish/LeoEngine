@@ -1,5 +1,5 @@
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL_image.h>
+    #include <SDL3_image/SDL_image.h>
 #elif defined(_WIN32)
     #include <SDL_image.h>
 #endif
@@ -26,7 +26,7 @@ namespace LeoEngine
         }
 
         SDL_Texture *newTexture = SDL_CreateTextureFromSurface(Services::get().getGraphics()->getRenderer().getSDLRendererObject(), newTextureSurface);
-        SDL_FreeSurface(newTextureSurface);
+        SDL_DestroySurface(newTextureSurface);
         if (newTexture == nullptr)
         {
             Services::get().getLogger()->critical("Texture", "Couldn't create new texture from surface. From SDL: " + LeoEngine::Services::get().getLogger()->getSDLError());
@@ -63,14 +63,16 @@ namespace LeoEngine
 
     Pair<int, int> Texture::getDimensions() const
     {
-        Pair<int, int> textureDimensions;
-
+        Pair<float, float> textureDimensions;
         if (_texture != nullptr)
         {
-            SDL_QueryTexture(_texture, nullptr, nullptr, &textureDimensions.first, &textureDimensions.second);
+            SDL_GetTextureSize(_texture, &textureDimensions.first, &textureDimensions.second);
         }
 
-        return textureDimensions;
+        // SDL3 conversion artifact
+        Pair<int, int> textureIntDimensions(textureDimensions.first, textureDimensions.second);
+
+        return textureIntDimensions;
     }
 
     SDL_Texture *Texture::getSDLTextureObject()
@@ -79,3 +81,4 @@ namespace LeoEngine
     }
 
 }
+

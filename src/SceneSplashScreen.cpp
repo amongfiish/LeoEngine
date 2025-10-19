@@ -28,7 +28,7 @@ namespace LeoEngine
     {
         if (_soundEffectFilename != "")
         {
-            Services::get().getAudio()->playSoundEffect(_soundEffectFilename);
+            Services::get().getAudio()->playOneShot(_soundEffectFilename);
         }
 
         _animatedSprite.setCurrentFrame(0);

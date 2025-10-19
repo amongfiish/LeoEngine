@@ -1,5 +1,5 @@
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL2/SDL.h>
+    #include <SDL3/SDL.h>
 #elif defined(_WIN32)
     #include <SDL.h>
 #endif
@@ -21,13 +21,14 @@
 #include "LeoEngine/EventWindowResize.hpp"
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
+#include "LeoEngine/Graphics.hpp"
 
 namespace LeoEngine
 {
 
     Events::Events()
     {
-        if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
+        if (!SDL_InitSubSystem(SDL_INIT_EVENTS))
         {
             throw std::runtime_error("Couldn't initialize SDL events subsystem.");
         }
@@ -42,60 +43,57 @@ namespace LeoEngine
 
             switch (e.type)
             {
-            case SDL_QUIT:
+            case SDL_EVENT_QUIT:
                 newEvent = static_cast<Event *>(new EventQuit);
                 break;
 
-            case SDL_KEYDOWN:
-                newEvent = static_cast<Event *>(new EventKeyDown(static_cast<const KeyCode>(e.key.keysym.sym)));
+            case SDL_EVENT_KEY_DOWN:
+                newEvent = static_cast<Event *>(new EventKeyDown(static_cast<const KeyCode>(e.key.key)));
                 break;
 
-            case SDL_KEYUP:
-                newEvent = static_cast<Event *>(new EventKeyUp(static_cast<const KeyCode>(e.key.keysym.sym)));
+            case SDL_EVENT_KEY_UP:
+                newEvent = static_cast<Event *>(new EventKeyUp(static_cast<const KeyCode>(e.key.key)));
                 break;
 
-            case SDL_MOUSEBUTTONDOWN:
+            case SDL_EVENT_MOUSE_BUTTON_DOWN:
                 newEvent = static_cast<Event *>(new EventMouseButtonDown(static_cast<int>(e.button.button)));
                 break;
 
-            case SDL_MOUSEBUTTONUP:
+            case SDL_EVENT_MOUSE_BUTTON_UP:
                 newEvent = static_cast<Event *>(new EventMouseButtonUp(static_cast<int>(e.button.button)));
                 break;
 
-            case SDL_MOUSEMOTION:
+            case SDL_EVENT_MOUSE_MOTION:
+                SDL_ConvertEventToRenderCoordinates(LeoEngine::Services::get().getGraphics()->getRenderer().getSDLRendererObject(), &e);
                 newEvent = static_cast<Event *>(new EventMouseMoved(e.motion.x, e.motion.y));
                 break;
 
-            case SDL_MOUSEWHEEL:
+            case SDL_EVENT_MOUSE_WHEEL:
                 newEvent = static_cast<Event *>(new EventMouseWheelMoved(e.wheel.x, e.wheel.y));
                 break;
 
-            case SDL_JOYDEVICEADDED:
+            case SDL_EVENT_JOYSTICK_ADDED:
                 newEvent = static_cast<Event *>(new EventControllerAdded(e.jdevice.which));
                 break;
 
-            case SDL_JOYDEVICEREMOVED:
+            case SDL_EVENT_JOYSTICK_REMOVED:
                 newEvent = static_cast<Event *>(new EventControllerRemoved(e.jdevice.which));
                 break;
 
-            case SDL_JOYAXISMOTION:
+            case SDL_EVENT_JOYSTICK_AXIS_MOTION:
                 newEvent = static_cast<Event *>(new EventControllerJoystickMoved(e.jaxis.which, e.jaxis.axis, e.jaxis.value));
                 break;
 
-            case SDL_JOYBUTTONDOWN:
+            case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
                 newEvent = static_cast<Event *>(new EventControllerButtonDown(e.jbutton.which, e.jbutton.button));
                 break;
 
-            case SDL_JOYBUTTONUP:
+            case SDL_EVENT_JOYSTICK_BUTTON_UP:
                 newEvent = static_cast<Event *>(new EventControllerButtonUp(e.jbutton.which, e.jbutton.button));
                 break;
 
-            case SDL_WINDOWEVENT:
-                if (e.window.event == SDL_WINDOWEVENT_RESIZED)
-                {
-                    newEvent = static_cast<Event *>(new EventWindowResize(e.window.data1, e.window.data2));
-                }
-
+            case SDL_EVENT_WINDOW_RESIZED:
+                newEvent = static_cast<Event *>(new EventWindowResize(e.window.data1, e.window.data2));
                 break;
             }
 

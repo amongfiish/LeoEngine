@@ -2,7 +2,7 @@
 #define INPUT_HPP
 
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL2/SDL.h>
+    #include <SDL3/SDL.h>
 #elif defined(_WIN32)
     #include <SDL.h>
 #endif
@@ -13,7 +13,6 @@
 #include "LeoEngine/KeyState.hpp"
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/Events.hpp"
-#include "LeoEngine/Controller.hpp"
 
 namespace LeoEngine
 {
@@ -36,13 +35,11 @@ namespace LeoEngine
         KeyState getMouseButtonState(int buttonID) const;
         const Pair<int, int> &getMouseWheelMotion() const;
 
-        KeyState getControllerButtonState(SDL_JoystickID controllerID, int buttonID) const;
-        int getControllerJoystickState(SDL_JoystickID controllerID, int axis) const;
+        // TODO: re-add controller stuff
 
     private:
         void keyCallback(Event *event);
         void mouseCallback(Event *event);
-        void controllerCallback(Event *event);
 
         bool _locked;
 
@@ -53,8 +50,6 @@ namespace LeoEngine
         Pair<int, int> _mousePosition;
         std::vector<KeyState> _mouseButtons;
         Pair<int, int> _mouseWheelMotion;
-
-        std::unordered_map<SDL_JoystickID, Controller> _controllers;
     };
 
 }

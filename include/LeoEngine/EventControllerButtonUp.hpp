@@ -2,7 +2,7 @@
 #define EVENT_CONTROLLER_BUTTON_UP
  
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL2/SDL.h>
+    #include <SDL3/SDL.h>
 #elif defined(_WIN32)
     #include <SDL.h>
 #endif

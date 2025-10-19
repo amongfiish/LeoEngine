@@ -19,12 +19,6 @@ namespace LeoEngine
         _mouseWheelMotion(0, 0),
         _locked(false)
     {
-        // initialize SDL joystick subsystem
-        if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) < 0)
-        {
-            throw runtime_error("Couldn't initialize SDL_JOYSTICK.");
-        }
-
         // input event callbacks
         _events->addCallback(EventType::KEY_DOWN, bind(&Input::keyCallback, this, placeholders::_1));
         _events->addCallback(EventType::KEY_UP, bind(&Input::keyCallback, this, placeholders::_1));
@@ -33,26 +27,15 @@ namespace LeoEngine
         _events->addCallback(EventType::MOUSE_BUTTON_UP, bind(&Input::mouseCallback, this, placeholders::_1));
         _events->addCallback(EventType::MOUSE_MOVED, bind(&Input::mouseCallback, this, placeholders::_1));
         _events->addCallback(EventType::MOUSE_WHEEL_MOVED, bind(&Input::mouseCallback, this, placeholders::_1));
-
-        _events->addCallback(EventType::CONTROLLER_ADDED, bind(&Input::controllerCallback, this, placeholders::_1));
-        _events->addCallback(EventType::CONTROLLER_REMOVED, bind(&Input::controllerCallback, this, placeholders::_1));
-        _events->addCallback(EventType::CONTROLLER_BUTTON_DOWN, bind(&Input::controllerCallback, this, placeholders::_1));
-        _events->addCallback(EventType::CONTROLLER_BUTTON_UP, bind(&Input::controllerCallback, this, placeholders::_1));
-        _events->addCallback(EventType::CONTROLLER_JOYSTICK_MOVED, bind(&Input::controllerCallback, this, placeholders::_1));
     }
 
     Input::~Input()
     {
-        SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
+
     }
 
     void Input::update()
     {
-        for (auto idControllerPair : _controllers)
-        {
-            idControllerPair.second.update();
-        }
-
         for (auto itKey = _keyStates.begin(); itKey != _keyStates.end(); itKey++)
         {
             if (itKey->second == KeyState::PRESSED)
@@ -114,21 +97,6 @@ namespace LeoEngine
     const Pair<int, int>& Input::getMouseWheelMotion() const
     {
         return _mouseWheelMotion;
-    }
-
-    KeyState Input::getControllerButtonState(SDL_JoystickID controllerID, int buttonID) const
-    {
-        if (_locked)
-        {
-            return KeyState::RELEASED;
-        }
-
-        return _controllers.at(controllerID).getButtonState(buttonID);
-    }
-
-    int Input::getControllerJoystickState(SDL_JoystickID controllerID, int axis) const
-    {
-        return _controllers.at(controllerID).getAxisState(axis);
     }
 
     void Input::keyCallback(Event *event)
@@ -203,49 +171,6 @@ namespace LeoEngine
                 EventMouseWheelMoved *castEvent = dynamic_cast<EventMouseWheelMoved *>(event);
                 _mouseWheelMotion.first = castEvent->x;
                 _mouseWheelMotion.second = castEvent->y;
-                break;
-            }
-
-            default:
-            {
-                break;
-            }
-        }
-    }
-
-    void Input::controllerCallback(Event *event)
-    {
-        switch(event->type)
-        {
-            case EventType::CONTROLLER_ADDED:
-            {
-                EventControllerAdded *castEvent = dynamic_cast<EventControllerAdded *>(event);
-                SDL_Joystick *joystick = SDL_JoystickOpen(castEvent->controllerID);
-                SDL_JoystickID joystickID = SDL_JoystickInstanceID(joystick);
-                _controllers.emplace(make_pair(joystickID, joystick));
-                break;
-            }
-
-            case EventType::CONTROLLER_REMOVED:
-            {
-                EventControllerRemoved *castEvent = dynamic_cast<EventControllerRemoved *>(event);
-                auto idControllerPair = _controllers.find(castEvent->controllerID);
-                _controllers.erase(idControllerPair);
-                break;
-            }
-
-            case EventType::CONTROLLER_BUTTON_DOWN:
-            {
-                break;
-            }
-
-            case EventType::CONTROLLER_BUTTON_UP:
-            {
-                break;
-            }
-
-            case EventType::CONTROLLER_JOYSTICK_MOVED:
-            {
                 break;
             }
 

@@ -1,91 +1,158 @@
 #include <stdexcept>
 #include <string>
 #include "LeoEngine/Audio.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 
 namespace LeoEngine
 {
 
     Audio::Audio()
         : _musicLoader("music"),
-        _soundEffectLoader("sfx")
+          _soundEffectLoader("sfx")
     {
-        if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
+        if (!SDL_InitSubSystem(SDL_INIT_AUDIO))
         {
-            throw std::runtime_error("Couldn't initialize SDL audio.");
+            throw std::runtime_error(std::string("Couldn't initialize SDL audio. SDL_GetError output: ") + SDL_GetError());
         }
 
-        if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+        if (!MIX_Init())
         {
-            throw std::runtime_error("Couldn't start SDL mixer.");
+            throw std::runtime_error(std::string("Couldn't start SDL mixer. SDL_GetError output: ") + SDL_GetError());
+        }
+
+        _mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
+        if (_mixer == NULL)
+        {
+            throw std::runtime_error(std::string("Couldn't create new MIX_Mixer. SDL_GetError output: ") + SDL_GetError());
         }
     }
 
     Audio::~Audio()
     {
-        Mix_CloseAudio();
+        MIX_Quit();
         SDL_QuitSubSystem(SDL_INIT_AUDIO);
     }
 
-    void Audio::playMusic(std::string filename, int loops, int fadeInMilliseconds, double startPosition)
+    Sound *Audio::getSound(std::string filename, bool decompress)
     {
-        Mix_FadeInMusicPos(_musicLoader.get(filename).getSDLMusicObject(), loops, fadeInMilliseconds, startPosition);
-    }
-
-    void Audio::pauseMusic()
-    {
-        Mix_PauseMusic();
-    }
-
-    void Audio::resumeMusic()
-    {
-        Mix_ResumeMusic();
-    }
-
-    void Audio::restartMusic()
-    {
-        Mix_RewindMusic();
-    }
-
-    void Audio::stopMusic(int fadeOutMilliseconds)
-    {
-        if (fadeOutMilliseconds <= 0)
+        if (decompress)
         {
-            Mix_HaltMusic();
+            return dynamic_cast<Sound *>(&_soundEffectLoader.get(filename));
         }
         else
         {
-            Mix_FadeOutMusic(fadeOutMilliseconds);
+            return dynamic_cast<Sound *>(&_musicLoader.get(filename));
         }
     }
 
-    void Audio::setMusicVolume(double volume)
+    void Audio::playOneShot(std::string filename)
     {
-        Mix_VolumeMusic(static_cast<int>(MIX_MAX_VOLUME * volume));
+        Sound *oneShotSound = getSound(filename, false);
+        if (oneShotSound == NULL)
+        {
+            std::string errorString = "Invalid filename provided to playOneShot.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        MIX_PlayAudio(_mixer, oneShotSound->getMixAudioObject());
     }
 
-    void Audio::setMusicPosition(double position)
+    void Audio::playOneShot(Sound *sound)
     {
-        Mix_SetMusicPosition(position);
+        if (sound == nullptr)
+        {
+            std::string errorString = "Null pointer provided to playOneShot.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        MIX_PlayAudio(_mixer, sound->getMixAudioObject());
     }
 
-    void Audio::playSoundEffect(std::string filename, int loops)
+    int Audio::createTrack()
     {
-        Mix_PlayChannel(-1, _soundEffectLoader.get(filename).getSDLChunkObject(), loops);
+        MIX_Track *newTrack = MIX_CreateTrack(_mixer);
+        if (newTrack == NULL)
+        {
+            std::string errorString = std::string("Couldn't create new MIX_Track. SDL_GetError output: ") + SDL_GetError();
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        _tracks.insert(std::make_pair(_nextTrackId, newTrack));
+        return _nextTrackId++;
     }
 
-    void Audio::playRandomSoundEffect(std::vector<std::string> effectFilenames)
+    void Audio::setTrackSound(int trackId, Sound *sound)
     {
-        playSoundEffect(effectFilenames.at(_rng.getNextNumber(0, effectFilenames.size()-1)));
+        if (sound == nullptr)
+        {
+            std::string errorString = "Attempting to assign nullptr Sound to track.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        auto trackIt = _tracks.find(trackId);
+        if (trackIt == _tracks.end())
+        {
+            std::string errorString = "Attempting to set sound of non-existent track.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        MIX_SetTrackAudio(trackIt->second, sound->getMixAudioObject());
     }
 
-    void Audio::setSoundEffectVolume(std::string filename, double volume)
+    void Audio::addTrackTag(int trackId, std::string tag)
     {
-        Mix_VolumeChunk(_soundEffectLoader.get(filename).getSDLChunkObject(), static_cast<int>(MIX_MAX_VOLUME * volume));
+        auto trackIt = _tracks.find(trackId);
+        if (trackIt == _tracks.end())
+        {
+            std::string errorString = "Attempting to set tag of non-existent track.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        MIX_TagTrack(trackIt->second, tag.c_str());
     }
 
-    void Audio::stopAllSoundEffects()
+    void Audio::removeTrackTag(int trackId, std::string tag)
     {
-        Mix_HaltChannel(-1);
+        auto trackIt = _tracks.find(trackId);
+        if (trackIt == _tracks.end())
+        {
+            std::string errorString = "Attempting to unset tag of non-existent track.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        MIX_UntagTrack(trackIt->second, tag.c_str());
+    }
+
+    void Audio::playTrack(int trackId)
+    {
+        auto trackIt = _tracks.find(trackId);
+        if (trackIt == _tracks.end())
+        {
+            std::string errorString = "Attempting to set tag of non-existent track.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        MIX_PlayTrack(trackIt->second, 0);
+    }
+
+    void Audio::playTag(std::string tag)
+    {
+        if (!MIX_PlayTag(_mixer, tag.c_str(), 0))
+        {
+            std::string errorString = std::string("Unable to play tag '") + tag + "'. SDL_GetError output: '" + SDL_GetError() + "'.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
     }
 
 }
+

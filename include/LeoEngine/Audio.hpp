@@ -2,8 +2,8 @@
 #define AUDIO_HPP
 
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL2/SDL.h>
-    #include <SDL_mixer.h>
+    #include <SDL3/SDL.h>
+    #include <SDL3_mixer/SDL_mixer.h>
 #elif defined(_WIN32)
     #include <SDL.h>
     #include <SDL_mixer.h>
@@ -11,8 +11,8 @@
 
 #include <array>
 #include <string>
-#include "LeoEngine/Music.hpp"
-#include "LeoEngine/SoundEffect.hpp"
+#include <map>
+#include "LeoEngine/Sound.hpp"
 #include "LeoEngine/Loader.hpp"
 #include "LeoEngine/RandomNumberGenerator.hpp"
 
@@ -25,29 +25,29 @@ namespace LeoEngine
         Audio();
         ~Audio();
 
-        // start position is in seconds. loops=0 means the song will play once. -1 means forever.
-        void playMusic(std::string filename, int loops = 0, int fadeInMilliseconds = 0, double startPosition = 0);
-        void pauseMusic();
-        void resumeMusic();
-        void restartMusic();
-        void stopMusic(int fadeOutMilliseconds);
+        Sound *getSound(std::string filename, bool decompress);
 
-        // volume is a double between 0 (muted) and 1 (full volume).
-        void setMusicVolume(double volume);
+        // play an uncompressed sound one time.
+        // does not give a reference or any ability to modify after firing.
+        void playOneShot(std::string filename);
+        void playOneShot(Sound *sound);
 
-        // see playMusic declaration above for position description
-        void setMusicPosition(double position);
-
-        void playSoundEffect(std::string filename, int loops = 0);
-        void playRandomSoundEffect(std::vector<std::string> effectFilenames);
-        void stopAllSoundEffects();
-        void setSoundEffectVolume(std::string filename, double volume);
+        int createTrack();
+        void setTrackSound(int trackId, Sound *sound);
+        void addTrackTag(int trackId, std::string tag);
+        void removeTrackTag(int trackId, std::string tag);
+        void playTrack(int trackId);
+        void playTag(std::string tag);
 
     private:
-        RandomNumberGenerator _rng;
+        MIX_Mixer *_mixer;
 
-        Loader<Music> _musicLoader;
-        Loader<SoundEffect> _soundEffectLoader;
+        std::map<int, MIX_Track *> _tracks;
+        unsigned int _nextTrackId;
+
+        Loader<CompressedSound> _musicLoader;
+        Loader<UncompressedSound> _soundEffectLoader;
+>>>>>>> SDL3-upgrade
     };
 
 }

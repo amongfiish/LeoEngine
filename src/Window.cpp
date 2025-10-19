@@ -9,7 +9,7 @@ namespace LeoEngine
 
     Window::Window(std::string title, int width, int height)
     {
-        SDL_Window *newWindow = SDL_CreateWindow(title.c_str(), 100, 100, width, height, SDL_WINDOW_SHOWN);
+        SDL_Window *newWindow = SDL_CreateWindow(title.c_str(), width, height, 0);
         if (newWindow == nullptr)
         {
             throw std::runtime_error("Window could not be created.");
@@ -64,12 +64,12 @@ namespace LeoEngine
 
     void Window::setBordered(bool isBordered)
     {
-        SDL_SetWindowBordered(_window, static_cast<SDL_bool>(isBordered));
+        SDL_SetWindowBordered(_window, isBordered);
     }
 
     void Window::setResizable(bool isResizable)
     {
-        SDL_SetWindowResizable(_window, static_cast<SDL_bool>(isResizable));
+        SDL_SetWindowResizable(_window, isResizable);
     }
 
     void Window::setTitle(std::string title)

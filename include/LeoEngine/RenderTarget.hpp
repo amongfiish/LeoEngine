@@ -4,7 +4,7 @@
 #if defined(_WIN32)
     #include <SDL.h>
 #elif defined(__linux__) || defined(__APPLE__)
-    #include <SDL2/SDL.h>
+    #include <SDL3/SDL.h>
 #endif
 
 #include <stdexcept>

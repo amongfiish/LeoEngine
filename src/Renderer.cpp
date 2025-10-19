@@ -6,7 +6,7 @@ namespace LeoEngine
 
     Renderer::Renderer(SDL_Window *window)
     {
-        SDL_Renderer *newRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+        SDL_Renderer *newRenderer = SDL_CreateRenderer(window, NULL);
         if (newRenderer == nullptr)
         {
             throw std::runtime_error("Renderer could not be created.");
@@ -37,7 +37,7 @@ namespace LeoEngine
 
     void Renderer::setLogicalDimensions(int width, int height)
     {
-        SDL_RenderSetLogicalSize(_renderer, width, height);
+        SDL_SetRenderLogicalPresentation(_renderer, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
     }
 
     void Renderer::setLogicalDimensions(const Pair<int, int>& dimensions)
@@ -48,14 +48,14 @@ namespace LeoEngine
     Pair<int, int> Renderer::getLogicalDimensions() const
     {
         Pair<int, int> dimensions;
-        SDL_RenderGetLogicalSize(_renderer, &dimensions.first, &dimensions.second);
+        SDL_GetRenderLogicalPresentation(_renderer, &dimensions.first, &dimensions.second, NULL);
 
         return dimensions;
     }
 
     void Renderer::setScalingFactor(float scalingX, float scalingY)
     {
-        SDL_RenderSetScale(_renderer, scalingX, scalingY);
+        SDL_SetRenderScale(_renderer, scalingX, scalingY);
     }
 
     void Renderer::setScalingFactor(const Pair<float, float>& scalingFactors)
@@ -66,12 +66,12 @@ namespace LeoEngine
     void Renderer::setViewport(const Rectangle<int>& viewport)
     {
         SDL_Rect newRect = viewport.toSDLRect();
-        SDL_RenderSetViewport(_renderer, &newRect);
+        SDL_SetRenderViewport(_renderer, &newRect);
     }
 
     void Renderer::setVSync(bool useVSync)
     {
-        SDL_RenderSetVSync(_renderer, static_cast<int>(useVSync));
+        SDL_SetRenderVSync(_renderer, static_cast<int>(useVSync));
     }
 
     SDL_Renderer *Renderer::getSDLRendererObject() const

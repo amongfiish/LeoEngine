@@ -1,5 +1,5 @@
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL2/SDL.h>
+    #include <SDL3/SDL.h>
 #elif defined(_WIN32)
     #include <SDL.h>
 #endif
@@ -9,9 +9,7 @@
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Events.hpp"
 #include "LeoEngine/Input.hpp"
-#include "LeoEngine/Saver.hpp"
 #include "LeoEngine/Logger.hpp"
-#include "LeoEngine/Actions.hpp"
 
 namespace LeoEngine
 {
@@ -31,10 +29,7 @@ namespace LeoEngine
 
         Services::get().getGraphics()->setRenderVSync(true);
 
-        _framerate = settings.framerate;
-
-        Saver::setOrgAndAppName(settings.organizationName, settings.applicationName);
-        Logger::setOrgAndAppName(settings.organizationName, settings.applicationName);
+        Services::get().getLogger()->setOrgAndAppName(settings.organizationName, settings.applicationName);
         
         Services::get().getLogger()->info("Core", "Engine instance initialized.");
     }
@@ -85,7 +80,13 @@ namespace LeoEngine
                 // show on the screen
                 Services::get().getGraphics()->present();
 
+<<<<<<< HEAD
                 previousDrawTicks = currentTicks;
+=======
+                game.update();
+
+                totalUpdateLag -= MS_BETWEEN_UPDATES;
+>>>>>>> SDL3-upgrade
             }
         }
 

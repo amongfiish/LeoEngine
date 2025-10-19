@@ -1,7 +1,7 @@
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL2/SDL.h>
-    #include <SDL_image.h>
-    #include <SDL_ttf.h>
+    #include <SDL3/SDL.h>
+    #include <SDL3_image/SDL_image.h>
+    #include <SDL3_ttf/SDL_ttf.h>
 #elif defined(_WIN32)
     #include <SDL.h>
     #include <SDL_image.h>
@@ -24,12 +24,12 @@ namespace LeoEngine
             _renderer(_window.getSDLWindowObject()),
             _textureLoader("textures")
     {
-        if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
+        if (!SDL_InitSubSystem(SDL_INIT_VIDEO))
         {
             throw std::runtime_error("Couldn't initialize SDL video subsystem.");
         }
 
-        if (TTF_Init() < 0)
+        if (!TTF_Init())
         {
             throw std::runtime_error("Couldn't initialize SDL TTF.");
         }
@@ -52,7 +52,7 @@ namespace LeoEngine
         _cameras.adjustPosition(adjustedPoint);
         
         _renderer.setDrawColour(colour);
-        SDL_RenderDrawPoint(_renderer.getSDLRendererObject(), adjustedPoint.first, adjustedPoint.second);
+        SDL_RenderPoint(_renderer.getSDLRendererObject(), adjustedPoint.first, adjustedPoint.second);
     }
 
     void Graphics::drawPoint(const Colour& colour, const Pair<int, int>& point)
@@ -68,7 +68,7 @@ namespace LeoEngine
         _cameras.adjustPosition(adjustedEnd);
 
         _renderer.setDrawColour(colour);
-        SDL_RenderDrawLine(_renderer.getSDLRendererObject(), adjustedStart.first, adjustedStart.second, adjustedEnd.first, adjustedEnd.second);
+        SDL_RenderLine(_renderer.getSDLRendererObject(), adjustedStart.first, adjustedStart.second, adjustedEnd.first, adjustedEnd.second);
     }
 
     void Graphics::drawLine(const Colour& colour, const Pair<int, int>& start, const Pair<int, int>& end)
@@ -85,16 +85,16 @@ namespace LeoEngine
     {
         Pair<int, int> adjustedOrigin(x, y);
         _cameras.adjustPosition(adjustedOrigin);
-        SDL_Rect newRect = { adjustedOrigin.first, adjustedOrigin.second, width, height };
+        SDL_FRect newFRect = { static_cast<float>(adjustedOrigin.first), static_cast<float>(adjustedOrigin.second), static_cast<float>(width), static_cast<float>(height) };
 
         _renderer.setDrawColour(colour);
         if (fill)
         {
-            SDL_RenderFillRect(_renderer.getSDLRendererObject(), &newRect);
+            SDL_RenderFillRect(_renderer.getSDLRendererObject(), &newFRect);
         }
         else
         {
-            SDL_RenderDrawRect(_renderer.getSDLRendererObject(), &newRect);
+            SDL_RenderRect(_renderer.getSDLRendererObject(), &newFRect);
         }
     }
 
@@ -151,23 +151,26 @@ namespace LeoEngine
 
     void Graphics::drawTexture(Texture& texture, const TextureDrawData& data)
     {
-        SDL_Rect srcRect;
-        SDL_Rect *p_srcRect;
+        SDL_FRect srcFRect;
+        SDL_FRect *p_srcFRect;
         if (data.sourceRectangle == nullptr)
         {
-            p_srcRect = NULL;
+            p_srcFRect = NULL;
         }
         else
         {
-            srcRect = data.sourceRectangle->toSDLRect();
-            p_srcRect = &srcRect;
+            srcFRect.x = data.sourceRectangle->x;
+            srcFRect.y = data.sourceRectangle->y;
+            srcFRect.w = data.sourceRectangle->width;
+            srcFRect.h = data.sourceRectangle->height;
+            p_srcFRect = &srcFRect;
         }
 
-        SDL_Rect destRect;
-        SDL_Rect *p_destRect;
+        SDL_FRect destFRect;
+        SDL_FRect *p_destFRect;
         if (data.destinationRectangle == nullptr)
         {
-            p_destRect = NULL;
+            p_destFRect = NULL;
         }
         else
         {
@@ -176,23 +179,27 @@ namespace LeoEngine
 
             Rectangle<int> adjustedRectangle(adjustedOrigin.first, adjustedOrigin.second, data.destinationRectangle->width, data.destinationRectangle->height);
 
-            destRect = adjustedRectangle.toSDLRect();
-            p_destRect = &destRect;
+            destFRect.x = adjustedRectangle.x;
+            destFRect.y = adjustedRectangle.y;
+            destFRect.w = adjustedRectangle.width;
+            destFRect.h = adjustedRectangle.height;
+            p_destFRect = &destFRect;
         }
 
-        SDL_Point center;
-        SDL_Point *p_center;
+        SDL_FPoint center;
+        SDL_FPoint *p_center;
         if (data.center == nullptr)
         {
             p_center = NULL;
         }
         else
         {
-            center = data.center->toSDLPoint();
+            center.x = data.center->first;
+            center.y = data.center->second;
             p_center = &center;
         }
 
-        SDL_RenderCopyEx(_renderer.getSDLRendererObject(), texture.getSDLTextureObject(), p_srcRect, p_destRect, data.angle, p_center, static_cast<SDL_RendererFlip>(data.flip));
+        SDL_RenderTextureRotated(_renderer.getSDLRendererObject(), texture->getSDLTextureObject(), p_srcFRect, p_destFRect, data.angle, p_center, static_cast<SDL_FlipMode>(data.flip));
     }
 
     void Graphics::drawTexture(Texture& texture)
@@ -236,7 +243,7 @@ namespace LeoEngine
         }
 
         SDL_SetTextureAlphaMod(renderTarget.getSDLTextureObject(), static_cast<int>(255 * opacity));
-        SDL_RenderCopy(_renderer.getSDLRendererObject(), renderTarget.getSDLTextureObject(), NULL, NULL);
+        SDL_RenderTexture(_renderer.getSDLRendererObject(), renderTarget.getSDLTextureObject(), NULL, NULL);
         SDL_SetTextureAlphaMod(renderTarget.getSDLTextureObject(), 255);
     }
 
@@ -325,7 +332,7 @@ namespace LeoEngine
     std::shared_ptr<Texture> Graphics::renderText(std::string text, TextDrawData& data)
     {
         TTF_Font *font = _fontManager.getFont(data.fontFilename, data.pointSize);
-        SDL_Surface *renderedText = TTF_RenderText_Solid(font, text.c_str(), data.colour.toSDLColor());
+        SDL_Surface *renderedText = TTF_RenderText_Solid(font, text.c_str(), text.size(), data.colour.toSDLColor());
         if (renderedText == nullptr)
         {
             Services::get().getLogger()->error("Graphics", "Failed to render text.");
