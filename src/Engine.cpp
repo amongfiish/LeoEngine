@@ -30,6 +30,8 @@ namespace LeoEngine
         Services::get().getGraphics()->setRenderVSync(true);
 
         Services::get().getLogger()->setOrgAndAppName(settings.organizationName, settings.applicationName);
+
+        _framerate = settings.framerate;
         
         Services::get().getLogger()->info("Core", "Engine instance initialized.");
     }
@@ -45,7 +47,7 @@ namespace LeoEngine
 
         int quitCallbackID = Services::get().getEvents()->addCallback(EventType::QUIT, bind(&Engine::quitCallback, this, placeholders::_1));
 
-        const int MS_BETWEEN_FRAMES = 1000 / _framerate; // maybe stop hardcoding this?
+        const int MS_BETWEEN_FRAMES = 1000 / _framerate;
 
         int previousUpdateTicks = SDL_GetTicks();
         int previousDrawTicks = previousUpdateTicks;
@@ -64,7 +66,6 @@ namespace LeoEngine
             // SDL event loop
             Services::get().getEvents()->sdlEventPoll();
             game.update(deltaTime);
-            Services::get().getActions()->update();
 
             previousUpdateTicks = currentTicks;
 
@@ -80,13 +81,7 @@ namespace LeoEngine
                 // show on the screen
                 Services::get().getGraphics()->present();
 
-<<<<<<< HEAD
                 previousDrawTicks = currentTicks;
-=======
-                game.update();
-
-                totalUpdateLag -= MS_BETWEEN_UPDATES;
->>>>>>> SDL3-upgrade
             }
         }
 

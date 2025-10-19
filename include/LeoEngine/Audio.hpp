@@ -47,7 +47,6 @@ namespace LeoEngine
 
         Loader<CompressedSound> _musicLoader;
         Loader<UncompressedSound> _soundEffectLoader;
->>>>>>> SDL3-upgrade
     };
 
 }

@@ -110,16 +110,16 @@ namespace LeoEngine
 
     void Graphics::drawRectangleCameraless(const Colour &colour, bool fill, const int x, const int y, const int width, const int height)
     {
-        SDL_Rect newRect = { x, y, width, height };
+        SDL_FRect newFRect = { static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), static_cast<float>(height) };
         
         _renderer.setDrawColour(colour);
         if (fill)
         {
-            SDL_RenderFillRect(_renderer.getSDLRendererObject(), &newRect);
+            SDL_RenderFillRect(_renderer.getSDLRendererObject(), &newFRect);
         }
         else
         {
-            SDL_RenderDrawRect(_renderer.getSDLRendererObject(), &newRect);
+            SDL_RenderRect(_renderer.getSDLRendererObject(), &newFRect);
         }
     }
 
@@ -199,7 +199,7 @@ namespace LeoEngine
             p_center = &center;
         }
 
-        SDL_RenderTextureRotated(_renderer.getSDLRendererObject(), texture->getSDLTextureObject(), p_srcFRect, p_destFRect, data.angle, p_center, static_cast<SDL_FlipMode>(data.flip));
+        SDL_RenderTextureRotated(_renderer.getSDLRendererObject(), texture.getSDLTextureObject(), p_srcFRect, p_destFRect, data.angle, p_center, static_cast<SDL_FlipMode>(data.flip));
     }
 
     void Graphics::drawTexture(Texture& texture)
@@ -340,7 +340,7 @@ namespace LeoEngine
         }
 
         std::shared_ptr<Texture> newTexture = std::make_shared<Texture>(renderedText);
-        SDL_FreeSurface(renderedText);
+        SDL_DestroySurface(renderedText);
 
         return newTexture;
     }
