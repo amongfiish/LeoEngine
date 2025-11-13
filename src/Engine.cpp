@@ -30,6 +30,7 @@ namespace LeoEngine
 
     void Engine::setFramerate(int framerate)
     {
+        // this should be changed at some point to allow dynamic framerates
         if (_running)
         {
             std::string errorMessage = "Changing the framerate after the game has started. This will do nothing. How did you even get here?";
