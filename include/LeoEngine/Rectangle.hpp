@@ -60,6 +60,20 @@ namespace LeoEngine
             y = other.y;
             width = other.width;
             height = other.width;
+
+            return *this;
+        }
+
+        // this MIGHT be silly... but i have one (1) use for it
+        Rectangle<T> operator-() const
+        {
+            Rectangle<T> newRectangle;
+            newRectangle.x = -x;
+            newRectangle.y = -y;
+            newRectangle.width = -width;
+            newRectangle.height = -height;
+
+            return newRectangle
         }
 
         T x;
