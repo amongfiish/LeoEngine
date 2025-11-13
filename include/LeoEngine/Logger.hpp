@@ -17,8 +17,6 @@ namespace LeoEngine
         Logger();
         ~Logger();
 
-        static void setOrgAndAppName(std::string organizationName, std::string applicationName);
-
         void trace(std::string id, std::string content);
         void debug(std::string id, std::string content);
         void info(std::string id, std::string content);
@@ -34,9 +32,6 @@ namespace LeoEngine
         std::shared_ptr<spdlog::logger> getLogger(std::string id);
 
         std::unordered_map<std::string, std::shared_ptr<spdlog::logger>> _spdLoggers;
-
-        static std::string _organizationName;
-        static std::string _applicationName;
     };
 
 }

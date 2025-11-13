@@ -9,8 +9,6 @@ namespace LeoEngine
     class EngineSettings
     {
     public:
-        std::string organizationName = "LeoEngineDefaultOrg";
-        std::string applicationName = "LeoEngineDefaultApp";
         std::string defaultWindowTitle = "Leo Engine Project";
 
         int defaultWindowWidth = 800;

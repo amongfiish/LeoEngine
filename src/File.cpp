@@ -13,6 +13,13 @@
 namespace LeoEngine
 {
 
+    void File::setWriteDirectory(std::string organizationDirectoryName, std::string applicationDirectoryName)
+    {
+        char *prefPath = SDL_GetPrefPath(organizationDirectoryName.c_str(), applicationDirectoryName.c_str());
+        _writeDirectory = std::string(prefPath);
+        SDL_free(prefPath);
+    }
+
     const char File::getPathSeparator()
     {
         return PATH_SEPARATOR;
@@ -22,12 +29,19 @@ namespace LeoEngine
     {
         return std::string(SDL_GetBasePath());
     }
+
+    const std::string File::getWriteDirectory()
+    {
+        return _writeDirectory;
+    }
     
     File::File(std::string filepath, bool isBinary)
         : _filepath(filepath), _isBinary(isBinary),
           _sdlFile(NULL), _isOpen(false)
     {
-        
+        char *defaultPrefPath = SDL_GetPrefPath("LeoDefaultOrg", "LeoDefaultApp");
+        _writeDirectory = defaultPrefPath;
+        SDL_free(defaultPrefPath);
     }
 
     File::~File()

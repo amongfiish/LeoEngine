@@ -5,12 +5,10 @@
 #endif
 
 #include "LeoEngine/Logger.hpp"
+#include "LeoEngine/File.hpp"
 
 namespace LeoEngine
 {
-
-    std::string Logger::_organizationName = "LeoEngineDefaultOrg";
-    std::string Logger::_applicationName = "LeoEngineDefaultApp";
 
     Logger::Logger()
     {
@@ -20,12 +18,6 @@ namespace LeoEngine
     Logger::~Logger()
     {
 
-    }
-
-    void Logger::setOrgAndAppName(std::string organizationName, std::string applicationName)
-    {
-        _organizationName = organizationName;
-        _applicationName = applicationName;
     }
 
     void Logger::trace(std::string id, std::string content)
@@ -83,7 +75,7 @@ namespace LeoEngine
         auto logger = _spdLoggers.find(id);
         if (logger == _spdLoggers.end())
         {
-            std::string path = SDL_GetPrefPath(_organizationName.c_str(), _applicationName.c_str());
+            std::string path = File::getWriteDirectory();
             path += "log.txt";
             return _spdLoggers.insert(make_pair(id, spdlog::basic_logger_mt(id, path))).first->second;
         }

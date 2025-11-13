@@ -29,8 +29,6 @@ namespace LeoEngine
 
         Services::get().getGraphics()->setRenderVSync(true);
 
-        Services::get().getLogger()->setOrgAndAppName(settings.organizationName, settings.applicationName);
-
         _framerate = settings.framerate;
         
         Services::get().getLogger()->info("Core", "Engine instance initialized.");

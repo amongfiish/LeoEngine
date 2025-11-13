@@ -23,9 +23,13 @@ namespace LeoEngine
     class File
     {
     public:
+        // engine related
+        static void setWriteDirectory(std::string organizationDirectoryName, std::string applicationDirectoryName); // used to be Logger::setOrgAndAppName
+
         // utility functions
         static const char getPathSeparator();
         static const std::string getApplicationDataDirectory();
+        static const std::string getWriteDirectory();
 
         File(std::string filepath, bool isBinary);
         ~File();
@@ -47,6 +51,8 @@ namespace LeoEngine
         void write(std::string data);
 
     private:
+        static std::string _writeDirectory;
+
         std::string _filepath;
         bool _isBinary;
 
