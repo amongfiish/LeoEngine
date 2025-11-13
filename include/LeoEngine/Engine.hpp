@@ -3,7 +3,6 @@
 
 #define SDL_MAIN_HANDLED
 
-#include "LeoEngine/EngineSettings.hpp"
 #include "LeoEngine/Game.hpp"
 
 namespace LeoEngine
@@ -13,15 +12,16 @@ namespace LeoEngine
     class Engine
     {
     public:
-        Engine(EngineSettings &settings);
+        Engine();
         ~Engine();
 
+        void setFramerate(int framerate);
         void runGame(Game &game);
 
     private:
         void quitCallback(Event *event);
 
-        bool _running = true;
+        bool _running;
 
         int _framerate;
     };

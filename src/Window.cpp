@@ -4,19 +4,23 @@
 #include "LeoEngine/Events.hpp"
 #include "LeoEngine/EventWindowResize.hpp"
 
+#define DEFAULT_WINDOW_TITLE "LeoDefaultWindowTitle"
+#define DEFAULT_WINDOW_WIDTH 800
+#define DEFAULT_WINDOW_HEIGHT 600
+
 namespace LeoEngine
 {
 
-    Window::Window(std::string title, int width, int height)
+    Window::Window()
     {
-        SDL_Window *newWindow = SDL_CreateWindow(title.c_str(), width, height, 0);
+        SDL_Window *newWindow = SDL_CreateWindow(DEFAULT_WINDOW_TITLE, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, 0);
         if (newWindow == nullptr)
         {
             throw std::runtime_error("Window could not be created.");
         }
 
-        _dimensions.first = width;
-        _dimensions.second = height;
+        _dimensions.first = DEFAULT_WINDOW_WIDTH;
+        _dimensions.second = DEFAULT_WINDOW_HEIGHT;
 
         _window = newWindow;
     }

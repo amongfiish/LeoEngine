@@ -20,7 +20,7 @@ namespace LeoEngine
 {
 
     Graphics::Graphics()
-            : _window("", 800, 600),
+            : _window(),
             _renderer(_window.getSDLWindowObject()),
             _textureLoader("textures")
     {

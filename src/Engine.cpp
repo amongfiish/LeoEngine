@@ -11,32 +11,34 @@
 #include "LeoEngine/Input.hpp"
 #include "LeoEngine/Logger.hpp"
 
+#define DEFAULT_FRAMERATE 60
+
 namespace LeoEngine
 {
 
-    bool running = true;
-
-    Engine::Engine(EngineSettings& settings)
+    Engine::Engine()
+        : _running(false),
+          _framerate(DEFAULT_FRAMERATE)
     {
-        Services::get().getGraphics()->setWindowDimensions(settings.defaultWindowWidth, settings.defaultWindowHeight);
-        Services::get().getGraphics()->setRenderDimensions(settings.defaultRenderWidth, settings.defaultRenderHeight);
-
-        Services::get().getGraphics()->setWindowFullscreen(settings.defaultFullscreen);
-        Services::get().getGraphics()->setWindowBordered(settings.defaultBordered);
-        Services::get().getGraphics()->setWindowResizable(settings.defaultResizable);
-
-        Services::get().getGraphics()->setWindowTitle(settings.defaultWindowTitle);
-
-        Services::get().getGraphics()->setRenderVSync(true);
-
-        _framerate = settings.framerate;
-        
-        Services::get().getLogger()->info("Core", "Engine instance initialized.");
+        Services::get().getLogger()->info("Core", "Engine instance started.");
     }
 
     Engine::~Engine()
     {
 
+    }
+
+    void Engine::setFramerate(int framerate)
+    {
+        if (_running)
+        {
+            std::string errorMessage = "Changing the framerate after the game has started. This will do nothing. How did you even get here?";
+            Services::get().getLogger()->warn("Engine", errorMessage);
+
+            return;
+        }
+
+        _framerate = framerate;
     }
 
     void Engine::runGame(Game& game)
@@ -52,7 +54,8 @@ namespace LeoEngine
         int currentTicks = 0;
 
         Services::get().getLogger()->info("Core", "Entering main loop.");
-        
+
+        _running = true;
         while (_running)
         {
             currentTicks = SDL_GetTicks();
