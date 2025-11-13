@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <memory>
 
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
@@ -12,6 +11,19 @@
 
 namespace LeoEngine
 {
+
+    enum class UIAnchor
+    {
+        TOP_LEFT,
+        TOP_MIDDLE,
+        TOP_RIGHT,
+        MIDDLE_LEFT,
+        MIDDLE,
+        MIDDLE_RIGHT,
+        BOTTOM_LEFT,
+        BOTTOM_MIDDLE,
+        BOTTOM_RIGHT
+    };
 
     class UIElement
     {
@@ -22,16 +34,30 @@ namespace LeoEngine
         template<typename T>
         T *createChild();
 
-        virtual void update() {}
-        virtual void draw() = 0;
+        void activate();
+        void deactivate();
+
+        void update();
+        void draw();
 
     protected:
+        virtual void updateInternal() {};
+        virtual void drawInternal() {};
+
+        // get the global bounds (starting from top left corner) of the element
+        Rectangle<int> getGlobalBounds();
+
         const UIElement *_parent;
         std::vector<UIElement *> _children;
 
-        // used for drawing 
-        bool _isVisible;
-        Rectangle<int> _bounds;
+        bool _isActive;
+
+        UIAnchor _anchor;   // where (on the parent) to anchor the origin
+        UIAnchor _origin;   // where (on this object) to consider the origin
+
+        Rectangle<int> _bounds; // x,y is the offset from the origin;
+                                // w,h is the dimensions of the object
+                                // (to be set by the object itself)
     };
 
     template<typename T>
