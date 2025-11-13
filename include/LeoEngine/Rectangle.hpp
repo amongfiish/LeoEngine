@@ -54,6 +54,14 @@ namespace LeoEngine
             return y + height;
         }
 
+        Rectangle<T>& operator=(const Rectangle<T>& other)
+        {
+            x = other.x;
+            y = other.y;
+            width = other.width;
+            height = other.width;
+        }
+
         T x;
         T y;
         T width;
