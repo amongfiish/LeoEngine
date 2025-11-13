@@ -19,9 +19,14 @@ namespace LeoEngine
         END     // end of file
     };
 
+
     class File
     {
     public:
+        // utility functions
+        static const char getPathSeparator();
+        static const std::string getApplicationDataDirectory();
+
         File(std::string filepath, bool isBinary);
         ~File();
     

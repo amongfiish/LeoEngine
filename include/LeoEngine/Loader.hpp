@@ -10,16 +10,10 @@
 #include <unordered_map>
 #include <string>
 
-#include "LeoEngine/FileUtility.hpp"
+#include "LeoEngine/File.hpp"
 
 namespace LeoEngine
 {
-
-#ifdef _WIN32
-#define PATH_SEPARATOR '\\'
-#else
-#define PATH_SEPARATOR '/'
-#endif
 
     template<class T>
     class Loader
@@ -27,7 +21,8 @@ namespace LeoEngine
     public:
         Loader(std::string subdirectory)
         {
-            std::string basePath = SDL_GetBasePath();
+            const char PATH_SEPARATOR = File::getPathSeparator();
+            const std::string APPLICATION_DATA_DIRECTORY = File::getApplicationDataDirectory();
 
             for (char& c : subdirectory) {
                 if ((c == '\\' || c == '/') && c != PATH_SEPARATOR) {
@@ -35,7 +30,7 @@ namespace LeoEngine
                 }
             }
 
-            _path = basePath + subdirectory + PATH_SEPARATOR;
+            _path = APPLICATION_DATA_DIRECTORY + subdirectory + PATH_SEPARATOR;
         }
 
         ~Loader()

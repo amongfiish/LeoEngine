@@ -4,8 +4,24 @@
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
 
+#if defined(__linux__) || defined(__APPLE__)
+    #define PATH_SEPARATOR '/'
+#elif defined(_WIN32)
+    #define PATH_SEPARATOR '\\'
+#endif
+
 namespace LeoEngine
 {
+
+    const char File::getPathSeparator()
+    {
+        return PATH_SEPARATOR;
+    }
+
+    const std::string File::getApplicationDataDirectory()
+    {
+        return std::string(SDL_GetBasePath());
+    }
     
     File::File(std::string filepath, bool isBinary)
         : _filepath(filepath), _isBinary(isBinary),
