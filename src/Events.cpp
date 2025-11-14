@@ -107,7 +107,7 @@ namespace LeoEngine
         }
     }
 
-    int Events::addCallback(EventType type, CallbackType callback)
+    int Events::addCallback(EventType type, VoidCallbackType callback)
     {
         if (_callbacks.find(type) == _callbacks.end())
         {
@@ -119,8 +119,33 @@ namespace LeoEngine
         return _nextID++;
     }
 
+    int Events::addCallback(EventType type, BoolCallbackType callback)
+    {
+        if (_callbacks.find(type) == _callbacks.end())
+        {
+            _priorityCallbacks.insert(make_pair(type, vector<Pair<int, BoolCallbackType>>()));
+        }
+
+        _priorityCallbacks.at(type).push_back(Pair<int, BoolCallbackType>(_nextID, callback));
+
+        return _nextID++;
+    }
+
     void Events::removeCallback(int id)
     {
+        for (auto eventVectorPair : _priorityCallbacks)
+        {
+            auto pairCallbackVector = eventVectorPair.second;
+            for (int i = 0; i < pairCallbackVector.size(); i++)
+            {
+                if (pairCallbackVector.at(i).first == id)
+                {
+                    pairCallbackVector.erase(pairCallbackVector.begin() + i);
+                    return;
+                }
+            }
+        }
+
         for (auto eventVectorPair : _callbacks)
         {
             auto pairCallbackVector = eventVectorPair.second;
@@ -129,6 +154,7 @@ namespace LeoEngine
                 if (pairCallbackVector.at(i).first == id)
                 {
                     pairCallbackVector.erase(pairCallbackVector.begin() + i);
+                    return;
                 }
             }
         }
@@ -136,6 +162,18 @@ namespace LeoEngine
 
     void Events::broadcast(Event *event)
     {
+        if (_priorityCallbacks.find(event->type) != _callbacks.end())
+        {
+            for (auto callback : _callbacks.at(event->type))
+            {
+                if (callback.second(event) == true)
+                {
+                    // consume event
+                    return;
+                }
+            }
+        }
+        
         if (_callbacks.find(event->type) != _callbacks.end())
         {
             for (auto callback : _callbacks.at(event->type))
