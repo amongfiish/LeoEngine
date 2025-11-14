@@ -33,6 +33,16 @@ namespace LeoEngine
         setPosition(position.first, position.second);
     }
 
+    void UIElement::setAnchor(UIAnchor anchor)
+    {
+        _anchor = anchor;
+    }
+
+    void UIElement::setOrigin(UIAnchor origin)
+    {
+        _origin = origin;
+    }
+
     void UIElement::activate()
     {
         _isActive = true;
@@ -114,6 +124,9 @@ namespace LeoEngine
         globalBounds.x += _bounds.x;
         globalBounds.y += _bounds.y;
         offsetWithAnchor(globalBounds, -_bounds, _origin);
+
+        globalBounds.width = _bounds.width;
+        globalBounds.height = _bounds.height;
 
         return globalBounds;
     }

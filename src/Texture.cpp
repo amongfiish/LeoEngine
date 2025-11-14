@@ -14,13 +14,14 @@ namespace LeoEngine
 {
 
     Texture::Texture(std::string path)
+        : _texture(nullptr)
     {
         SDL_Surface *newTextureSurface = IMG_Load(path.c_str());
         if (newTextureSurface == nullptr)
         {
             std::string message = "File '";
             message = message + path + "' not found";
-            Services::get().getLogger()->critical("Texture", message);
+            Services::get().getLogger()->error("Texture", message);
             Services::get().getLogger()->flush();
             throw std::runtime_error("Couldn't load new texture from file.");
         }
@@ -29,7 +30,7 @@ namespace LeoEngine
         SDL_DestroySurface(newTextureSurface);
         if (newTexture == nullptr)
         {
-            Services::get().getLogger()->critical("Texture", "Couldn't create new texture from surface. From SDL: " + LeoEngine::Services::get().getLogger()->getSDLError());
+            Services::get().getLogger()->error("Texture", "Couldn't create new texture from surface. From SDL: " + LeoEngine::Services::get().getLogger()->getSDLError());
             Services::get().getLogger()->flush();
             throw std::runtime_error("Couldn't create new texture from surface.");
         }
@@ -47,7 +48,7 @@ namespace LeoEngine
         SDL_Texture *newTexture = SDL_CreateTextureFromSurface(Services::get().getGraphics()->getRenderer().getSDLRendererObject(), surface);
         if (newTexture == nullptr)
         {
-            Services::get().getLogger()->critical("Texture", "Failed to create texture from surface.");
+            Services::get().getLogger()->error("Texture", "Failed to create texture from surface.");
 
             Services::get().getLogger()->flush();
             throw std::runtime_error("Failed to create texture from surface.");

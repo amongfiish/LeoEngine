@@ -1,5 +1,3 @@
-#include "LeoEngine/FontManager.hpp"
-
 #if defined(__linux__) || defined(__APPLE__)
     #include <SDL3/SDL.h>
     #define PATH_SEPARATOR '/'
@@ -7,6 +5,12 @@
     #include <SDL.h>
     #define PATH_SEPARATOR '\\'
 #endif
+
+#include <stdexcept>
+
+#include "LeoEngine/FontManager.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 
 namespace LeoEngine
 {
@@ -30,6 +34,14 @@ namespace LeoEngine
 
     TTF_Font *FontManager::getFont(std::string filename, int pointSize)
     {
+        if (filename.empty())
+        {
+            std::string errorMessage = "Empty filename provided to getFont.";
+            Services::get().getLogger()->error("FontManager", errorMessage);
+            Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
+        }
+
         auto foundFontName = _fonts.find(filename);
         if (foundFontName != _fonts.end())
         {
@@ -41,16 +53,35 @@ namespace LeoEngine
 
             std::string fullPath = _path + filename;
             TTF_Font *newFontSize = TTF_OpenFont(fullPath.c_str(), pointSize);
+            TTF_SetFontHinting(newFontSize, TTF_HINTING_NONE);
+            if (newFontSize == nullptr)
+            {
+                std::string errorMessage = std::string("Failed to load font. SDL error text: '") + SDL_GetError() + "'.";
+                Services::get().getLogger()->error("FontManager", errorMessage);
+                Services::get().getLogger()->flush();
+                throw std::runtime_error(errorMessage);
+            }
+
             auto insertResult = foundFontName->second.insert(std::make_pair(pointSize, newFontSize));
 
             return insertResult.first->second;
         }
 
         auto insertResult0 = _fonts.insert(std::make_pair(filename, std::map<int, TTF_Font *>()));
+
         std::string fullPath = _path + filename;
         TTF_Font *newFontSize = TTF_OpenFont(fullPath.c_str(), pointSize);
+        TTF_SetFontHinting(newFontSize, TTF_HINTING_NONE);
+        if (newFontSize == nullptr)
+        {
+            std::string errorMessage = std::string("Failed to load font. SDL error text: '") + SDL_GetError() + "'.";
+            Services::get().getLogger()->error("FontManager", errorMessage);
+            Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
+        }
 
         auto insertResult1 = insertResult0.first->second.insert(std::make_pair(pointSize, newFontSize));
+
         return insertResult1.first->second;
     }
 

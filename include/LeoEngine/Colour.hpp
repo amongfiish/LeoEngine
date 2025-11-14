@@ -35,7 +35,17 @@ namespace LeoEngine
 
         bool operator!=(const Colour& other)
         {
-            return (red == other.red) && (green == other.green) && (blue == other.blue) && (alpha == other.alpha);
+            return (red != other.red) || (green != other.green) || (blue != other.blue) || (alpha != other.alpha);
+        }
+
+        Colour& operator=(const Colour& other)
+        {
+            red = other.red;
+            green = other.green;
+            blue = other.blue;
+            alpha = other.alpha;
+
+            return *this;
         }
 
         int red, green, blue, alpha;

@@ -12,8 +12,8 @@ namespace LeoEngine
     public:
         TextDrawData(std::string fontFilename, int pointSize, Colour colour)
             : fontFilename(fontFilename),
-            pointSize(pointSize),
-            colour(colour)
+              pointSize(pointSize),
+              colour(colour)
         {}
 
         std::string fontFilename;

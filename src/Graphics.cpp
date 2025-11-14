@@ -238,8 +238,10 @@ namespace LeoEngine
     {
         if (renderTarget.getSDLTextureObject() == nullptr)
         {
-            Services::get().getLogger()->error("Graphics", "Attempted to copy render target that wasn't properly initialized.");
-            return;
+            std::string errorMessage = "Attempted to copy render target that wasn't properly initialized.";
+            Services::get().getLogger()->error("Graphics", errorMessage);
+            Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
         }
 
         SDL_SetTextureAlphaMod(renderTarget.getSDLTextureObject(), static_cast<int>(255 * opacity));
@@ -335,8 +337,10 @@ namespace LeoEngine
         SDL_Surface *renderedText = TTF_RenderText_Solid(font, text.c_str(), text.size(), data.colour.toSDLColor());
         if (renderedText == nullptr)
         {
-            Services::get().getLogger()->error("Graphics", "Failed to render text.");
-            return nullptr;
+            std::string errorMessage = std::string("Failed to render text. SDL error text: '") + SDL_GetError() + "'.";
+            Services::get().getLogger()->error("Graphics", errorMessage);
+            Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
         }
 
         std::shared_ptr<Texture> newTexture = std::make_shared<Texture>(renderedText);

@@ -12,7 +12,7 @@ namespace LeoEngine
 {
 
     UIText::UIText()
-        : _textDrawData("", 0, Colour()),
+        : _textDrawData(std::string(), 0, Colour()),
           _renderedText(nullptr)
     {
 
@@ -65,12 +65,14 @@ namespace LeoEngine
         {
             std::string errorMessage = "Skipping renderText call as the font filename hasn't been initialized yet.";
             Services::get().getLogger()->warn("UIText", errorMessage);
+            return;
         }
 
         if (_textDrawData.pointSize <= 0)
         {
             std::string errorMessage = "Skipping renderText call as the font size hasn't been initialized yet.";
             Services::get().getLogger()->warn("UIText", errorMessage);
+            return;
         }
 
         _renderedText = Services::get().getGraphics()->renderText(_text, _textDrawData);

@@ -35,6 +35,9 @@ namespace LeoEngine
         void setPosition(int x, int y);
         void setPosition(const Pair<int, int>& _position);
 
+        void setAnchor(UIAnchor anchor);
+        void setOrigin(UIAnchor origin);
+
         template<typename T>
         T *createChild();
 
