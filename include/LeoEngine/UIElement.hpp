@@ -8,6 +8,7 @@
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
 #include "LeoEngine/Rectangle.hpp"
+#include "LeoEngine/Pair.hpp"
 
 namespace LeoEngine
 {
@@ -30,6 +31,9 @@ namespace LeoEngine
     public:
         UIElement();
         virtual ~UIElement();
+
+        void setPosition(int x, int y);
+        void setPosition(const Pair<int, int>& _position);
 
         template<typename T>
         T *createChild();

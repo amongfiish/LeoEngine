@@ -22,6 +22,17 @@ namespace LeoEngine
         _children.clear();
     }
 
+    void UIElement::setPosition(int x, int y)
+    {
+        _bounds.x = x;
+        _bounds.y = y;
+    }
+
+    void UIElement::setPosition(const Pair<int, int>& position)
+    {
+        setPosition(position.first, position.second);
+    }
+
     void UIElement::activate()
     {
         _isActive = true;

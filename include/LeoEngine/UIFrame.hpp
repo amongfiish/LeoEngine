@@ -12,7 +12,9 @@ namespace LeoEngine
         UIFrame();
         virtual ~UIFrame();
 
-        void setBounds(const Rectangle<int>& bounds);
+        // UIFrame has the dimensions of the render area
+        // as its own dimensions by default
+        void setSize(const Pair<int, int>& size);
     };
 
 }

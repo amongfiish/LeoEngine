@@ -33,6 +33,11 @@ namespace LeoEngine
             return sdlColor;
         }
 
+        bool operator!=(const Colour& other)
+        {
+            return (red == other.red) && (green == other.green) && (blue == other.blue) && (alpha == other.alpha);
+        }
+
         int red, green, blue, alpha;
     };
 

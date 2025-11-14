@@ -18,9 +18,10 @@ namespace LeoEngine
 
     }
 
-    void UIFrame::setBounds(const Rectangle<int>& bounds)
+    void UIFrame::setSize(const Pair<int, int>& size)
     {
-        _bounds = bounds;
+        _bounds.x = size.first;
+        _bounds.y = size.second;
     }
 
 }
