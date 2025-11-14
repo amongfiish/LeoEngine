@@ -66,6 +66,7 @@ namespace LeoEngine
         void setWindowFullscreen(bool isFullscreen);
         void setWindowBordered(bool isBordered);
         void setWindowResizable(bool isResizable);
+        void setWindowGrabCursor(bool grabCursor);
 
         void setWindowTitle(std::string title);
 

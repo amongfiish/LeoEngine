@@ -76,6 +76,11 @@ namespace LeoEngine
         SDL_SetWindowResizable(_window, isResizable);
     }
 
+    void Window::setGrabCursor(bool grabCursor)
+    {
+        SDL_SetWindowMouseGrab(_window, grabCursor);
+    }
+
     void Window::setTitle(std::string title)
     {
         SDL_SetWindowTitle(_window, title.c_str());

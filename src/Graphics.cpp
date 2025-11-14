@@ -279,6 +279,11 @@ namespace LeoEngine
         _window.setResizable(isResizable);
     }
 
+    void Graphics::setWindowGrabCursor(bool grabCursor)
+    {
+        _window.setGrabCursor(grabCursor);
+    }
+
     void Graphics::setWindowTitle(std::string title)
     {
         _window.setTitle(title);
