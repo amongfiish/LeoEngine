@@ -63,15 +63,15 @@ namespace LeoEngine
     {
         if (_textDrawData.fontFilename.empty())
         {
-            std::string errorMessage = "Skipping renderText call as the font filename hasn't been initialized yet.";
-            Services::get().getLogger()->warn("UIText", errorMessage);
+            // std::string errorMessage = "Skipping renderText call as the font filename hasn't been initialized yet.";
+            // Services::get().getLogger()->warn("UIText", errorMessage);
             return;
         }
 
         if (_textDrawData.pointSize <= 0)
         {
-            std::string errorMessage = "Skipping renderText call as the font size hasn't been initialized yet.";
-            Services::get().getLogger()->warn("UIText", errorMessage);
+            // std::string errorMessage = "Skipping renderText call as the font size hasn't been initialized yet.";
+            // Services::get().getLogger()->warn("UIText", errorMessage);
             return;
         }
 
