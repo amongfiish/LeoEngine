@@ -111,17 +111,17 @@ namespace LeoEngine
     {
         if (_callbacks.find(type) == _callbacks.end())
         {
-            _callbacks.insert(make_pair(type, vector<Pair<int, CallbackType>>()));
+            _callbacks.insert(make_pair(type, vector<Pair<int, VoidCallbackType>>()));
         }
 
-        _callbacks.at(type).push_back(Pair<int, CallbackType>(_nextID, callback));
+        _callbacks.at(type).push_back(Pair<int, VoidCallbackType>(_nextID, callback));
 
         return _nextID++;
     }
 
     int Events::addCallback(EventType type, BoolCallbackType callback)
     {
-        if (_callbacks.find(type) == _callbacks.end())
+        if (_priorityCallbacks.find(type) == _priorityCallbacks.end())
         {
             _priorityCallbacks.insert(make_pair(type, vector<Pair<int, BoolCallbackType>>()));
         }
@@ -162,9 +162,9 @@ namespace LeoEngine
 
     void Events::broadcast(Event *event)
     {
-        if (_priorityCallbacks.find(event->type) != _callbacks.end())
+        if (_priorityCallbacks.find(event->type) != _priorityCallbacks.end())
         {
-            for (auto callback : _callbacks.at(event->type))
+            for (auto callback : _priorityCallbacks.at(event->type))
             {
                 if (callback.second(event) == true)
                 {

@@ -5,7 +5,7 @@ namespace LeoEngine
 
     UIElement::UIElement()
         : _parent(nullptr),
-          _isVisible(true),
+          _isActive(true),
           _bounds(0,0,0,0)
     {
 
@@ -48,37 +48,37 @@ namespace LeoEngine
         }
     }
 
-    void offsetWithAnchor(Rectangle<int>& originalRect, Rectangle<int>& offsetRect, UIAnchor anchor)
+    void offsetWithAnchor(Rectangle<int>& originalRect, Rectangle<int> offsetRect, UIAnchor anchor)
     {
         switch (anchor)
         {
-        case TOP_LEFT:
+        case UIAnchor::TOP_LEFT:
             break;
-        case TOP_MIDDLE:
+        case UIAnchor::TOP_MIDDLE:
             originalRect.x += offsetRect.width / 2;
             break;
-        case TOP_RIGHT:
+        case UIAnchor::TOP_RIGHT:
             originalRect.x += offsetRect.width;
             break;
-        case MIDDLE_LEFT:
+        case UIAnchor::MIDDLE_LEFT:
             originalRect.y += offsetRect.height / 2;
             break;
-        case MIDDLE:
+        case UIAnchor::MIDDLE:
             originalRect.x += offsetRect.width / 2;
             originalRect.y += offsetRect.height / 2;
             break;
-        case MIDDLE_RIGHT:
+        case UIAnchor::MIDDLE_RIGHT:
             originalRect.x += offsetRect.width;
             originalRect.y += offsetRect.height / 2;
             break;
-        case BOTTOM_LEFT:
+        case UIAnchor::BOTTOM_LEFT:
             originalRect.y += offsetRect.height;
             break;
-        case BOTTOM_MIDDLE:
+        case UIAnchor::BOTTOM_MIDDLE:
             originalRect.x += offsetRect.width / 2;
             originalRect.y += offsetRect.height;
             break;
-        case BOTTOM_RIGHT:
+        case UIAnchor::BOTTOM_RIGHT:
             originalRect.x += offsetRect.width;
             originalRect.y += offsetRect.height;
             break;
@@ -87,13 +87,13 @@ namespace LeoEngine
         }
     }
 
-    Rectangle<int> UIElement::getGlobalBounds()
+    Rectangle<int> UIElement::getGlobalBounds() const
     {
         Rectangle<int> globalBounds(0, 0, 0, 0);
 
         if (_parent != nullptr)
         {
-            Rectangle<int> parentBounds = _parent.getGlobalBounds();
+            Rectangle<int> parentBounds = _parent->getGlobalBounds();
 
             globalBounds.x += parentBounds.x;
             globalBounds.y += parentBounds.y;

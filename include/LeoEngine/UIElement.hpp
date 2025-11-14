@@ -45,7 +45,7 @@ namespace LeoEngine
         virtual void drawInternal() {};
 
         // get the global bounds (starting from top left corner) of the element
-        Rectangle<int> getGlobalBounds();
+        Rectangle<int> getGlobalBounds() const;
 
         const UIElement *_parent;
         std::vector<UIElement *> _children;

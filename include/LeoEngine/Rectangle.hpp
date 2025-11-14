@@ -73,7 +73,7 @@ namespace LeoEngine
             newRectangle.width = -width;
             newRectangle.height = -height;
 
-            return newRectangle
+            return newRectangle;
         }
 
         T x;
