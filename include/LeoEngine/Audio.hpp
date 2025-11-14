@@ -33,11 +33,17 @@ namespace LeoEngine
         void playOneShot(Sound *sound);
 
         int createTrack();
+
         void setTrackSound(int trackId, Sound *sound);
+
         void addTrackTag(int trackId, std::string tag);
         void removeTrackTag(int trackId, std::string tag);
-        void playTrack(int trackId);
-        void playTag(std::string tag);
+
+        void playTrack(int trackId, int loops=0, double fadeInSeconds=0);
+        void playTag(std::string tag, int loops=0, double fadeInSeconds=0);
+
+        void stopTrack(int trackId, int fadeOutSeconds=0);
+        void stopTag(std::string tag, int fadeOutSeconds=0);
 
     private:
         MIX_Mixer *_mixer;

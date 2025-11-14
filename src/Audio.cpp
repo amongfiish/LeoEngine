@@ -131,7 +131,51 @@ namespace LeoEngine
         MIX_UntagTrack(trackIt->second, tag.c_str());
     }
 
-    void Audio::playTrack(int trackId)
+    SDL_PropertiesID createNewAudioProperties(int loops, double fadeInSeconds)
+    {
+        SDL_PropertiesID newProperties = SDL_CreateProperties();
+
+        SDL_SetNumberProperty(newProperties, MIX_PROP_PLAY_LOOPS_NUMBER, loops);
+        SDL_SetNumberProperty(newProperties, MIX_PROP_PLAY_FADE_IN_FRAMES_NUMBER, static_cast<int>(fadeInSeconds * 1000));
+
+        return newProperties;
+    }
+
+    void Audio::playTrack(int trackId, int loops, double fadeInSeconds)
+    {
+        SDL_PropertiesID newProperties = createNewAudioProperties(loops, fadeInSeconds);
+
+        auto trackIt = _tracks.find(trackId);
+        if (trackIt == _tracks.end())
+        {
+            std::string errorString = "Attempting to set tag of non-existent track.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+        MIX_PlayTrack(trackIt->second, newProperties);
+
+        SDL_DestroyProperties(newProperties);
+    }
+
+    void Audio::playTag(std::string tag, int loops, double fadeInSeconds)
+    {
+        SDL_PropertiesID newProperties = createNewAudioProperties(loops, fadeInSeconds);
+
+        bool success = MIX_PlayTag(_mixer, tag.c_str(), newProperties);
+
+        SDL_DestroyProperties(newProperties);
+
+        if (!success)
+        {
+            std::string errorString = std::string("Unable to play tag '") + tag + "'. SDL_GetError output: '" + SDL_GetError() + "'.";
+            Services::get().getLogger()->error("Audio", errorString);
+            throw std::runtime_error(errorString);
+        }
+
+    }
+
+    void Audio::stopTrack(int trackId, int fadeOutSeconds)
     {
         auto trackIt = _tracks.find(trackId);
         if (trackIt == _tracks.end())
@@ -141,14 +185,18 @@ namespace LeoEngine
             throw std::runtime_error(errorString);
         }
 
-        MIX_PlayTrack(trackIt->second, 0);
+        // why are there still silly inconsistencies like this in the SDL library?
+        int fadeOutFrames = MIX_TrackMSToFrames(trackIt->second, static_cast<int>(fadeOutSeconds * 1000));
+        MIX_StopTrack(trackIt->second, fadeOutFrames);
     }
 
-    void Audio::playTag(std::string tag)
+    void Audio::stopTag(std::string tag, int fadeOutSeconds)
     {
-        if (!MIX_PlayTag(_mixer, tag.c_str(), 0))
+        bool success = MIX_StopTag(_mixer, tag.c_str(), static_cast<int>(fadeOutSeconds * 1000));
+
+        if (!success)
         {
-            std::string errorString = std::string("Unable to play tag '") + tag + "'. SDL_GetError output: '" + SDL_GetError() + "'.";
+            std::string errorString = std::string("Unable to stop tag '") + tag + "'. SDL_GetError output: '" + SDL_GetError() + "'.";
             Services::get().getLogger()->error("Audio", errorString);
             throw std::runtime_error(errorString);
         }
