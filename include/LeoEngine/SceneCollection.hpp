@@ -1,8 +1,10 @@
 #ifndef SCENE_COLLECTION_HPP
 #define SCENE_COLLECTION_HPP
 
+#include <string>
 #include <vector>
 #include <functional>
+#include <stdexcept>
 #include "LeoEngine/Scene.hpp"
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Input.hpp"
@@ -76,7 +78,9 @@ namespace LeoEngine
         {
             if (!sceneIsValid(sceneID))
             {
-                return;
+                std::string errorMessage = "Attempting to set _currentScene with invalid sceneID.";
+                LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                throw std::runtime_error(errorMessage);
             }
 
             if (_currentScene)
@@ -93,7 +97,9 @@ namespace LeoEngine
         {
             if (!sceneIsValid(sceneID))
             {
-                return;
+                std::string errorMessage = "Attempting to set _currentScene with invalid sceneID.";
+                LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                throw std::runtime_error(errorMessage);
             }
 
             Services::get().getInput()->lockInput();
@@ -114,11 +120,6 @@ namespace LeoEngine
         bool sceneIsValid(int sceneID)
         {
             bool sceneIsValid = sceneID >= 0 && sceneID < _scenes.size();
-            if (!sceneIsValid)
-            {
-                Services::get().getLogger()->error("Game", "Provided sceneID is out of range.");
-            }
-
             return sceneIsValid;
         }
 
@@ -126,7 +127,6 @@ namespace LeoEngine
         {
             if (scene == nullptr)
             {
-                Services::get().getLogger()->error("Game", "Provided nullptr in place of scene.");
                 return false;
             }
 
@@ -138,7 +138,6 @@ namespace LeoEngine
                 }
             }
 
-            Services::get().getLogger()->error("Game", "Provided pointer to invalid scene.");
             return false;
         }
 
@@ -146,7 +145,9 @@ namespace LeoEngine
         {
             if (!sceneIsValid(scene))
             {
-                return;
+                std::string errorMessage = "Attempting to set _currentScene with invalid sceneID.";
+                LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                throw std::runtime_error(errorMessage);
             }
 
             if (_currentScene)
@@ -162,7 +163,9 @@ namespace LeoEngine
         {
             if (_currentScene == nullptr)
             {
-                return;
+                std::string errorMessage = "Attempting to update null scene.";
+                LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                throw std::runtime_error(errorMessage);
             }
 
             _currentScene->update(deltaTime);
@@ -172,7 +175,9 @@ namespace LeoEngine
         {
             if (_currentScene == nullptr)
             {
-                return;
+                std::string errorMessage = "Attempting to draw null scene.";
+                LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                throw std::runtime_error(errorMessage);
             }
 
             _currentScene->draw();
