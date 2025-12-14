@@ -80,6 +80,7 @@ namespace LeoEngine
             {
                 std::string errorMessage = "Attempting to set _currentScene with invalid sceneID.";
                 LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                LeoEngine::Services::get().getLogger()->flush();
                 throw std::runtime_error(errorMessage);
             }
 
@@ -99,6 +100,7 @@ namespace LeoEngine
             {
                 std::string errorMessage = "Attempting to set _currentScene with invalid sceneID.";
                 LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                LeoEngine::Services::get().getLogger()->flush();
                 throw std::runtime_error(errorMessage);
             }
 
@@ -147,6 +149,7 @@ namespace LeoEngine
             {
                 std::string errorMessage = "Attempting to set _currentScene with invalid sceneID.";
                 LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                LeoEngine::Services::get().getLogger()->flush();
                 throw std::runtime_error(errorMessage);
             }
 
@@ -165,6 +168,7 @@ namespace LeoEngine
             {
                 std::string errorMessage = "Attempting to update null scene.";
                 LeoEngine::Services::get().getLogger()->error("SceneCollection", errorMessage);
+                LeoEngine::Services::get().getLogger()->flush();
                 throw std::runtime_error(errorMessage);
             }
 
