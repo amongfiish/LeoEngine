@@ -35,6 +35,8 @@ namespace LeoEngine
             throw std::runtime_error("Couldn't create new texture from surface.");
         }
 
+        // nearest scaling mode
+        SDL_SetTextureScaleMode(newTexture, SDL_SCALEMODE_NEAREST);
         _texture = newTexture;
     }
 
