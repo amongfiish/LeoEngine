@@ -51,7 +51,7 @@ namespace LeoEngine
         Sound *oneShotSound = getSound(filename, true);
         if (oneShotSound == NULL)
         {
-            std::string errorString = "Invalid filename provided to playOneShot.";
+            std::string errorString = std::string("Invalid filename provided to playOneShot: '") + filename + "'.";
             Services::get().getLogger()->error("Audio", errorString);
             throw std::runtime_error(errorString);
         }

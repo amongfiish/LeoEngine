@@ -19,11 +19,10 @@ namespace LeoEngine
         SDL_Surface *newTextureSurface = IMG_Load(path.c_str());
         if (newTextureSurface == nullptr)
         {
-            std::string message = "File '";
-            message = message + path + "' not found";
+            std::string message = std::string("Failed to load surface from file with path '") + path + "'.";
             Services::get().getLogger()->error("Texture", message);
             Services::get().getLogger()->flush();
-            throw std::runtime_error("Couldn't load new texture from file.");
+            throw std::runtime_error(message);
         }
 
         SDL_Texture *newTexture = SDL_CreateTextureFromSurface(Services::get().getGraphics()->getRenderer().getSDLRendererObject(), newTextureSurface);

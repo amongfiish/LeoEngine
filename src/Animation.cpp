@@ -8,8 +8,10 @@ namespace LeoEngine
     {
         if (numberOfCells < 0 || cellWidth < 0 || cellHeight < 0 || filename == "" || numberOfCellsPerRow == 0)
         {
-            Services::get().getLogger()->error("Animation", "Attempting to create animation from invalid strip data.");
-            return nullptr;
+            std::string errorMessage = "Attempting to create animation from invalid strip data.";
+            Services::get().getLogger()->error("Animation", errorMessage);
+            Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
         }
 
         std::shared_ptr<Animation> newAnimation = std::make_shared<Animation>(filename, cellWidth, cellHeight);
@@ -69,9 +71,10 @@ namespace LeoEngine
     {
         if (frame < 0 || frame >= _frameData.size())
         {
-            Services::get().getLogger()->error("Animation", "Frame number provided was out of range.");
-
-            return AnimationFrameData(-1, -1, -1);
+            std::string errorMessage = "Frame number provided was out of range.";
+            Services::get().getLogger()->error("Animation", errorMessage);
+            Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
         }
 
         return _frameData.at(frame);

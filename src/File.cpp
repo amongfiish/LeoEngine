@@ -61,7 +61,7 @@ namespace LeoEngine
     {
         if (isOpen())
         {
-            std::string errorMessage = "Re-creating file '" + _filepath + "', which is already open.";
+            std::string errorMessage = std::string("Re-creating file '") + _filepath + "', which is already open.";
             Services::get().getLogger()->error("File", errorMessage);
             Services::get().getLogger()->flush();
             throw std::runtime_error(errorMessage);
