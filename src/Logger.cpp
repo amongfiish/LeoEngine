@@ -83,7 +83,21 @@ namespace LeoEngine
         {
             std::string path = File::getWriteDirectory();
             path += "log.txt";
-            return _spdLoggers.insert(make_pair(id, spdlog::basic_logger_mt(id, path))).first->second;
+
+            std::shared_ptr<spdlog::logger> logger = nullptr;
+
+            try
+            {
+                 logger = spdlog::basic_logger_mt(id, path);
+            }
+            catch (const spdlog::spdlog_ex &ex)
+            {
+                std::string errorMessage = std::string("Failed to create logger. Error: ") + ex.what();
+                spdlog::error(errorMessage);
+                throw std::runtime_error(errorMessage);
+            }
+
+            return _spdLoggers.insert(make_pair(id, logger)).first->second;
         }
 
         return logger->second;
