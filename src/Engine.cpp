@@ -48,20 +48,21 @@ namespace LeoEngine
 
         int quitCallbackID = Services::get().getEvents()->addCallback(EventType::QUIT, bind(&Engine::quitCallback, this, placeholders::_1));
 
-        const int MS_BETWEEN_FRAMES = 1000 / _framerate;
+        const double NS_BETWEEN_FRAMES = 1000000000.0 / _framerate;
 
-        int previousUpdateTicks = SDL_GetTicks();
-        int previousDrawTicks = previousUpdateTicks;
-        int currentTicks = 0;
+        double previousUpdateTicks = SDL_GetTicksNS();
+        double previousDrawTicks = previousUpdateTicks;
+        double currentTicks = 0;
 
-        Services::get().getLogger()->info("Core", "Entering main loop.");
+        Services::get().getLogger()->info("Engine", "Entering main loop.");
 
         _running = true;
         while (_running)
         {
-            currentTicks = SDL_GetTicks();
+            currentTicks = SDL_GetTicksNS();
 
-            double deltaTime = (currentTicks - previousUpdateTicks) / 1000.0;
+            double deltaTime = (currentTicks - previousUpdateTicks) / 1000000000.0;
+            // LeoEngine::Services::get().getLogger()->debug("Engine", "deltaTime: " + std::to_string(deltaTime));
             
             // input update (run BEFORE event polling and game update)
             Services::get().getInput()->update();
@@ -71,7 +72,7 @@ namespace LeoEngine
 
             previousUpdateTicks = currentTicks;
 
-            if (currentTicks - previousDrawTicks >= MS_BETWEEN_FRAMES)
+            if (currentTicks - previousDrawTicks >= NS_BETWEEN_FRAMES)
             {
                 // update camera
                 Services::get().getGraphics()->updateCamera();
@@ -87,7 +88,7 @@ namespace LeoEngine
             }
         }
 
-        Services::get().getLogger()->info("Core", "Exited main loop.");
+        Services::get().getLogger()->info("Engine", "Exited main loop.");
         
         Services::get().getEvents()->removeCallback(quitCallbackID);
     }

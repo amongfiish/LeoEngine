@@ -12,7 +12,7 @@ namespace LeoEngine
 
     Logger::Logger()
     {
-
+        spdlog::set_level(spdlog::level::trace);
     }
 
     Logger::~Logger()
@@ -24,36 +24,42 @@ namespace LeoEngine
     {
         auto logger = getLogger(id);
         logger->trace(content);
+        spdlog::trace(content);
     }
 
     void Logger::debug(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->debug(content);
+        spdlog::debug(content);
     }
 
     void Logger::info(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->info(content);
+        spdlog::info(content);
     }
 
     void Logger::warn(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->warn(content);
+        spdlog::warn(content);
     }
 
     void Logger::error(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->error(content);
+        spdlog::error(content);
     }
 
     void Logger::critical(std::string id, std::string content)
     {
         auto logger = getLogger(id);
         logger->critical(content);
+        spdlog::critical(content);
     }
 
     std::string Logger::getSDLError()

@@ -18,8 +18,14 @@ namespace LeoEngine
 
         Pair(T0 first, T1 second)
             : first(first),
-            second(second)
+              second(second)
         {
+        }
+
+        Pair(const Pair<T0, T1>& other)
+        {
+            first = other.first;
+            second = other.second;
         }
 
         SDL_Point toSDLPoint() const
@@ -27,6 +33,11 @@ namespace LeoEngine
             SDL_Point newPoint = { first, second };
 
             return newPoint;
+        }
+
+        bool operator==(const Pair<T0, T1>& other) const
+        {
+            return (first == other.first && second == other.second);
         }
 
         T0 first;
