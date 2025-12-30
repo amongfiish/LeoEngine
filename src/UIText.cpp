@@ -61,6 +61,11 @@ namespace LeoEngine
 
     void UIText::renderText()
     {
+        if (_text.empty())
+        {
+            return;
+        }
+
         if (_textDrawData.fontFilename.empty())
         {
             // std::string errorMessage = "Skipping renderText call as the font filename hasn't been initialized yet.";
