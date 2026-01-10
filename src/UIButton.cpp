@@ -39,7 +39,7 @@ namespace LeoEngine
 
         const LeoEngine::Pair<int, int>& mousePosition = Services::get().getInput()->getMousePosition();
 
-        if (checkForOverlap(mousePosition, _bounds))
+        if (checkForOverlap(mousePosition, getGlobalBounds()))
         {
             _mouseHovering = true;
         }
