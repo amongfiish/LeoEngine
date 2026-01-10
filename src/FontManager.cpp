@@ -56,7 +56,7 @@ namespace LeoEngine
             TTF_SetFontHinting(newFontSize, TTF_HINTING_NONE);
             if (newFontSize == nullptr)
             {
-                std::string errorMessage = std::string("Failed to load font. SDL error text: '") + SDL_GetError() + "'.";
+                std::string errorMessage = std::string("Failed to load font at path '" + fullPath + "'. SDL error text: '") + SDL_GetError() + "'.";
                 Services::get().getLogger()->error("FontManager", errorMessage);
                 Services::get().getLogger()->flush();
                 throw std::runtime_error(errorMessage);
@@ -74,7 +74,7 @@ namespace LeoEngine
         TTF_SetFontHinting(newFontSize, TTF_HINTING_NONE);
         if (newFontSize == nullptr)
         {
-            std::string errorMessage = std::string("Failed to load font. SDL error text: '") + SDL_GetError() + "'.";
+            std::string errorMessage = std::string("Failed to load font at path '" + fullPath + "'. SDL error text: '") + SDL_GetError() + "'.";
             Services::get().getLogger()->error("FontManager", errorMessage);
             Services::get().getLogger()->flush();
             throw std::runtime_error(errorMessage);
