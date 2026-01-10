@@ -57,7 +57,7 @@ namespace LeoEngine
     {
         if (_isActive)
         {
-            updateInternal();
+            _update();
         }
     }
 
@@ -65,7 +65,7 @@ namespace LeoEngine
     {
         if (_isActive)
         {
-            drawInternal();
+            _draw();
         }
     }
 

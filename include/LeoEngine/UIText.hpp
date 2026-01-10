@@ -25,7 +25,7 @@ namespace LeoEngine
     private:
         void renderText();
 
-        virtual void drawInternal() override;
+        virtual void _draw() override;
 
         std::string _text;
         TextDrawData _textDrawData;

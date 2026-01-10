@@ -48,8 +48,8 @@ namespace LeoEngine
         void draw();
 
     protected:
-        virtual void updateInternal() {};
-        virtual void drawInternal() {};
+        virtual void _update() {};
+        virtual void _draw() {};
 
         // get the global bounds (starting from top left corner) of the element
         Rectangle<int> getGlobalBounds() const;

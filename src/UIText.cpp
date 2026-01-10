@@ -87,7 +87,7 @@ namespace LeoEngine
         _bounds.height = textDimensions.second;
     }
 
-    void UIText::drawInternal()
+    void UIText::_draw()
     {
         if (_renderedText == nullptr)
         {
