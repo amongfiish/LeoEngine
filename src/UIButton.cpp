@@ -58,16 +58,10 @@ namespace LeoEngine
 
         EventMouseButtonDown *mouseButtonEvent = dynamic_cast<EventMouseButtonDown *>(event);
 
-        if (mouseButtonEvent->mouseButton == _MOUSE_BUTTON)
+        if (mouseButtonEvent->mouseButton == _MOUSE_BUTTON && _mouseHovering)
         {
-            const LeoEngine::Pair<int, int>& mousePosition = Services::get().getInput()->getMousePosition();
-
-            if (checkForOverlap(mousePosition, _bounds))
-            {
-                _clickFunction();
-
-                return true;
-            }
+            _clickFunction();
+            return true;
         }
 
         return false;

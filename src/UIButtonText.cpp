@@ -43,8 +43,8 @@ namespace LeoEngine
             outlineColour = &_outlineColourHover;
         }
 
-        Services::get().getGraphics()->drawRectangle(*backgroundColour, true, globalBounds);
-        Services::get().getGraphics()->drawRectangle(*outlineColour, false, globalBounds);
+        Services::get().getGraphics()->drawRectangleCameraless(*backgroundColour, true, globalBounds);
+        Services::get().getGraphics()->drawRectangleCameraless(*outlineColour, false, globalBounds);
 
         _text->draw();
     }
