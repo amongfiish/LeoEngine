@@ -162,6 +162,10 @@ namespace LeoEngine
     std::string File::read(int numberOfBytes)
     {
         char *inputBuffer = new char[numberOfBytes];
+        for (int i = 0; i < numberOfBytes; i++)
+        {
+            inputBuffer[i] = 0;
+        }
         void *voidInputBuffer = static_cast<void *>(inputBuffer);
 
         if (SDL_GetIOStatus(_sdlFile) == SDL_IO_STATUS_EOF)
