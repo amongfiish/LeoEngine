@@ -6,6 +6,7 @@ namespace LeoEngine
     UIElement::UIElement()
         : _parent(nullptr),
           _isActive(true),
+          _isVisible(true),
           _bounds(0,0,0,0)
     {
 
@@ -53,6 +54,16 @@ namespace LeoEngine
         _isActive = false;
     }
 
+    void UIElement::show()
+    {
+        _isVisible = true;
+    }
+    
+    void UIElement::hide()
+    {
+        _isVisible = false;
+    }
+
     void UIElement::update()
     {
         if (_isActive)
@@ -63,7 +74,7 @@ namespace LeoEngine
 
     void UIElement::draw()
     {
-        if (_isActive)
+        if (_isVisible)
         {
             _draw();
         }

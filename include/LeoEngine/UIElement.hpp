@@ -44,6 +44,9 @@ namespace LeoEngine
         void activate();
         void deactivate();
 
+        void show();
+        void hide();
+
         void update();
         void draw();
 
@@ -58,6 +61,7 @@ namespace LeoEngine
         std::vector<UIElement *> _children;
 
         bool _isActive;
+        bool _isVisible;
 
         UIAnchor _anchor;   // where (on the parent) to anchor the origin
         UIAnchor _origin;   // where (on this object) to consider the origin
