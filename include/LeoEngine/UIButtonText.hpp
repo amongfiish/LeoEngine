@@ -13,7 +13,7 @@ namespace LeoEngine
     class UIButtonText : public UIButton
     {
     public:
-        UIButtonText(std::function<void(void)> clickFunction);
+        UIButtonText(std::function<void(void)> clickFunction, bool unhoverOnClick);
         virtual ~UIButtonText() {};
 
         UIText& getText();

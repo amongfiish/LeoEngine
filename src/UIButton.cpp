@@ -9,9 +9,10 @@
 namespace LeoEngine
 {
 
-    UIButton::UIButton(std::function<void(void)> clickFunction)
+    UIButton::UIButton(std::function<void(void)> clickFunction, bool unhoverOnClick)
         : _mouseHovering(false),
-          _clickFunction(clickFunction)
+          _clickFunction(clickFunction),
+          _unhoverOnClick(unhoverOnClick)
     {
         // explicit casting is necessary as Events::addCallback is overloaded
         _mouseMovedCallbackID = Services::get().getEvents()->addCallback(EventType::MOUSE_MOVED, static_cast<VoidCallbackType>(std::bind(&UIButton::_mouseMovedCallback, this, std::placeholders::_1)));
@@ -60,6 +61,11 @@ namespace LeoEngine
 
         if (mouseButtonEvent->mouseButton == _MOUSE_BUTTON && _mouseHovering)
         {
+            if (_unhoverOnClick)
+            {
+                _mouseHovering = false;
+            }
+
             _clickFunction();
             return true;
         }

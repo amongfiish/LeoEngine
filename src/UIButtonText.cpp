@@ -6,8 +6,8 @@
 namespace LeoEngine
 {
 
-    UIButtonText::UIButtonText(std::function<void(void)> clickFunction)
-        : UIButton(clickFunction),
+    UIButtonText::UIButtonText(std::function<void(void)> clickFunction, bool unhoverOnClick)
+        : UIButton(clickFunction, unhoverOnClick),
           _text(createChild<UIText>()),
           _backgroundColour(0xFF, 0xFF, 0xFF, 0xFF),
           _backgroundColourHover(0xAA, 0xAA, 0xAA, 0xFF),

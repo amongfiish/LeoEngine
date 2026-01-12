@@ -14,7 +14,7 @@ namespace LeoEngine
     class UIButton : public UIElement
     {
     public:
-        UIButton(std::function<void(void)> clickFunction);
+        UIButton(std::function<void(void)> clickFunction, bool unhoverOnClick);
         virtual ~UIButton();
 
         void setSize(int width, int height);
@@ -31,6 +31,8 @@ namespace LeoEngine
         std::function<void(void)> _clickFunction;
 
         bool _mouseHovering;
+        // should _mouseHovering be set to false in _clickCallback?
+        bool _unhoverOnClick;
     };
 
 }
