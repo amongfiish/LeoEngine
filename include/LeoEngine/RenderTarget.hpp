@@ -1,11 +1,7 @@
 #ifndef RENDER_TARGET_HPP
 #define RENDER_TARGET_HPP
 
-#if defined(_WIN32)
-    #include <SDL.h>
-#elif defined(__linux__) || defined(__APPLE__)
-    #include <SDL3/SDL.h>
-#endif
+#include <SDL3/SDL.h>
 
 #include <stdexcept>
 #include "LeoEngine/Services.hpp"

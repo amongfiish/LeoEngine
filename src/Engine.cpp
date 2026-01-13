@@ -1,8 +1,4 @@
-#if defined(__linux__) || defined(__APPLE__)
-    #include <SDL3/SDL.h>
-#elif defined(_WIN32)
-    #include <SDL.h>
-#endif
+#include <SDL3/SDL.h>
 
 #include "LeoEngine/Engine.hpp"
 #include "LeoEngine/Services.hpp"
@@ -20,7 +16,7 @@ namespace LeoEngine
         : _running(false),
           _framerate(DEFAULT_FRAMERATE)
     {
-        Services::get().getLogger()->info("Core", "Engine instance started.");
+        
     }
 
     Engine::~Engine()
@@ -54,7 +50,7 @@ namespace LeoEngine
         double previousDrawTicks = previousUpdateTicks;
         double currentTicks = 0;
 
-        Services::get().getLogger()->info("Engine", "Entering main loop.");
+        Services::get().getLogger()->info("Engine", "Engine started.");
 
         _running = true;
         while (_running)
@@ -88,7 +84,7 @@ namespace LeoEngine
             }
         }
 
-        Services::get().getLogger()->info("Engine", "Exited main loop.");
+        Services::get().getLogger()->info("Engine", "Engine finished.");
         
         Services::get().getEvents()->removeCallback(quitCallbackID);
     }

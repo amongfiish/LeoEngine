@@ -1,7 +1,10 @@
 #include <stdexcept>
+#include <SDL3_image/SDL_image.h>
 #include "LeoEngine/Window.hpp"
 #include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 #include "LeoEngine/Events.hpp"
+#include "LeoEngine/File.hpp"
 #include "LeoEngine/EventWindowResize.hpp"
 
 #define DEFAULT_WINDOW_TITLE "LeoDefaultWindowTitle"
@@ -84,6 +87,22 @@ namespace LeoEngine
     void Window::setTitle(std::string title)
     {
         SDL_SetWindowTitle(_window, title.c_str());
+    }
+
+    void Window::setIcon(std::string filename)
+    {
+        std::string filePath = LeoEngine::File::getApplicationDataDirectory() + LeoEngine::File::getPathSeparator() + filename;
+
+        SDL_Surface* iconSurface = IMG_Load(filePath.c_str());
+        if (iconSurface == nullptr)
+        {
+            std::string errorMessage = "Could not load icon from file '" + filePath + "'. SDL Error: '" + SDL_GetError() + "'";
+            LeoEngine::Services::get().getLogger()->error("Window", errorMessage);
+            throw std::runtime_error(errorMessage);
+        }
+        
+        SDL_SetWindowIcon(_window, iconSurface);
+        SDL_DestroySurface(iconSurface);
     }
 
     void Window::windowResizeCallback(Event *event)

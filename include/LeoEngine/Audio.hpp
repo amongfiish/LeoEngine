@@ -1,13 +1,8 @@
 #ifndef AUDIO_HPP
 #define AUDIO_HPP
 
-#if defined(__linux__) || defined(__APPLE__)
-    #include <SDL3/SDL.h>
-    #include <SDL3_mixer/SDL_mixer.h>
-#elif defined(_WIN32)
-    #include <SDL.h>
-    #include <SDL_mixer.h>
-#endif
+#include <SDL3/SDL.h>
+#include <SDL3_mixer/SDL_mixer.h>
 
 #include <array>
 #include <string>

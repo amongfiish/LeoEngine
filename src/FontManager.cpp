@@ -1,8 +1,8 @@
+#include <SDL3/SDL.h>
+
 #if defined(__linux__) || defined(__APPLE__)
-    #include <SDL3/SDL.h>
     #define PATH_SEPARATOR '/'
 #elif defined(_WIN32)
-    #include <SDL.h>
     #define PATH_SEPARATOR '\\'
 #endif
 

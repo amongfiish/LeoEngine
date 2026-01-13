@@ -1,12 +1,6 @@
-#if defined(__linux__) || defined(__APPLE__)
-    #include <SDL3/SDL.h>
-    #include <SDL3_image/SDL_image.h>
-    #include <SDL3_ttf/SDL_ttf.h>
-#elif defined(_WIN32)
-    #include <SDL.h>
-    #include <SDL_image.h>
-    #include <SDL_ttf.h>
-#endif
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 #include <stdexcept>
 #include <iostream>
@@ -287,6 +281,11 @@ namespace LeoEngine
     void Graphics::setWindowTitle(std::string title)
     {
         _window.setTitle(title);
+    }
+
+    void Graphics::setWindowIcon(std::string filename)
+    {
+        _window.setIcon(filename);
     }
 
     void Graphics::setRenderDimensions(int width, int height)

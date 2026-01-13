@@ -1,0 +1,1 @@
+to build on windows-- put all the DLL and LIB files in the build/x64-XXX folder (of the app it's being built with)

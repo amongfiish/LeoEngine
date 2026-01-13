@@ -6,6 +6,10 @@
 #include "LeoEngine/Graphics.hpp"
 #include "LeoEngine/Input.hpp"
 
+#ifdef _WIN32
+#define M_PI 3.14
+#endif
+
 namespace LeoEngine
 {
 

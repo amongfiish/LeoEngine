@@ -1,11 +1,7 @@
 #ifndef FONT_MANAGER_HPP
 #define FONT_MANAGER_HPP
 
-#if defined(__linux__) || defined(__APPLE__)
-    #include <SDL3_ttf/SDL_ttf.h>
-#elif defined(_WIN32)
-    #include <SDL_ttf.h>
-#endif
+#include <SDL3_ttf/SDL_ttf.h>
 
 #include <map>
 #include <string>

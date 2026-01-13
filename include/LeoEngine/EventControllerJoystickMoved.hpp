@@ -1,11 +1,7 @@
 #ifndef EVENT_CONTROLLER_JOYSTICK_MOVED_HPP
 #define EVENT_CONTROLLER_JOYSTICK_MOVED_HPP
 
-#if defined(__linux__) || defined(__APPLE__)
-    #include <SDL3/SDL.h>
-#elif defined(_WIN32)
-    #include <SDL.h>
-#endif
+#include <SDL3/SDL.h>
 
 #include "LeoEngine/Event.hpp"
 

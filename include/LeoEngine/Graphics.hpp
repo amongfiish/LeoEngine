@@ -69,6 +69,7 @@ namespace LeoEngine
         void setWindowGrabCursor(bool grabCursor);
 
         void setWindowTitle(std::string title);
+        void setWindowIcon(std::string filename);
 
         // renderer functions
         void setRenderDimensions(int width, int height);

@@ -1,11 +1,7 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
-#if defined(__linux__) || defined(__APPLE__)
-    #include <SDL3/SDL.h>
-#elif defined(_WIN32)
-    #include <SDL.h>
-#endif
+#include <SDL3/SDL.h>
 #include <string>
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/Colour.hpp"
@@ -35,6 +31,7 @@ namespace LeoEngine
         void setGrabCursor(bool grabCursor);
 
         void setTitle(std::string title);
+        void setIcon(std::string filename);
 
     private:
         void windowResizeCallback(Event *event);
