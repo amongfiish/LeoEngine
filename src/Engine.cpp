@@ -13,10 +13,9 @@ namespace LeoEngine
 {
 
     Engine::Engine()
-        : _running(false),
-          _framerate(DEFAULT_FRAMERATE)
+        : _running(false)
     {
-        
+        setFramerate(DEFAULT_FRAMERATE);
     }
 
     Engine::~Engine()
@@ -26,16 +25,7 @@ namespace LeoEngine
 
     void Engine::setFramerate(int framerate)
     {
-        // this should be changed at some point to allow dynamic framerates
-        if (_running)
-        {
-            std::string errorMessage = "Changing the framerate after the game has started. This will do nothing. How did you even get here?";
-            Services::get().getLogger()->warn("Engine", errorMessage);
-
-            return;
-        }
-
-        _framerate = framerate;
+        _nsBetweenFrames = static_cast<long long>(1000000000.0 / framerate);
     }
 
     void Engine::runGame(Game& game)
@@ -44,11 +34,9 @@ namespace LeoEngine
 
         int quitCallbackID = Services::get().getEvents()->addCallback(EventType::QUIT, bind(&Engine::quitCallback, this, placeholders::_1));
 
-        const double NS_BETWEEN_FRAMES = 1000000000.0 / _framerate;
-
-        double previousUpdateTicks = SDL_GetTicksNS();
-        double previousDrawTicks = previousUpdateTicks;
-        double currentTicks = 0;
+        long long previousUpdateTicks = SDL_GetTicksNS();
+        long long previousDrawTicks = previousUpdateTicks;
+        long long currentTicks = 0;
 
         Services::get().getLogger()->info("Engine", "Engine started.");
 
@@ -68,7 +56,7 @@ namespace LeoEngine
 
             previousUpdateTicks = currentTicks;
 
-            if (currentTicks - previousDrawTicks >= NS_BETWEEN_FRAMES)
+            if (currentTicks - previousDrawTicks >= _nsBetweenFrames)
             {
                 // update camera
                 Services::get().getGraphics()->updateCamera();

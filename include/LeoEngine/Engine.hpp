@@ -23,7 +23,7 @@ namespace LeoEngine
 
         bool _running;
 
-        int _framerate;
+        long long _nsBetweenFrames;
     };
 
 }
