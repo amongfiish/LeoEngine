@@ -12,9 +12,10 @@ namespace LeoEngine
         : _backgroundColour(0x00, 0x00, 0x00, 0xFF),
           _soundEffectFilename(""),
           _duration(0),
-          _remainingFrames(0),
+          _remainingDuration(0),
           _endEventSent(false),
-          _nextSceneID(0)
+          _nextSceneID(0),
+          _fadeDuration(1.0)
     {
 
     }
@@ -32,7 +33,7 @@ namespace LeoEngine
         }
 
         _animatedSprite.setCurrentFrame(0);
-        _remainingFrames = _duration;
+        _remainingDuration = _duration;
 
         _endEventSent = false;
 
@@ -46,9 +47,11 @@ namespace LeoEngine
 
     void SceneSplashScreen::update(double deltaTime)
     {
-        if (_remainingFrames <= 0 && !_endEventSent)
+        if (_remainingDuration <= 0 && !_endEventSent)
         {
             EventChangeScene newEvent(_nextSceneID, true);
+            newEvent.fadeDuration = _fadeDuration;
+
             Event *castEvent = dynamic_cast<Event *>(&newEvent);
             Services::get().getEvents()->broadcast(castEvent);
 
@@ -57,7 +60,7 @@ namespace LeoEngine
 
         _animatedSprite.update(deltaTime);
 
-        _remainingFrames -= deltaTime;
+        _remainingDuration -= deltaTime;
     }
 
     void SceneSplashScreen::draw()
@@ -67,7 +70,7 @@ namespace LeoEngine
         _animatedSprite.draw();
     }
 
-    void SceneSplashScreen::setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle<int>> position, int duration, Colour backgroundColour, std::string soundEffectFilename)
+    void SceneSplashScreen::setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle<int>> position, double duration, Colour backgroundColour, std::string soundEffectFilename)
     {
         _animatedSprite.setAnimation(animation);
         _animatedSprite.setLoop(false);
@@ -84,6 +87,11 @@ namespace LeoEngine
     void SceneSplashScreen::setNextSceneID(int id)
     {
         _nextSceneID = id;
+    }
+
+    void SceneSplashScreen::setFadeDuration(double fadeDuration)
+    {
+        _fadeDuration = fadeDuration;
     }
 
 }

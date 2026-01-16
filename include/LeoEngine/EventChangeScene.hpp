@@ -12,7 +12,8 @@ namespace LeoEngine
         EventChangeScene(const int sceneID, const bool fade)
             : Event(EventType::CHANGE_SCENE),
             sceneID(sceneID),
-            fade(fade)
+            fade(fade),
+            fadeDuration(1.0)
         {
 
         }
@@ -24,6 +25,8 @@ namespace LeoEngine
 
         const int sceneID;
         const bool fade;
+
+        double fadeDuration;
     };
 
 }

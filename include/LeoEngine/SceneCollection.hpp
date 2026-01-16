@@ -234,7 +234,7 @@ namespace LeoEngine
             }
             else
             {
-                fadeToScene(castEvent->sceneID, 2.0);
+                fadeToScene(castEvent->sceneID, castEvent->fadeDuration);
             }
         }
 

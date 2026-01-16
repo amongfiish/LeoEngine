@@ -24,20 +24,24 @@ namespace LeoEngine
         virtual void update(double deltaTime) override;
         virtual void draw() override;
 
-        void setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle<int>> position, int duration, Colour backgroundColour, std::string soundEffectFilename);
+        void setSplash(std::shared_ptr<Animation> animation, std::shared_ptr<Rectangle<int>> position, double duration, Colour backgroundColour, std::string soundEffectFilename);
 
         void setNextSceneID(int id);
+
+        void setFadeDuration(double fadeDuration);
 
     private:
         SpriteAnimated _animatedSprite;
         Colour _backgroundColour;
         std::string _soundEffectFilename;
 
-        int _duration;
-        double _remainingFrames;
+        double _duration;
+        double _remainingDuration;
         bool _endEventSent;
 
         int _nextSceneID;
+
+        double _fadeDuration;
     };
 
 }
