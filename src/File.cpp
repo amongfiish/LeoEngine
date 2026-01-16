@@ -1,3 +1,4 @@
+#include <SDL3/SDL.h>
 #include <stdexcept>
 
 #include "LeoEngine/File.hpp"
@@ -38,8 +39,8 @@ namespace LeoEngine
     }
     
     File::File(std::string filepath, bool isBinary)
-        : _filepath(filepath), _isBinary(isBinary),
-          _sdlFile(NULL), _isOpen(false)
+        : _filepath(filepath),
+          _isOpen(false)
     {
         if (_writeDirectory.empty())
         {
@@ -67,11 +68,11 @@ namespace LeoEngine
             throw std::runtime_error(errorMessage);
         }
 
-        _sdlFile = SDL_IOFromFile(_filepath.c_str(), "w+");
-        if (_sdlFile == NULL)
+        _file.open(_filepath.c_str(), std::fstream::in | std::fstream::out | std::fstream::trunc);
+        if (_file.fail())
         {
             _isOpen = false;
-            std::string errorMessage = "Failed to create file '" + _filepath + "'. SDL error text: '" + SDL_GetError() + "'.";
+            std::string errorMessage = "Failed to create file '" + _filepath + "'.";
             Services::get().getLogger()->error("File", errorMessage);
             Services::get().getLogger()->flush();
             throw std::runtime_error(errorMessage);
@@ -90,11 +91,11 @@ namespace LeoEngine
             throw std::runtime_error(errorMessage);
         }
 
-        _sdlFile = SDL_IOFromFile(_filepath.c_str(), "r+");
-        if (_sdlFile == NULL)
+        _file.open(_filepath.c_str(), std::fstream::in | std::fstream::out);
+        if (_file.fail())
         {
             _isOpen = false;
-            std::string errorMessage = "Failed to create file '" + _filepath + "'. SDL error text: '" + SDL_GetError() + "'.";
+            std::string errorMessage = "Failed to open file '" + _filepath + "'.";
             Services::get().getLogger()->error("File", errorMessage);
             Services::get().getLogger()->flush();
             throw std::runtime_error(errorMessage);
@@ -113,14 +114,26 @@ namespace LeoEngine
             throw std::runtime_error(errorMessage);
         }
 
-        SDL_CloseIO(_sdlFile);
-        _sdlFile = NULL;
+        _file.close();
         _isOpen = false;
     }
 
-    bool File::exists() const
+    bool File::exists()
     {
-        return SDL_GetPathInfo(_filepath.c_str(), NULL);
+        if (isOpen())
+        {
+            return true;
+        }
+
+        _file.open(_filepath.c_str(), std::fstream::in);
+        if (_file.fail())
+        {
+            return false;
+        }
+
+        _file.close();
+
+        return true;
     }
 
     bool File::isOpen() const
@@ -135,14 +148,17 @@ namespace LeoEngine
         switch (origin)
         {
         case FileSeekOrigin::START:
-            seekResult = SDL_SeekIO(_sdlFile, numberOfBytes, SDL_IO_SEEK_SET);
+            _file.seekp(numberOfBytes, std::fstream::beg);
             break;
+
         case FileSeekOrigin::CURSOR:
-            seekResult = SDL_SeekIO(_sdlFile, numberOfBytes, SDL_IO_SEEK_CUR);
+            _file.seekp(numberOfBytes, std::fstream::cur);
             break;
+
         case FileSeekOrigin::END:
-            seekResult = SDL_SeekIO(_sdlFile, numberOfBytes, SDL_IO_SEEK_END);
+            _file.seekp(numberOfBytes, std::fstream::end);
             break;
+
         default:
             std::string errorMessage = "Invalid seek origin provided.";
             Services::get().getLogger()->error("File", errorMessage);
@@ -152,57 +168,83 @@ namespace LeoEngine
 
         if (seekResult < 0)
         {
-            std::string errorMessage = std::string("Failed to seek. SDL error text: '") + SDL_GetError() + "'.";
+            std::string errorMessage = std::string("Failed to seek.");
             Services::get().getLogger()->error("File", errorMessage);
             Services::get().getLogger()->flush();
             throw std::runtime_error(errorMessage);
         }
     }
 
-    std::string File::read(int numberOfBytes)
+    std::string File::readWord()
     {
-        char *inputBuffer = new char[numberOfBytes];
-        for (int i = 0; i < numberOfBytes; i++)
+        if (!isOpen())
         {
-            inputBuffer[i] = 0;
-        }
-        void *voidInputBuffer = static_cast<void *>(inputBuffer);
-
-        if (SDL_GetIOStatus(_sdlFile) == SDL_IO_STATUS_EOF)
-        {
-            return "";
+            std::string errorMessage = "Cannot read from an unopened file.";
+            LeoEngine::Services::get().getLogger()->error("File", errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
+            throw errorMessage;
         }
 
-        SDL_ReadIO(_sdlFile, voidInputBuffer, numberOfBytes);
-        std::string inputString(inputBuffer);
+        std::string word;
 
-        delete[] inputBuffer;
+        _file >> word;
 
-        if (inputString.empty())
-        {
-            std::string errorMessage = "Failed to read from file '" + _filepath + "'. SDL error text: '" + SDL_GetError() + "'.";
-            Services::get().getLogger()->error("File", errorMessage);
-            Services::get().getLogger()->flush();
-            throw std::runtime_error(errorMessage);
-        }
-
-        return inputString;
+        return word;
     }
+
+    std::string File::readLine()
+    {
+        if (!isOpen())
+        {
+            std::string errorMessage = "Cannot read from an unopened file.";
+            LeoEngine::Services::get().getLogger()->error("File", errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
+            throw errorMessage;
+        }
+
+        std::string line;
+
+        std::getline(_file, line);
+
+        return line;
+    }
+
+    /*
+    std::string File::readBytes(int numberOfBytes)
+    {
+        if (!isOpen())
+        {
+            std::string errorMessage = "Cannot read from an unopened file.";
+            LeoEngine::Services::get().getLogger()->error("File", errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
+            throw errorMessage;
+        }
+
+        std::string content;
+
+        _file.read(
+    }
+    */
 
     void File::write(std::string data)
     {
-        if (data.size() < 1)
+        if (!isOpen())
+        {
+            std::string errorMessage = "Cannot write from an unopened file.";
+            LeoEngine::Services::get().getLogger()->error("File", errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
+            throw errorMessage;
+        }
+
+        if (data.empty())
         {
             return;
         }
 
-        const char *cStringData = data.c_str();
-        const void *voidData = static_cast<const void *>(cStringData);
-
-        int writeResult = SDL_WriteIO(_sdlFile, voidData, data.size());
-        if (writeResult < data.size())
+        _file << data;
+        if (_file.fail())
         {
-            std::string errorString = "Failed to write data '" + data + "' to file '" + _filepath + "'. SDL error text: '" + SDL_GetError() + "'.";
+            std::string errorString = "Failed to write data '" + data + "' to file '" + _filepath + "'.";
             Services::get().getLogger()->error("File", errorString);
             Services::get().getLogger()->flush();
             throw std::runtime_error(errorString);

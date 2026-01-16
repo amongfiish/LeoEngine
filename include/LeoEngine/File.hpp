@@ -1,8 +1,7 @@
 #ifndef FILE_HPP
 #define FILE_HPP
 
-#include <SDL3/SDL.h>
-
+#include <fstream>
 #include <string>
 
 namespace LeoEngine
@@ -36,13 +35,15 @@ namespace LeoEngine
 
         void close();
 
-        bool exists() const;
+        bool exists();
         bool isOpen() const;
 
         // distance is in bytes; can be negative
         void seek(FileSeekOrigin origin, int numberOfBytes);
         
-        std::string read(int numberOfBytes);
+        std::string readWord();
+        std::string readLine();
+        // std::string readBytes(int numberOfBytes);
 
         void write(std::string data);
 
@@ -50,9 +51,8 @@ namespace LeoEngine
         static std::string _writeDirectory;
 
         std::string _filepath;
-        bool _isBinary;
 
-        SDL_IOStream *_sdlFile;
+        std::fstream _file;
 
         bool _isOpen;
     };
