@@ -38,9 +38,8 @@ namespace LeoEngine
         return _writeDirectory;
     }
     
-    File::File(std::string filepath, bool isBinary)
-        : _filepath(filepath),
-          _isOpen(false)
+    File::File(std::string filename, bool isBinary)
+        : _isOpen(false)
     {
         if (_writeDirectory.empty())
         {
@@ -48,6 +47,8 @@ namespace LeoEngine
             _writeDirectory = defaultPrefPath;
             SDL_free(defaultPrefPath);
         }
+
+        _filepath = _writeDirectory + filename;
     }
 
     File::~File()
@@ -166,7 +167,7 @@ namespace LeoEngine
             throw std::runtime_error(errorMessage);
         }
 
-        if (seekResult < 0)
+        if (_file.fail())
         {
             std::string errorMessage = std::string("Failed to seek.");
             Services::get().getLogger()->error("File", errorMessage);
