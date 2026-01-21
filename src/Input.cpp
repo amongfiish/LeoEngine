@@ -8,6 +8,8 @@
 #include "LeoEngine/EventMouseWheelMoved.hpp"
 #include "LeoEngine/EventControllerAdded.hpp"
 #include "LeoEngine/EventControllerRemoved.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 
 namespace LeoEngine
 {
@@ -77,6 +79,14 @@ namespace LeoEngine
         }
 
         return KeyState::RELEASED;
+    }
+
+    std::string Input::getKeyName(KeyCode keyCode) const
+    {
+        const char * sdlKeyName = SDL_GetKeyName(static_cast<SDL_Keycode>(keyCode));
+
+        std::string keyName(sdlKeyName);
+        return keyName;
     }
 
     const Pair<int, int>& Input::getMousePosition() const

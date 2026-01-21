@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <string>
 #include "LeoEngine/KeyCode.hpp"
 #include "LeoEngine/KeyState.hpp"
 #include "LeoEngine/Pair.hpp"
@@ -26,6 +27,7 @@ namespace LeoEngine
         void unlockInput();
 
         KeyState getKeyState(KeyCode keyCode) const;
+        std::string getKeyName(KeyCode keyCode) const;
 
         const Pair<int, int> &getMousePosition() const;
         KeyState getMouseButtonState(int buttonID) const;
