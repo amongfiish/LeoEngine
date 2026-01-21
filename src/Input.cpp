@@ -116,6 +116,11 @@ namespace LeoEngine
             case EventType::KEY_DOWN:
             {
                 EventKeyDown *castEvent = dynamic_cast<EventKeyDown *>(event);
+                if (castEvent->isRepeat)
+                {
+                    break;
+                }
+
                 if (_keyStates.find(castEvent->keyCode) == _keyStates.end())
                 {
                     _keyStates.insert(make_pair(castEvent->keyCode, KeyState::PRESSED));
@@ -124,6 +129,9 @@ namespace LeoEngine
                 {
                     _keyStates.at(castEvent->keyCode) = KeyState::PRESSED;
                 }
+
+                std::string traceMessage = "Key '" + getKeyName(castEvent->keyCode) + "' pressed down.";
+                LeoEngine::Services::get().getLogger()->trace("Input", traceMessage);
 
                 break;
             }
@@ -139,6 +147,9 @@ namespace LeoEngine
                 {
                     _keyStates.at(castEvent->keyCode) = KeyState::RELEASED;
                 }
+
+                std::string traceMessage = "Key '" + getKeyName(castEvent->keyCode) + "' released.";
+                LeoEngine::Services::get().getLogger()->trace("Input", traceMessage);
 
                 break;
             }
