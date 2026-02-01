@@ -71,6 +71,9 @@ namespace LeoEngine
         void setWindowTitle(std::string title);
         void setWindowIcon(std::string filename);
 
+        void hideCursor();
+        void showCursor();
+
         // renderer functions
         void setRenderDimensions(int width, int height);
         void setRenderDimensions(Pair<int, int> &dimensions);

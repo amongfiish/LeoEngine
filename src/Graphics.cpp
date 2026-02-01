@@ -288,6 +288,16 @@ namespace LeoEngine
         _window.setIcon(filename);
     }
 
+    void Graphics::hideCursor()
+    {
+        SDL_HideCursor();
+    }
+
+    void Graphics::showCursor()
+    {
+        SDL_ShowCursor();
+    }
+
     void Graphics::setRenderDimensions(int width, int height)
     {
         _renderer.setLogicalDimensions(width, height);
