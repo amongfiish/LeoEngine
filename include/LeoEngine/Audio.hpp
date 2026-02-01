@@ -35,10 +35,10 @@ namespace LeoEngine
         void removeTrackTag(int trackId, std::string tag);
 
         void playTrack(int trackId, int loops=0, double fadeInSeconds=0);
-        void playTag(std::string tag, int loops=0, double fadeInSeconds=0);
+        void playTag(std::string tag, int loops=0);
 
-        void stopTrack(int trackId, int fadeOutSeconds=0);
-        void stopTag(std::string tag, int fadeOutSeconds=0);
+        void stopTrack(int trackId, double fadeOutSeconds=0);
+        void stopTag(std::string tag);
 
     private:
         MIX_Mixer *_mixer;
