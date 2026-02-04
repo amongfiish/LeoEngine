@@ -310,7 +310,7 @@ namespace LeoEngine
 
     Pair<int, int> Graphics::getRenderDimensions() const
     {
-        return _renderer.getLogicalDimensions();
+        return _renderer.getRenderDimensions();
     }
 
     void Graphics::setRenderScalingFactor(float scalingX, float scalingY)
