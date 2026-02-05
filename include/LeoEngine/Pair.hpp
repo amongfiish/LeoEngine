@@ -36,6 +36,37 @@ namespace LeoEngine
             return (first == other.first && second == other.second);
         }
 
+        LeoEngine::Pair<T0, T1> operator+(const Pair<T0, T1>& other) const
+        {
+            return LeoEngine::Pair<T0, T1>(first + other.first, second + other.second);
+        }
+
+        LeoEngine::Pair<T0, T1> operator-(const Pair<T0, T1>& other) const
+        {
+            return LeoEngine::Pair<T0, T1>(first - other.first, second - other.second);
+        }
+
+        LeoEngine::Pair<T0, T1> operator*(const Pair<T0, T1>& other) const
+        {
+            return LeoEngine::Pair<T0, T1>(first * other.first, second * other.second);
+        }
+
+        LeoEngine::Pair<T0, T1> operator/(const Pair<T0, T1>& other) const
+        {
+            return LeoEngine::Pair<T0, T1>(first / other.first, second / other.second);
+        }
+
+        LeoEngine::Pair<T0, T1> operator*(double multiple) const
+        {
+            return LeoEngine::Pair<T0, T1>(first * multiple, second * multiple);
+        }
+
+        template<class T2, class T3>
+        operator LeoEngine::Pair<T2, T3>() const
+        {
+            return LeoEngine::Pair<T2, T3>(static_cast<T2>(first), static_cast<T3>(second));
+        }
+
         T0 first;
         T1 second;
     };
