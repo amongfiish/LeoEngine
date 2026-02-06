@@ -16,6 +16,7 @@ namespace LeoEngine
             : first(first),
               second(second)
         {
+
         }
 
         Pair(const Pair<T0, T1>& other)

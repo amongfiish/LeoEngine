@@ -2,6 +2,7 @@
 #define SPRITE_STATIC_HPP
 
 #include <string>
+#include "LeoEngine/Drawable.hpp"
 #include "LeoEngine/TextureDrawData.hpp"
 #include "LeoEngine/Rectangle.hpp"
 #include "LeoEngine/Pair.hpp"
@@ -9,14 +10,15 @@
 namespace LeoEngine
 {
 
-    class SpriteStatic
+    class SpriteStatic : public Drawable
     {
     public:
         SpriteStatic();
         SpriteStatic(std::string textureFilename);
         SpriteStatic(std::string textureFilename, TextureDrawData textureDrawData);
+        virtual ~SpriteStatic() {}
 
-        void draw();
+        virtual void draw() override;
 
         const TextureDrawData *getDrawData() const;
 
