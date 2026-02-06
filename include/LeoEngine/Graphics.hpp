@@ -78,6 +78,7 @@ namespace LeoEngine
         void setRenderDimensions(int width, int height);
         void setRenderDimensions(Pair<int, int> &dimensions);
 
+        Pair<int, int> getLogicalDimensions() const;
         Pair<int, int> getRenderDimensions() const;
 
         void setRenderScalingFactor(float scalingX, float scalingY);

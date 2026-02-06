@@ -308,6 +308,11 @@ namespace LeoEngine
         _renderer.setLogicalDimensions(dimensions);
     }
 
+    Pair<int, int> Graphics::getLogicalDimensions() const
+    {
+        return _renderer.getLogicalDimensions();
+    }
+
     Pair<int, int> Graphics::getRenderDimensions() const
     {
         return _renderer.getRenderDimensions();
