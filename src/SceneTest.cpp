@@ -29,10 +29,10 @@ namespace LeoEngine
 
     void SceneTest::update(double deltaTime)
     {
-        Pair<int, int> windowDimensions = Services::get().getGraphics()->getRenderDimensions();
+        Pair<int, int> renderDimensions = Services::get().getGraphics()->getRenderDimensions();
 
-        _rectangle.width = windowDimensions.first;
-        _rectangle.height = windowDimensions.second;
+        _rectangle.width = renderDimensions.first;
+        _rectangle.height = renderDimensions.second;
     }
 
     void SceneTest::draw()

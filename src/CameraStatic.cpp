@@ -3,6 +3,11 @@
 namespace LeoEngine
 {
 
+    CameraStatic::CameraStatic()
+    {
+        setPosition(0, 0);
+    }
+
     CameraStatic::CameraStatic(int x, int y)
     {
         setPosition(x, y);

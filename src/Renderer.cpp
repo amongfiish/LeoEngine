@@ -53,6 +53,14 @@ namespace LeoEngine
         return dimensions;
     }
 
+    Pair<int, int> Renderer::getRenderDimensions() const
+    {
+        Pair<int, int> dimensions;
+        SDL_GetCurrentRenderOutputSize(_renderer, &dimensions.first, &dimensions.second);
+
+        return dimensions;
+    }
+
     void Renderer::setScalingFactor(float scalingX, float scalingY)
     {
         SDL_SetRenderScale(_renderer, scalingX, scalingY);

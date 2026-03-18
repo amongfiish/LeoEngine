@@ -2,20 +2,21 @@
 #define SPRITE_ANIMATED_HPP
 
 #include <memory>
+#include "LeoEngine/Drawable.hpp"
 #include "LeoEngine/Animation.hpp"
 #include "LeoEngine/SpriteStatic.hpp"
 
 namespace LeoEngine
 {
 
-    class SpriteAnimated
+    class SpriteAnimated : public Drawable
     {
     public:
         SpriteAnimated();
-        ~SpriteAnimated();
+        virtual ~SpriteAnimated();
 
-        void update(double deltaTime);
-        void draw();
+        virtual void update(double deltaTime) override;
+        virtual void draw() override;
 
         void setAnimation(std::shared_ptr<Animation> animation);
 

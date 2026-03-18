@@ -44,8 +44,18 @@ namespace LeoEngine
                 break;
 
             case SDL_EVENT_KEY_DOWN:
-                newEvent = static_cast<Event *>(new EventKeyDown(static_cast<const KeyCode>(e.key.key)));
+            {
+                EventKeyDown *newKeyDownEvent = new EventKeyDown(static_cast<const KeyCode>(e.key.key));
+
+                if (e.key.repeat)
+                {
+                    newKeyDownEvent->isRepeat = true;
+                }
+
+                newEvent = static_cast<Event *>(newKeyDownEvent);
+
                 break;
+            }
 
             case SDL_EVENT_KEY_UP:
                 newEvent = static_cast<Event *>(new EventKeyUp(static_cast<const KeyCode>(e.key.key)));

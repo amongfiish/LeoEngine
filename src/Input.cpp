@@ -8,6 +8,8 @@
 #include "LeoEngine/EventMouseWheelMoved.hpp"
 #include "LeoEngine/EventControllerAdded.hpp"
 #include "LeoEngine/EventControllerRemoved.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 
 namespace LeoEngine
 {
@@ -79,6 +81,14 @@ namespace LeoEngine
         return KeyState::RELEASED;
     }
 
+    std::string Input::getKeyName(KeyCode keyCode) const
+    {
+        const char * sdlKeyName = SDL_GetKeyName(static_cast<SDL_Keycode>(keyCode));
+
+        std::string keyName(sdlKeyName);
+        return keyName;
+    }
+
     const Pair<int, int>& Input::getMousePosition() const
     {
         return _mousePosition;
@@ -106,6 +116,11 @@ namespace LeoEngine
             case EventType::KEY_DOWN:
             {
                 EventKeyDown *castEvent = dynamic_cast<EventKeyDown *>(event);
+                if (castEvent->isRepeat)
+                {
+                    break;
+                }
+
                 if (_keyStates.find(castEvent->keyCode) == _keyStates.end())
                 {
                     _keyStates.insert(make_pair(castEvent->keyCode, KeyState::PRESSED));
@@ -114,6 +129,9 @@ namespace LeoEngine
                 {
                     _keyStates.at(castEvent->keyCode) = KeyState::PRESSED;
                 }
+
+                std::string traceMessage = "Key '" + getKeyName(castEvent->keyCode) + "' pressed down.";
+                LeoEngine::Services::get().getLogger()->trace("Input", traceMessage);
 
                 break;
             }
@@ -129,6 +147,9 @@ namespace LeoEngine
                 {
                     _keyStates.at(castEvent->keyCode) = KeyState::RELEASED;
                 }
+
+                std::string traceMessage = "Key '" + getKeyName(castEvent->keyCode) + "' released.";
+                LeoEngine::Services::get().getLogger()->trace("Input", traceMessage);
 
                 break;
             }

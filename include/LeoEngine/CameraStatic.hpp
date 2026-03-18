@@ -10,6 +10,7 @@ namespace LeoEngine
     class CameraStatic : public Camera
     {
     public:
+        CameraStatic();
         CameraStatic(int x, int y);
         CameraStatic(Pair<int, int> &position);
 

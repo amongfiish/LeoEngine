@@ -8,7 +8,7 @@ namespace LeoEngine
 
     Logger::Logger()
     {
-        spdlog::set_level(spdlog::level::trace);
+        spdlog::set_level(spdlog::level::debug);
     }
 
     Logger::~Logger()

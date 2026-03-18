@@ -131,20 +131,18 @@ namespace LeoEngine
         MIX_UntagTrack(trackIt->second, tag.c_str());
     }
 
-    SDL_PropertiesID createNewAudioProperties(int loops, double fadeInSeconds)
+    SDL_PropertiesID createNewAudioProperties(int loops, int fadeInFrames)
     {
         SDL_PropertiesID newProperties = SDL_CreateProperties();
 
         SDL_SetNumberProperty(newProperties, MIX_PROP_PLAY_LOOPS_NUMBER, loops);
-        SDL_SetNumberProperty(newProperties, MIX_PROP_PLAY_FADE_IN_FRAMES_NUMBER, static_cast<int>(fadeInSeconds * 1000));
+        SDL_SetNumberProperty(newProperties, MIX_PROP_PLAY_FADE_IN_FRAMES_NUMBER, fadeInFrames);
 
         return newProperties;
     }
 
     void Audio::playTrack(int trackId, int loops, double fadeInSeconds)
     {
-        SDL_PropertiesID newProperties = createNewAudioProperties(loops, fadeInSeconds);
-
         auto trackIt = _tracks.find(trackId);
         if (trackIt == _tracks.end())
         {
@@ -153,14 +151,16 @@ namespace LeoEngine
             throw std::runtime_error(errorString);
         }
 
+        SDL_PropertiesID newProperties = createNewAudioProperties(loops, MIX_TrackMSToFrames(trackIt->second, fadeInSeconds*1000));
+
         MIX_PlayTrack(trackIt->second, newProperties);
 
         SDL_DestroyProperties(newProperties);
     }
 
-    void Audio::playTag(std::string tag, int loops, double fadeInSeconds)
+    void Audio::playTag(std::string tag, int loops)
     {
-        SDL_PropertiesID newProperties = createNewAudioProperties(loops, fadeInSeconds);
+        SDL_PropertiesID newProperties = createNewAudioProperties(loops, 0);
 
         bool success = MIX_PlayTag(_mixer, tag.c_str(), newProperties);
 
@@ -175,7 +175,7 @@ namespace LeoEngine
 
     }
 
-    void Audio::stopTrack(int trackId, int fadeOutSeconds)
+    void Audio::stopTrack(int trackId, double fadeOutSeconds)
     {
         auto trackIt = _tracks.find(trackId);
         if (trackIt == _tracks.end())
@@ -190,9 +190,9 @@ namespace LeoEngine
         MIX_StopTrack(trackIt->second, fadeOutFrames);
     }
 
-    void Audio::stopTag(std::string tag, int fadeOutSeconds)
+    void Audio::stopTag(std::string tag)
     {
-        bool success = MIX_StopTag(_mixer, tag.c_str(), static_cast<int>(fadeOutSeconds * 1000));
+        bool success = MIX_StopTag(_mixer, tag.c_str(), 0);
 
         if (!success)
         {

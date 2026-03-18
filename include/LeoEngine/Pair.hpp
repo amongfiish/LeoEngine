@@ -17,6 +17,7 @@ namespace LeoEngine
             : first(first),
               second(second)
         {
+
         }
 
         Pair(const Pair<T0, T1>& other)
@@ -66,6 +67,12 @@ namespace LeoEngine
         {
             std::string s = "Pair(" + std::to_string(first) + "," + std::to_string(second) + ")";
             return s;
+        }
+
+        template<class T2, class T3>
+        operator LeoEngine::Pair<T2, T3>() const
+        {
+            return LeoEngine::Pair<T2, T3>(static_cast<T2>(first), static_cast<T3>(second));
         }
 
         T0 first;

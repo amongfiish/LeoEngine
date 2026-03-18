@@ -12,7 +12,8 @@ namespace LeoEngine
     public:
         EventKeyDown(const KeyCode keyCode)
             : Event(EventType::KEY_DOWN),
-            keyCode(keyCode)
+              keyCode(keyCode),
+              isRepeat(false)
         {
         }
 
@@ -21,6 +22,7 @@ namespace LeoEngine
         }
 
         const KeyCode keyCode;
+        bool isRepeat;
     };
 
 }
