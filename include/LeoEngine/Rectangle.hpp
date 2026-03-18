@@ -2,6 +2,7 @@
 #define RECTANGLE_HPP
 
 #include <SDL3/SDL.h>
+#include <string>
 
 #include "LeoEngine/Pair.hpp"
 
@@ -70,6 +71,12 @@ namespace LeoEngine
             newRectangle.height = -height;
 
             return newRectangle;
+        }
+
+        std::string toString() const
+        {
+            std::string s = "Rectangle(" + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(width) + "," + std::to_string(height) + ")";
+            return s;
         }
 
         T x;

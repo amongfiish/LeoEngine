@@ -97,10 +97,17 @@ namespace LeoEngine
 
         void setCameraX(double x);
         void setCameraY(double y);
+
         void setCameraPosition(double x, double y);
         void setCameraPosition(const Pair<double, double> &position);
 
+        void setCameraZoom(double x, double y);
+        void setCameraZoom(const Pair<double, double> &zoom);
+
         const Pair<double, double>& getCameraPosition() const;
+
+        const Pair<double, double>& getCameraZoom() const;
+
         Rectangle<int> getVisibleRegionRectangle() const;
 
         void updateCamera();

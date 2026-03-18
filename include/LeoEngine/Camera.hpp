@@ -10,7 +10,8 @@ namespace LeoEngine
     {
     public:
         Camera()
-            : _position(0, 0)
+            : _position(0.0, 0.0),
+              _zoom(1.0, 1.0)
         {
 
         }
@@ -24,12 +25,19 @@ namespace LeoEngine
         void setPosition(const Pair<int, int> &position);
         void setPosition(const Pair<double, double> &position);
 
+        void setZoom(double x, double y);
+        void setZoom(const Pair<int, int> &zoom);
+        void setZoom(const Pair<double, double> &zoom);
+
         const Pair<double, double> &getPosition() const;
+
+        const Pair<double, double> &getZoom() const;
 
         virtual void update() = 0;
 
     protected:
         Pair<double, double> _position;
+        Pair<double, double> _zoom;
     };
 
 }

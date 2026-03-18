@@ -1,4 +1,6 @@
 #include "LeoEngine/CameraFollow.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 
 namespace LeoEngine
 {
@@ -54,12 +56,12 @@ namespace LeoEngine
 
         if (!_xLock)
         {
-            _position.first = _targetPosition->first + _xOffset;
+            _position.first = _targetPosition->first + (_xOffset / _zoom.first);
         }
         
         if (!_yLock)
         {
-            _position.second = _targetPosition->second + _yOffset;
+            _position.second = _targetPosition->second + (_yOffset / _zoom.second);
         }
     }
 

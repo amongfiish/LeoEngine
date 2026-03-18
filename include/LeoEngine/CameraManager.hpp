@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "LeoEngine/Pair.hpp"
+#include "LeoEngine/Rectangle.hpp"
 
 namespace LeoEngine
 {
@@ -25,18 +26,23 @@ namespace LeoEngine
         void setCamera(int cameraID);
 
         void setCameraPosition(double x, double y);
-        void setCameraPosition(const Pair<int, int> &position);
-        void setCameraPosition(const Pair<double, double> &position);
-        const Pair<double, double> &getPosition() const;
+        void setCameraPosition(const Pair<int, int>& position);
+        void setCameraPosition(const Pair<double, double>& position);
 
-        void adjustPosition(Pair<int, int> &position);
+        void setCameraZoom(double x, double y);
+        void setCameraZoom(const Pair<int, int>& zoom);
+        void setCameraZoom(const Pair<double, double>& zoom);
+
+        const Pair<double, double>& getPosition() const;
+
+        const Pair<double, double>& getZoom() const;
+
         void adjustPosition(Pair<double, double> &position);
+        void adjustRectangle(Rectangle<double>& rectangle);
 
     private:
         Camera *_currentCamera = nullptr;
         std::vector<Camera *> _cameras;
-
-        Pair<double, double> _fallbackPosition;
     };
 
 }

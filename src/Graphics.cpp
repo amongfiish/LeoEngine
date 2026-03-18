@@ -42,7 +42,7 @@ namespace LeoEngine
 
     void Graphics::drawPoint(const Colour& colour, const int x, const int y)
     {
-        Pair<int, int> adjustedPoint(x, y);
+        Pair<double, double> adjustedPoint(x, y);
         _cameras.adjustPosition(adjustedPoint);
         
         _renderer.setDrawColour(colour);
@@ -56,8 +56,8 @@ namespace LeoEngine
 
     void Graphics::drawLine(const Colour& colour, const int x0, const int y0, const int x1, const int y1)
     {
-        Pair<int, int> adjustedStart(x0, y0);
-        Pair<int, int> adjustedEnd(x1, y1);
+        Pair<double, double> adjustedStart(x0, y0);
+        Pair<double, double> adjustedEnd(x1, y1);
         _cameras.adjustPosition(adjustedStart);
         _cameras.adjustPosition(adjustedEnd);
 
@@ -77,9 +77,9 @@ namespace LeoEngine
 
     void Graphics::drawRectangle(const Colour& colour, bool fill, const int x, const int y, const int width, const int height)
     {
-        Pair<int, int> adjustedOrigin(x, y);
-        _cameras.adjustPosition(adjustedOrigin);
-        SDL_FRect newFRect = { static_cast<float>(adjustedOrigin.first), static_cast<float>(adjustedOrigin.second), static_cast<float>(width), static_cast<float>(height) };
+        Rectangle<double> adjustedRectangle(x, y, width, height);
+        _cameras.adjustRectangle(adjustedRectangle);
+        SDL_FRect newFRect = { static_cast<float>(adjustedRectangle.x), static_cast<float>(adjustedRectangle.y), static_cast<float>(adjustedRectangle.width), static_cast<float>(adjustedRectangle.height) };
 
         _renderer.setDrawColour(colour);
         if (fill)
@@ -168,15 +168,14 @@ namespace LeoEngine
         }
         else
         {
-            Pair<int, int> adjustedOrigin(data.destinationRectangle->x, data.destinationRectangle->y);
-            _cameras.adjustPosition(adjustedOrigin);
+            Rectangle<double> adjustedRectangle(data.destinationRectangle->x, data.destinationRectangle->y, data.destinationRectangle->width, data.destinationRectangle->height);
 
-            Rectangle<int> adjustedRectangle(adjustedOrigin.first, adjustedOrigin.second, data.destinationRectangle->width, data.destinationRectangle->height);
+            _cameras.adjustRectangle(adjustedRectangle);
 
-            destFRect.x = adjustedRectangle.x;
-            destFRect.y = adjustedRectangle.y;
-            destFRect.w = adjustedRectangle.width;
-            destFRect.h = adjustedRectangle.height;
+            destFRect.x = static_cast<float>(adjustedRectangle.x);
+            destFRect.y = static_cast<float>(adjustedRectangle.y);
+            destFRect.w = static_cast<float>(adjustedRectangle.width);
+            destFRect.h = static_cast<float>(adjustedRectangle.height);
             p_destFRect = &destFRect;
         }
 
@@ -215,11 +214,14 @@ namespace LeoEngine
     void Graphics::drawTextureCameraless(Texture& texture, const TextureDrawData &data)
     {
         const Pair<double, double> cameraPosition = _cameras.getPosition();
-        _cameras.setCameraPosition(0, 0);
+        const Pair<double, double> cameraZoom = _cameras.getZoom();
+        _cameras.setCameraPosition(0.0, 0.0);
+        _cameras.setCameraZoom(1.0, 1.0);
 
         drawTexture(texture, data);
 
         _cameras.setCameraPosition(cameraPosition);
+        _cameras.setCameraZoom(cameraZoom);
     }
 
     void Graphics::drawTextureCameraless(Texture& texture)
@@ -388,16 +390,39 @@ namespace LeoEngine
         _cameras.setCameraPosition(position);
     }
 
+    void Graphics::setCameraZoom(double x, double y)
+    {
+        _cameras.setCameraZoom(x, y);
+    }
+
+    void Graphics::setCameraZoom(const Pair<double, double>& zoom)
+    {
+        _cameras.setCameraZoom(zoom);
+    }
+
     const Pair<double, double>& Graphics::getCameraPosition() const
     {
         return _cameras.getPosition();
+    }
+
+    const Pair<double, double>& Graphics::getCameraZoom() const
+    {
+        return _cameras.getZoom();
     }
 
     Rectangle<int> Graphics::getVisibleRegionRectangle() const
     {
         const Pair<double, double>& cameraPosition = getCameraPosition();
         Pair<int, int> cameraPositionAsIntegers(cameraPosition.first, cameraPosition.second);
-        Rectangle<int> visibleRegion(cameraPositionAsIntegers, getRenderDimensions());
+
+        const Pair<double, double>& cameraZoom = _cameras.getZoom();
+        const Pair<int, int>& renderDimensions = getRenderDimensions();
+
+        Pair<int, int> scaledRenderDimensions;
+        scaledRenderDimensions.first = static_cast<int>(renderDimensions.first / cameraZoom.first);
+        scaledRenderDimensions.second = static_cast<int>(renderDimensions.second / cameraZoom.second);
+
+        Rectangle<int> visibleRegion(cameraPositionAsIntegers, scaledRenderDimensions);
 
         return visibleRegion;
     }

@@ -2,6 +2,7 @@
 #define PAIR_HPP
 
 #include <SDL3/SDL.h>
+#include <string>
 
 namespace LeoEngine
 {
@@ -34,6 +35,37 @@ namespace LeoEngine
         bool operator==(const Pair<T0, T1>& other) const
         {
             return (first == other.first && second == other.second);
+        }
+
+        Pair<T0, T1> operator*(const Pair<T0, T1>& other) const
+        {
+            return Pair<T0, T1>(first * other.first, second * other.second);
+        }
+
+        Pair<T0, T1> operator/(const Pair<T0, T1>& other) const
+        {
+            return Pair<T0, T1>(first / other.first, second / other.second);
+        }
+
+        Pair<T0, T1> operator+(const Pair<T0, T1>& other) const
+        {
+            return Pair<T0, T1>(first + other.first, second + other.second);
+        }
+
+        Pair<T0, T1> operator-(const Pair<T0, T1>& other) const
+        {
+            return Pair<T0, T1>(first - other.first, second - other.second);
+        }
+
+        Pair<T0, T1> operator-() const
+        {
+            return Pair<T0, T1>(-first, -second);
+        }
+
+        std::string toString() const
+        {
+            std::string s = "Pair(" + std::to_string(first) + "," + std::to_string(second) + ")";
+            return s;
         }
 
         T0 first;

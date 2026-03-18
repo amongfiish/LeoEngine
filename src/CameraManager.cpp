@@ -1,13 +1,21 @@
 #include <iostream>
 #include "LeoEngine/CameraManager.hpp"
 #include "LeoEngine/Camera.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 using namespace std;
 
 namespace LeoEngine
 {
 
+    void throwCameraNotSetError()
+    {
+        std::string errorMessage("Current camera has not been set.");
+        LeoEngine::Services::get().getLogger()->error("CameraManager", errorMessage);
+        throw std::runtime_error(errorMessage);
+    }
+
     CameraManager::CameraManager()
-        : _fallbackPosition()
     {
 
     }
@@ -51,7 +59,7 @@ namespace LeoEngine
     {
         if (_currentCamera == nullptr)
         {
-            return;
+            throwCameraNotSetError();
         }
 
         _currentCamera->setPosition(x, y);
@@ -61,7 +69,7 @@ namespace LeoEngine
     {
         if (_currentCamera == nullptr)
         {
-            return;
+            throwCameraNotSetError();
         }
 
         _currentCamera->setPosition(position);
@@ -71,46 +79,96 @@ namespace LeoEngine
     {
         if (_currentCamera == nullptr)
         {
-            return;
+            throwCameraNotSetError();
         }
 
         _currentCamera->setPosition(position);
+    }
+
+    void CameraManager::setCameraZoom(double x, double y)
+    {
+        if (_currentCamera == nullptr)
+        {
+            throwCameraNotSetError();
+        }
+
+        _currentCamera->setZoom(x, y);
+    }
+
+    void CameraManager::setCameraZoom(const Pair<int, int>& zoom)
+    {
+        if (_currentCamera == nullptr)
+        {
+            throwCameraNotSetError();
+        }
+
+        _currentCamera->setZoom(zoom);
+    }
+
+    void CameraManager::setCameraZoom(const Pair<double, double>& zoom)
+    {
+        if (_currentCamera == nullptr)
+        {
+            throwCameraNotSetError();
+        }
+
+        _currentCamera->setZoom(zoom);
     }
 
     const Pair<double, double>& CameraManager::getPosition() const
     {
         if (_currentCamera == nullptr)
         {
-            return _fallbackPosition;
+            throwCameraNotSetError();
         }
 
         return _currentCamera->getPosition();
     }
 
-    void CameraManager::adjustPosition(Pair<int, int>& position)
+    const Pair<double, double>& CameraManager::getZoom() const
     {
         if (_currentCamera == nullptr)
         {
-            return;
+            throwCameraNotSetError();
         }
 
-        const Pair<double, double>& cameraPosition = _currentCamera->getPosition();
-
-        position.first -= cameraPosition.first;
-        position.second -= cameraPosition.second;
+        return _currentCamera->getZoom();
     }
 
     void CameraManager::adjustPosition(Pair<double, double>& position)
     {
         if (_currentCamera == nullptr)
         {
-            return;
+            throwCameraNotSetError();
         }
 
-        const Pair<double, double>& cameraPosition = _currentCamera->getPosition();
+        const Pair<double, double>& cameraPosition = getPosition();
+        const Pair<double, double>& zoomFactor = getZoom();
 
-        position.first -= cameraPosition.first;
-        position.second -= cameraPosition.second;
+        Pair<double, double> scaledRelativePosition = (position - cameraPosition) * zoomFactor;
+
+        position = scaledRelativePosition;
+    }
+
+    void CameraManager::adjustRectangle(Rectangle<double>& rectangle)
+    {
+        if (_currentCamera == nullptr)
+        {
+            throwCameraNotSetError();
+        }
+
+        const Pair<double, double>& cameraPosition = getPosition();
+        const Pair<double, double>& zoomFactor = getZoom();
+
+        Pair<double, double> position(rectangle.x, rectangle.y);
+
+        Pair<double, double> scaledRelativePosition = (position - cameraPosition) * zoomFactor;
+
+        rectangle.x = scaledRelativePosition.first;
+        rectangle.y = scaledRelativePosition.second;
+        rectangle.width *= zoomFactor.first;
+        rectangle.height *= zoomFactor.second;
     }
 
 }
+
