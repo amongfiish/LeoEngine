@@ -63,6 +63,10 @@ namespace LeoEngine
         {
             _position.second = _targetPosition->second + (_yOffset / _zoom.second);
         }
+
+        // LeoEngine::Services::get().getLogger()->debug("CameraFollow", "Position: " + _position.toString());
+        // LeoEngine::Services::get().getLogger()->debug("CameraFollow", "xOffset: " + std::to_string(_xOffset));
+        // LeoEngine::Services::get().getLogger()->debug("CameraFollow", "yOffset: " + std::to_string(_yOffset));
     }
 
 }

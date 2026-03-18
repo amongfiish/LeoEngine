@@ -56,7 +56,9 @@ namespace LeoEngine
     Pair<int, int> Renderer::getRenderDimensions() const
     {
         Pair<int, int> dimensions;
-        SDL_GetCurrentRenderOutputSize(_renderer, &dimensions.first, &dimensions.second);
+        // getCurrentRenderOutputSize might be better, but it seems to not adjust by the logical size...
+        // had to change it back for Mission Garter.
+        SDL_GetRenderLogicalPresentation(_renderer, &dimensions.first, &dimensions.second, nullptr);
 
         return dimensions;
     }

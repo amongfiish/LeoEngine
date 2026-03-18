@@ -146,7 +146,7 @@ namespace LeoEngine
         const Pair<double, double>& zoomFactor = getZoom();
 
         Pair<double, double> scaledRelativePosition = (position - cameraPosition) * zoomFactor;
-
+        
         position = scaledRelativePosition;
     }
 
@@ -162,7 +162,11 @@ namespace LeoEngine
 
         Pair<double, double> position(rectangle.x, rectangle.y);
 
+        // LeoEngine::Services::get().getLogger()->debug("CameraManager", "Position: " + position.toString());
+
         Pair<double, double> scaledRelativePosition = (position - cameraPosition) * zoomFactor;
+
+        // LeoEngine::Services::get().getLogger()->debug("CameraManager", "Scaled relative position: " + scaledRelativePosition.toString());
 
         rectangle.x = scaledRelativePosition.first;
         rectangle.y = scaledRelativePosition.second;
