@@ -1,6 +1,7 @@
 #include <iostream>
 #include "LeoEngine/CameraManager.hpp"
 #include "LeoEngine/Camera.hpp"
+#include "LeoEngine/CameraStatic.hpp"
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
 using namespace std;
@@ -8,16 +9,10 @@ using namespace std;
 namespace LeoEngine
 {
 
-    void throwCameraNotSetError()
-    {
-        std::string errorMessage("Current camera has not been set.");
-        LeoEngine::Services::get().getLogger()->error("CameraManager", errorMessage);
-        throw std::runtime_error(errorMessage);
-    }
-
     CameraManager::CameraManager()
     {
-
+        addCamera(new CameraStatic);
+        setCamera(0);
     }
 
     CameraManager::~CameraManager()
@@ -57,91 +52,46 @@ namespace LeoEngine
 
     void CameraManager::setCameraPosition(double x, double y)
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         _currentCamera->setPosition(x, y);
     }
 
     void CameraManager::setCameraPosition(const Pair<int, int>& position)
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         _currentCamera->setPosition(position);
     }
 
     void CameraManager::setCameraPosition(const Pair<double, double>& position)
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         _currentCamera->setPosition(position);
     }
 
     void CameraManager::setCameraZoom(double x, double y)
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         _currentCamera->setZoom(x, y);
     }
 
     void CameraManager::setCameraZoom(const Pair<int, int>& zoom)
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         _currentCamera->setZoom(zoom);
     }
 
     void CameraManager::setCameraZoom(const Pair<double, double>& zoom)
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         _currentCamera->setZoom(zoom);
     }
 
     const Pair<double, double>& CameraManager::getPosition() const
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         return _currentCamera->getPosition();
     }
 
     const Pair<double, double>& CameraManager::getZoom() const
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         return _currentCamera->getZoom();
     }
 
     void CameraManager::adjustPosition(Pair<double, double>& position)
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         const Pair<double, double>& cameraPosition = getPosition();
         const Pair<double, double>& zoomFactor = getZoom();
 
@@ -152,11 +102,6 @@ namespace LeoEngine
 
     void CameraManager::adjustRectangle(Rectangle<double>& rectangle)
     {
-        if (_currentCamera == nullptr)
-        {
-            throwCameraNotSetError();
-        }
-
         const Pair<double, double>& cameraPosition = getPosition();
         const Pair<double, double>& zoomFactor = getZoom();
 

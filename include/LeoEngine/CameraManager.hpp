@@ -41,7 +41,7 @@ namespace LeoEngine
         void adjustRectangle(Rectangle<double>& rectangle);
 
     private:
-        Camera *_currentCamera = nullptr;
+        Camera *_currentCamera;
         std::vector<Camera *> _cameras;
     };
 
