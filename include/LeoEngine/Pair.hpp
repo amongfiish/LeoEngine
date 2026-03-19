@@ -43,6 +43,11 @@ namespace LeoEngine
             return Pair<T0, T1>(first * other.first, second * other.second);
         }
 
+        Pair<T0, T1> operator*(const int& multiplier) const
+        {
+            return Pair<T0, T1>(first * multiplier, second * multiplier);
+        }
+
         Pair<T0, T1> operator/(const Pair<T0, T1>& other) const
         {
             return Pair<T0, T1>(first / other.first, second / other.second);
