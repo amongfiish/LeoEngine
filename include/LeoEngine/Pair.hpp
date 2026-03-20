@@ -43,7 +43,7 @@ namespace LeoEngine
             return Pair<T0, T1>(first * other.first, second * other.second);
         }
 
-        Pair<T0, T1> operator*(const int& multiplier) const
+        Pair<T0, T1> operator*(const T0& multiplier) const
         {
             return Pair<T0, T1>(first * multiplier, second * multiplier);
         }
@@ -54,7 +54,7 @@ namespace LeoEngine
             second *= other.second;
         }
 
-        void operator*=(const int& multiplier)
+        void operator*=(const T0& multiplier)
         {
             first *= multiplier;
             second *= multiplier;
@@ -65,10 +65,21 @@ namespace LeoEngine
             return Pair<T0, T1>(first / other.first, second / other.second);
         }
 
+        Pair<T0, T1> operator/(const T0& divisor) const
+        {
+            return Pair<T0, T1>(first / divisor, second / divisor);
+        }
+
         void operator/=(const Pair<T0, T1>& other)
         {
             first /= other.first;
             second /= other.second;
+        }
+
+        void operator/=(const T0 divisor)
+        {
+            first /= divisor;
+            second /= divisor;
         }
 
         Pair<T0, T1> operator+(const Pair<T0, T1>& other) const
