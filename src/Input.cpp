@@ -8,6 +8,10 @@
 #include "LeoEngine/EventMouseWheelMoved.hpp"
 #include "LeoEngine/EventControllerAdded.hpp"
 #include "LeoEngine/EventControllerRemoved.hpp"
+#include "LeoEngine/EventControllerJoystickMoved.hpp"
+#include "LeoEngine/EventControllerButtonDown.hpp"
+#include "LeoEngine/EventControllerButtonUp.hpp"
+#include "LeoEngine/Controller.hpp"
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
 
@@ -29,6 +33,12 @@ namespace LeoEngine
         _events->addCallback(EventType::MOUSE_BUTTON_UP, bind(&Input::mouseCallback, this, placeholders::_1));
         _events->addCallback(EventType::MOUSE_MOVED, bind(&Input::mouseCallback, this, placeholders::_1));
         _events->addCallback(EventType::MOUSE_WHEEL_MOVED, bind(&Input::mouseCallback, this, placeholders::_1));
+
+        _events->addCallback(EventType::CONTROLLER_ADDED, bind(&Input::keyCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_REMOVED, bind(&Input::keyCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_JOYSTICK_MOVED, bind(&Input::keyCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_BUTTON_DOWN, bind(&Input::keyCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_BUTTON_UP, bind(&Input::keyCallback, this, placeholders::_1));
     }
 
     Input::~Input()
@@ -43,6 +53,17 @@ namespace LeoEngine
             if (itKey->second == KeyState::PRESSED)
             {
                 itKey->second = KeyState::HELD;
+            }
+        }
+
+        for (auto& c : _controllers)
+        {
+            for (auto itButton = c.second->_buttonStates.begin(); itButton != c.second->_buttonStates.end(); itButton++)
+            {
+                if (itButton->second == KeyState::PRESSED)
+                {
+                    itButton->second = KeyState::HELD;
+                }
             }
         }
 
@@ -109,6 +130,31 @@ namespace LeoEngine
         return _mouseWheelMotion;
     }
 
+    KeyState Input::getControllerButtonState(int controllerID, ControllerButton button) const
+    {
+        return _controllers.at(controllerID)->getButtonState(button);
+    }
+
+    const Pair<double, double>& Input::getControllerLeftJoystickAxes(int controllerID) const
+    {
+        return _controllers.at(controllerID)->getLeftStickAxes();
+    }
+
+    const Pair<double, double>& Input::getControllerRightJoystickAxes(int controllerID) const
+    {
+        return _controllers.at(controllerID)->getRightStickAxes();
+    }
+
+    double Input::getControllerLeftTriggerAxis(int controllerID) const
+    {
+        return _controllers.at(controllerID)->getLeftTriggerAxis();
+    }
+
+    double Input::getControllerRightTriggerAxis(int controllerID) const
+    {
+        return _controllers.at(controllerID)->getRightTriggerAxis();
+    }
+
     void Input::keyCallback(Event *event)
     {
         switch (event->type)
@@ -151,6 +197,78 @@ namespace LeoEngine
                 std::string traceMessage = "Key '" + getKeyName(castEvent->keyCode) + "' released.";
                 LeoEngine::Services::get().getLogger()->trace("Input", traceMessage);
 
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    void Input::controllerCallback(Event *event)
+    {
+        switch(event->type)
+        {
+            case EventType::CONTROLLER_ADDED:
+            {
+                EventControllerAdded* castEvent = dynamic_cast<EventControllerAdded*>(event);
+                _controllers.emplace(std::make_pair(static_cast<int>(castEvent->controllerID), new Controller));
+                break;
+            }
+
+            case EventType::CONTROLLER_REMOVED:
+            {
+                EventControllerRemoved* castEvent = dynamic_cast<EventControllerRemoved*>(event);
+                _controllers.erase(static_cast<int>(castEvent->controllerID));
+                break;
+            }
+
+            case EventType::CONTROLLER_JOYSTICK_MOVED:
+            {
+                EventControllerJoystickMoved* castEvent = dynamic_cast<EventControllerJoystickMoved*>(event);
+
+                switch(castEvent->axis)
+                {
+                case SDL_GAMEPAD_AXIS_LEFTX:
+                    _controllers.at(castEvent->controllerID)->setLeftStickAxisX(castEvent->value);
+                    break;
+
+                case SDL_GAMEPAD_AXIS_LEFTY:
+                    _controllers.at(castEvent->controllerID)->setLeftStickAxisY(castEvent->value);
+                    break;
+
+                case SDL_GAMEPAD_AXIS_RIGHTX:
+                    _controllers.at(castEvent->controllerID)->setRightStickAxisX(castEvent->value);
+                    break;
+
+                case SDL_GAMEPAD_AXIS_RIGHTY:
+                    _controllers.at(castEvent->controllerID)->setRightStickAxisY(castEvent->value);
+                    break;
+
+                case SDL_GAMEPAD_AXIS_LEFT_TRIGGER:
+                    _controllers.at(castEvent->controllerID)->setLeftTriggerAxis(castEvent->value);
+                    break;
+
+                case SDL_GAMEPAD_AXIS_RIGHT_TRIGGER:
+                    _controllers.at(castEvent->controllerID)->setRightTriggerAxis(castEvent->value);
+                    break;
+                }
+                break;
+            }
+
+            case EventType::CONTROLLER_BUTTON_DOWN:
+            {
+                EventControllerButtonDown* castEvent = dynamic_cast<EventControllerButtonDown*>(event);
+                _controllers.at(castEvent->controllerID)->setButtonState(castEvent->button, KeyState::PRESSED);
+                break;
+            }
+
+            case EventType::CONTROLLER_BUTTON_UP:
+            {
+                EventControllerButtonUp* castEvent = dynamic_cast<EventControllerButtonUp*>(event);
+                _controllers.at(castEvent->controllerID)->setButtonState(castEvent->button, KeyState::RELEASED);
                 break;
             }
 

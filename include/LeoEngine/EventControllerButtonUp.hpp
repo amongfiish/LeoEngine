@@ -4,6 +4,7 @@
 #include <SDL3/SDL.h>
 
 #include "LeoEngine/Event.hpp"
+#include "LeoEngine/ControllerButton.hpp"
 
 namespace LeoEngine
 {
@@ -11,10 +12,10 @@ namespace LeoEngine
     class EventControllerButtonUp : public Event
     {
     public:
-        EventControllerButtonUp(const SDL_JoystickID controllerID, const int buttonID)
+        EventControllerButtonUp(const SDL_JoystickID controllerID, const ControllerButton button)
             : Event(EventType::CONTROLLER_BUTTON_UP),
             controllerID(controllerID),
-            buttonID(buttonID)
+            button(button)
         {
         }
 
@@ -23,7 +24,7 @@ namespace LeoEngine
         }
 
         const SDL_JoystickID controllerID;
-        const int buttonID;
+        const ControllerButton button;
     };
 
 }

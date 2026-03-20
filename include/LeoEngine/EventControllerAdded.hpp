@@ -13,7 +13,7 @@ namespace LeoEngine
     public:
         EventControllerAdded(const int controllerID)
             : Event(EventType::CONTROLLER_ADDED),
-            controllerID(controllerID)
+              controllerID(controllerID)
         {
         }
 

@@ -24,7 +24,7 @@ namespace LeoEngine
 
     Events::Events()
     {
-        if (!SDL_InitSubSystem(SDL_INIT_EVENTS))
+        if (!SDL_InitSubSystem(SDL_INIT_EVENTS | SDL_INIT_GAMEPAD))
         {
             throw std::runtime_error("Couldn't initialize SDL events subsystem.");
         }
@@ -78,24 +78,24 @@ namespace LeoEngine
                 newEvent = static_cast<Event *>(new EventMouseWheelMoved(e.wheel.x, e.wheel.y));
                 break;
 
-            case SDL_EVENT_JOYSTICK_ADDED:
-                newEvent = static_cast<Event *>(new EventControllerAdded(e.jdevice.which));
+            case SDL_EVENT_GAMEPAD_ADDED:
+                newEvent = static_cast<Event *>(new EventControllerAdded(e.gdevice.which));
                 break;
 
-            case SDL_EVENT_JOYSTICK_REMOVED:
-                newEvent = static_cast<Event *>(new EventControllerRemoved(e.jdevice.which));
+            case SDL_EVENT_GAMEPAD_REMOVED:
+                newEvent = static_cast<Event *>(new EventControllerRemoved(e.gdevice.which));
                 break;
 
-            case SDL_EVENT_JOYSTICK_AXIS_MOTION:
-                newEvent = static_cast<Event *>(new EventControllerJoystickMoved(e.jaxis.which, e.jaxis.axis, e.jaxis.value));
+            case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+                newEvent = static_cast<Event *>(new EventControllerJoystickMoved(e.gaxis.which, e.gaxis.axis, e.gaxis.value));
                 break;
 
-            case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
-                newEvent = static_cast<Event *>(new EventControllerButtonDown(e.jbutton.which, e.jbutton.button));
+            case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+                newEvent = static_cast<Event *>(new EventControllerButtonDown(e.gbutton.which, static_cast<LeoEngine::ControllerButton>(e.gbutton.button)));
                 break;
 
-            case SDL_EVENT_JOYSTICK_BUTTON_UP:
-                newEvent = static_cast<Event *>(new EventControllerButtonUp(e.jbutton.which, e.jbutton.button));
+            case SDL_EVENT_GAMEPAD_BUTTON_UP:
+                newEvent = static_cast<Event *>(new EventControllerButtonUp(e.gbutton.which, static_cast<LeoEngine::ControllerButton>(e.gbutton.button)));
                 break;
 
             case SDL_EVENT_WINDOW_RESIZED:

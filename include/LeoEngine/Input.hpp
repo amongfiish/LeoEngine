@@ -4,15 +4,18 @@
 #include <SDL3/SDL.h>
 
 #include <vector>
-#include <unordered_map>
+#include <map>
 #include <string>
 #include "LeoEngine/KeyCode.hpp"
 #include "LeoEngine/KeyState.hpp"
 #include "LeoEngine/Pair.hpp"
 #include "LeoEngine/Events.hpp"
+#include "LeoEngine/ControllerButton.hpp"
 
 namespace LeoEngine
 {
+
+    class Controller;
 
     class Input
     {
@@ -33,17 +36,24 @@ namespace LeoEngine
         KeyState getMouseButtonState(int buttonID) const;
         const Pair<int, int> &getMouseWheelMotion() const;
 
-        // TODO: re-add controller stuff
+        KeyState getControllerButtonState(int controllerID, ControllerButton button) const;
+        const Pair<double, double>& getControllerLeftJoystickAxes(int controllerID) const;
+        const Pair<double, double>& getControllerRightJoystickAxes(int controllerID) const;
+        double getControllerLeftTriggerAxis(int controllerID) const;
+        double getControllerRightTriggerAxis(int controllerID) const;
 
     private:
         void keyCallback(Event *event);
+        void controllerCallback(Event *event);
         void mouseCallback(Event *event);
 
         bool _locked;
 
         Events *_events;
 
-        std::unordered_map<KeyCode, KeyState> _keyStates;
+        std::map<KeyCode, KeyState> _keyStates;
+
+        std::map<int, Controller*> _controllers;
 
         Pair<int, int> _mousePosition;
         std::vector<KeyState> _mouseButtons;
