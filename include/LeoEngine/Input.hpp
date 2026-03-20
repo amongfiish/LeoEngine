@@ -32,13 +32,15 @@ namespace LeoEngine
         KeyState getKeyState(KeyCode keyCode) const;
         std::string getKeyName(KeyCode keyCode) const;
 
-        const Pair<int, int> &getMousePosition() const;
+        Pair<int, int> getMousePosition() const;
         KeyState getMouseButtonState(int buttonID) const;
-        const Pair<int, int> &getMouseWheelMotion() const;
+        Pair<int, int> getMouseWheelMotion() const;
+
+        std::vector<int> getConnectedControllers() const;
 
         KeyState getControllerButtonState(int controllerID, ControllerButton button) const;
-        const Pair<double, double>& getControllerLeftJoystickAxes(int controllerID) const;
-        const Pair<double, double>& getControllerRightJoystickAxes(int controllerID) const;
+        Pair<double, double> getControllerLeftJoystickAxes(int controllerID) const;
+        Pair<double, double> getControllerRightJoystickAxes(int controllerID) const;
         double getControllerLeftTriggerAxis(int controllerID) const;
         double getControllerRightTriggerAxis(int controllerID) const;
 

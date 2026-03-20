@@ -110,7 +110,7 @@ namespace LeoEngine
         return keyName;
     }
 
-    const Pair<int, int>& Input::getMousePosition() const
+    Pair<int, int> Input::getMousePosition() const
     {
         return _mousePosition;
     }
@@ -125,33 +125,74 @@ namespace LeoEngine
         return _mouseButtons.at(buttonID);
     }
 
-    const Pair<int, int>& Input::getMouseWheelMotion() const
+    Pair<int, int> Input::getMouseWheelMotion() const
     {
+        if (_locked)
+        {
+            return LeoEngine::Pair<int, int>(0, 0);
+        }
+
         return _mouseWheelMotion;
+    }
+
+    std::vector<int> Input::getConnectedControllers() const
+    {
+        std::vector<int> connectedControllers;
+        for (auto it = _controllers.begin(); it != _controllers.end(); it++)
+        {
+            connectedControllers.push_back(it->first);   
+        }
+
+        return connectedControllers;
     }
 
     KeyState Input::getControllerButtonState(int controllerID, ControllerButton button) const
     {
+        if (_locked)
+        {
+            return KeyState::RELEASED;
+        }
+
         return _controllers.at(controllerID)->getButtonState(button);
     }
 
-    const Pair<double, double>& Input::getControllerLeftJoystickAxes(int controllerID) const
+    Pair<double, double> Input::getControllerLeftJoystickAxes(int controllerID) const
     {
+        if (_locked)
+        {
+            return LeoEngine::Pair<double, double>(0.0, 0.0);
+        }
+
         return _controllers.at(controllerID)->getLeftStickAxes();
     }
 
-    const Pair<double, double>& Input::getControllerRightJoystickAxes(int controllerID) const
+    Pair<double, double> Input::getControllerRightJoystickAxes(int controllerID) const
     {
+        if (_locked)
+        {
+            return LeoEngine::Pair<double, double>(0.0, 0.0);
+        }
+
         return _controllers.at(controllerID)->getRightStickAxes();
     }
 
     double Input::getControllerLeftTriggerAxis(int controllerID) const
     {
+        if (_locked)
+        {
+            return 0;
+        }
+
         return _controllers.at(controllerID)->getLeftTriggerAxis();
     }
 
     double Input::getControllerRightTriggerAxis(int controllerID) const
     {
+        if (_locked)
+        {
+            return 0;
+        }
+
         return _controllers.at(controllerID)->getRightTriggerAxis();
     }
 
