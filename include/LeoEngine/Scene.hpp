@@ -17,10 +17,11 @@ namespace LeoEngine
         
         }
 
-        virtual void onActivate() {};
-        virtual void onDeactivate() {};
+        virtual void onActivate() {}
+        virtual void onDeactivate() {}
 
         virtual void update(double deltaTime) = 0;
+        virtual void fixedUpdate(double deltaTime) {}
         virtual void draw() = 0;
     };
 

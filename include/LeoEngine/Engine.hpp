@@ -16,6 +16,7 @@ namespace LeoEngine
         ~Engine();
 
         void setFramerate(int framerate);
+        void setFixedUpdateRate(int fixedUpdateRate);
         void runGame(Game &game);
 
     private:
@@ -24,6 +25,7 @@ namespace LeoEngine
         bool _running;
 
         long long _nsBetweenFrames;
+        long long _nsBetweenFixedUpdates;
     };
 
 }

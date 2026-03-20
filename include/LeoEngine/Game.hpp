@@ -24,6 +24,11 @@ namespace LeoEngine
             _scenes.update(deltaTime);
         }
 
+        void fixedUpdate(double deltaTime)
+        {
+            _scenes.fixedUpdate(deltaTime);
+        }
+
         void draw()
         {
             _scenes.draw();

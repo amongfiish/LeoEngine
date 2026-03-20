@@ -93,6 +93,11 @@ namespace LeoEngine
             _currentScene->onActivate();
         }
 
+        void fixedUpdate(double deltaTime)
+        {
+            _currentScene->fixedUpdate(deltaTime);
+        }
+
         // fade out (to black), call setCurrentScene, fade in
         void fadeToScene(int sceneID, double transitionTime)
         {
