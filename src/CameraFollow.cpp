@@ -43,8 +43,14 @@ namespace LeoEngine
 
     void CameraFollow::setOffset(int xOffset, int yOffset)
     {
-        setXOffset(xOffset);
-        setYOffset(yOffset);
+        _xOffset = xOffset;
+        _yOffset = yOffset;
+    }
+
+    void CameraFollow::setOffset(const LeoEngine::Pair<int, int>& offset)
+    {
+        _xOffset = offset.first;
+        _yOffset = offset.second;
     }
 
     void CameraFollow::update()

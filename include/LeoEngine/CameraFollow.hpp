@@ -21,6 +21,7 @@ namespace LeoEngine
         void setXOffset(int xOffset);
         void setYOffset(int yOffset);
         void setOffset(int xOffset, int yOffset);
+        void setOffset(const LeoEngine::Pair<int, int>& offset);
 
         virtual void update() override;
 
