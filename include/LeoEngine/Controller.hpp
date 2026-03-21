@@ -5,8 +5,9 @@
 #include "LeoEngine/ControllerButton.hpp"
 #include "LeoEngine/KeyState.hpp"
 #include "LeoEngine/Pair.hpp"
-
 #include "LeoEngine/Input.hpp"
+
+#define AXIS_MAX 32768
 
 namespace LeoEngine
 {
@@ -14,10 +15,12 @@ namespace LeoEngine
     class Controller
     {
     public:
-        Controller();
+        Controller(int joystickID);
         ~Controller();
 
-        KeyState getButtonState(ControllerButton button) const;
+        int getJoystickID() const;
+
+        KeyState getButtonState(ControllerButton button);
 
         const Pair<double, double>& getLeftStickAxes() const;
         const Pair<double, double>& getRightStickAxes() const;
@@ -27,6 +30,8 @@ namespace LeoEngine
 
     private:
         friend Input;
+
+        static constexpr double DEADZONE = 0.2;
 
         void setButtonState(ControllerButton button, KeyState state);
 
@@ -45,6 +50,9 @@ namespace LeoEngine
         Pair<double, double> _axesRightStick;
         double _axisLeftTrigger;
         double _axisRightTrigger;
+
+        int _joystickID;
+        SDL_Gamepad* _gamepad;
     };
 
 }

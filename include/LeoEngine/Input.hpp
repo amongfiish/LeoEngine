@@ -37,6 +37,9 @@ namespace LeoEngine
         Pair<int, int> getMouseWheelMotion() const;
 
         std::vector<int> getConnectedControllers() const;
+        bool controllerExists(int controllerID) const;
+
+        int getLastAddedControllerID() const;
 
         KeyState getControllerButtonState(int controllerID, ControllerButton button) const;
         Pair<double, double> getControllerLeftJoystickAxes(int controllerID) const;
@@ -56,6 +59,7 @@ namespace LeoEngine
         std::map<KeyCode, KeyState> _keyStates;
 
         std::map<int, Controller*> _controllers;
+        int _lastAddedControllerID;
 
         Pair<int, int> _mousePosition;
         std::vector<KeyState> _mouseButtons;

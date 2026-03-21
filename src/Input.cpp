@@ -23,7 +23,8 @@ namespace LeoEngine
         _mousePosition(0, 0),
         _mouseButtons(10, KeyState::RELEASED),
         _mouseWheelMotion(0, 0),
-        _locked(false)
+        _locked(false),
+        _lastAddedControllerID(-1)
     {
         // input event callbacks
         _events->addCallback(EventType::KEY_DOWN, bind(&Input::keyCallback, this, placeholders::_1));
@@ -34,16 +35,19 @@ namespace LeoEngine
         _events->addCallback(EventType::MOUSE_MOVED, bind(&Input::mouseCallback, this, placeholders::_1));
         _events->addCallback(EventType::MOUSE_WHEEL_MOVED, bind(&Input::mouseCallback, this, placeholders::_1));
 
-        _events->addCallback(EventType::CONTROLLER_ADDED, bind(&Input::keyCallback, this, placeholders::_1));
-        _events->addCallback(EventType::CONTROLLER_REMOVED, bind(&Input::keyCallback, this, placeholders::_1));
-        _events->addCallback(EventType::CONTROLLER_JOYSTICK_MOVED, bind(&Input::keyCallback, this, placeholders::_1));
-        _events->addCallback(EventType::CONTROLLER_BUTTON_DOWN, bind(&Input::keyCallback, this, placeholders::_1));
-        _events->addCallback(EventType::CONTROLLER_BUTTON_UP, bind(&Input::keyCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_ADDED, bind(&Input::controllerCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_REMOVED, bind(&Input::controllerCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_JOYSTICK_MOVED, bind(&Input::controllerCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_BUTTON_DOWN, bind(&Input::controllerCallback, this, placeholders::_1));
+        _events->addCallback(EventType::CONTROLLER_BUTTON_UP, bind(&Input::controllerCallback, this, placeholders::_1));
     }
 
     Input::~Input()
     {
-
+        for (auto& p : _controllers)
+        {
+            delete p.second;
+        }
     }
 
     void Input::update()
@@ -129,7 +133,7 @@ namespace LeoEngine
     {
         if (_locked)
         {
-            return LeoEngine::Pair<int, int>(0, 0);
+            return Pair<int, int>(0, 0);
         }
 
         return _mouseWheelMotion;
@@ -146,11 +150,49 @@ namespace LeoEngine
         return connectedControllers;
     }
 
+    bool Input::controllerExists(int controllerID) const
+    {
+        /*
+        for (auto& c : getConnectedControllers())
+        {
+            Services::get().getLogger()->debug("Input", "Controller #" + std::to_string(c));
+        }
+        */
+
+        if (_controllers.find(controllerID) == _controllers.end())
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    int Input::getLastAddedControllerID() const
+    {
+        return _lastAddedControllerID;
+    }
+
     KeyState Input::getControllerButtonState(int controllerID, ControllerButton button) const
     {
+        if (!controllerExists(controllerID))
+        {
+            std::string errorMessage = "Cannot get button state from controllerID #" + std::to_string(controllerID) + " (does not exist).";
+            Services::get().getLogger()->error("Input", errorMessage);
+            Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
+        }
+
         if (_locked)
         {
             return KeyState::RELEASED;
+        }
+
+        std::map<ControllerButton, KeyState> buttonStates = _controllers.at(controllerID)->_buttonStates;
+
+        auto foundButtonState = buttonStates.find(button);
+        if (foundButtonState != buttonStates.end())
+        {
+            return foundButtonState->second;
         }
 
         return _controllers.at(controllerID)->getButtonState(button);
@@ -158,9 +200,16 @@ namespace LeoEngine
 
     Pair<double, double> Input::getControllerLeftJoystickAxes(int controllerID) const
     {
+        if (!controllerExists(controllerID))
+        {
+            std::string errorMessage = "Cannot get controller left joystick axes from controllerID #" + std::to_string(controllerID) + " (does not exist).";
+            Services::get().getLogger()->error("Input", errorMessage);
+            throw std::runtime_error(errorMessage);
+        }
+
         if (_locked)
         {
-            return LeoEngine::Pair<double, double>(0.0, 0.0);
+            return Pair<double, double>(0.0, 0.0);
         }
 
         return _controllers.at(controllerID)->getLeftStickAxes();
@@ -168,9 +217,16 @@ namespace LeoEngine
 
     Pair<double, double> Input::getControllerRightJoystickAxes(int controllerID) const
     {
+        if (!controllerExists(controllerID))
+        {
+            std::string errorMessage = "Cannot get controller right joystick axes from controllerID #" + std::to_string(controllerID) + " (does not exist).";
+            Services::get().getLogger()->error("Input", errorMessage);
+            throw std::runtime_error(errorMessage);
+        }
+
         if (_locked)
         {
-            return LeoEngine::Pair<double, double>(0.0, 0.0);
+            return Pair<double, double>(0.0, 0.0);
         }
 
         return _controllers.at(controllerID)->getRightStickAxes();
@@ -178,6 +234,13 @@ namespace LeoEngine
 
     double Input::getControllerLeftTriggerAxis(int controllerID) const
     {
+        if (!controllerExists(controllerID))
+        {
+            std::string errorMessage = "Cannot get controller left trigger axes from controllerID #" + std::to_string(controllerID) + " (does not exist).";
+            Services::get().getLogger()->error("Input", errorMessage);
+            throw std::runtime_error(errorMessage);
+        }
+
         if (_locked)
         {
             return 0;
@@ -188,6 +251,13 @@ namespace LeoEngine
 
     double Input::getControllerRightTriggerAxis(int controllerID) const
     {
+        if (!controllerExists(controllerID))
+        {
+            std::string errorMessage = "Cannot get controller right trigger axes from controllerID #" + std::to_string(controllerID) + " (does not exist).";
+            Services::get().getLogger()->error("Input", errorMessage);
+            throw std::runtime_error(errorMessage);
+        }
+
         if (_locked)
         {
             return 0;
@@ -218,7 +288,7 @@ namespace LeoEngine
                 }
 
                 std::string traceMessage = "Key '" + getKeyName(castEvent->keyCode) + "' pressed down.";
-                LeoEngine::Services::get().getLogger()->trace("Input", traceMessage);
+                Services::get().getLogger()->trace("Input", traceMessage);
 
                 break;
             }
@@ -236,7 +306,7 @@ namespace LeoEngine
                 }
 
                 std::string traceMessage = "Key '" + getKeyName(castEvent->keyCode) + "' released.";
-                LeoEngine::Services::get().getLogger()->trace("Input", traceMessage);
+                Services::get().getLogger()->trace("Input", traceMessage);
 
                 break;
             }
@@ -255,20 +325,25 @@ namespace LeoEngine
             case EventType::CONTROLLER_ADDED:
             {
                 EventControllerAdded* castEvent = dynamic_cast<EventControllerAdded*>(event);
-                _controllers.emplace(std::make_pair(static_cast<int>(castEvent->controllerID), new Controller));
+                Controller* newController = new Controller(castEvent->controllerID);
+                _controllers.emplace(std::make_pair(newController->getJoystickID(), newController));
+                _lastAddedControllerID = newController->getJoystickID();
                 break;
             }
 
             case EventType::CONTROLLER_REMOVED:
             {
                 EventControllerRemoved* castEvent = dynamic_cast<EventControllerRemoved*>(event);
+                delete _controllers.at(castEvent->controllerID);
                 _controllers.erase(static_cast<int>(castEvent->controllerID));
                 break;
             }
 
             case EventType::CONTROLLER_JOYSTICK_MOVED:
             {
-                EventControllerJoystickMoved* castEvent = dynamic_cast<EventControllerJoystickMoved*>(event);
+                EventControllerJoystickMoved* castEvent = static_cast<EventControllerJoystickMoved*>(event);
+
+                // Services::get().getLogger()->debug("Input", "value: " + std::to_string(castEvent->value));
 
                 switch(castEvent->axis)
                 {
@@ -295,6 +370,13 @@ namespace LeoEngine
                 case SDL_GAMEPAD_AXIS_RIGHT_TRIGGER:
                     _controllers.at(castEvent->controllerID)->setRightTriggerAxis(castEvent->value);
                     break;
+
+                default:
+                    std::string errorMessage = "Cannot set value of axis #" + std::to_string(castEvent->axis) + " (does not exist).";
+                    Services::get().getLogger()->error("Input", errorMessage);
+                    Services::get().getLogger()->flush();
+                    throw std::runtime_error(errorMessage);
+                    
                 }
                 break;
             }
@@ -302,14 +384,14 @@ namespace LeoEngine
             case EventType::CONTROLLER_BUTTON_DOWN:
             {
                 EventControllerButtonDown* castEvent = dynamic_cast<EventControllerButtonDown*>(event);
-                _controllers.at(castEvent->controllerID)->setButtonState(castEvent->button, KeyState::PRESSED);
+                _controllers[castEvent->controllerID]->setButtonState(castEvent->button, KeyState::PRESSED);
                 break;
             }
 
             case EventType::CONTROLLER_BUTTON_UP:
             {
                 EventControllerButtonUp* castEvent = dynamic_cast<EventControllerButtonUp*>(event);
-                _controllers.at(castEvent->controllerID)->setButtonState(castEvent->button, KeyState::RELEASED);
+                _controllers[castEvent->controllerID]->setButtonState(castEvent->button, KeyState::RELEASED);
                 break;
             }
 
@@ -362,3 +444,4 @@ namespace LeoEngine
     }
 
 }
+
