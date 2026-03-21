@@ -38,7 +38,6 @@ namespace LeoEngine
 
     void Engine::runGame(Game& game)
     {
-
         const Colour BLACK(0, 0, 0, 255);
 
         int quitCallbackID = Services::get().getEvents()->addCallback(EventType::QUIT, bind(&Engine::quitCallback, this, placeholders::_1));
