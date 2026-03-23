@@ -40,6 +40,11 @@ namespace LeoEngine
         _events->addCallback(EventType::CONTROLLER_JOYSTICK_MOVED, bind(&Input::controllerCallback, this, placeholders::_1));
         _events->addCallback(EventType::CONTROLLER_BUTTON_DOWN, bind(&Input::controllerCallback, this, placeholders::_1));
         _events->addCallback(EventType::CONTROLLER_BUTTON_UP, bind(&Input::controllerCallback, this, placeholders::_1));
+
+        for (int i = 0; i < MAX_CONTROLLERS; i++)
+        {
+            _playerAssignedControllerIDs[i] = -1;
+        }
     }
 
     Input::~Input()
@@ -152,13 +157,6 @@ namespace LeoEngine
 
     bool Input::controllerExists(int controllerID) const
     {
-        /*
-        for (auto& c : getConnectedControllers())
-        {
-            Services::get().getLogger()->debug("Input", "Controller #" + std::to_string(c));
-        }
-        */
-
         if (_controllers.find(controllerID) == _controllers.end())
         {
             return false;
@@ -170,6 +168,55 @@ namespace LeoEngine
     int Input::getLastAddedControllerID() const
     {
         return _lastAddedControllerID;
+    }
+
+    void Input::setPlayerControllerID(int player, int id)
+    {
+        if (player < 0 || player >= MAX_CONTROLLERS)
+        {
+            std::string errorMessage = "Player ID (" + std::to_string(player) + ") is out of range: [0, " + std::to_string(MAX_CONTROLLERS) + "].";
+            LeoEngine::Services::get().getLogger()->error("Input", errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
+        }
+
+        if (!controllerExists(id))
+        {
+            std::string errorMessage = "Controller (ID: " + std::to_string(id) + ") does not exist.";
+            LeoEngine::Services::get().getLogger()->error("Input", errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
+        }
+
+        _playerAssignedControllerIDs[player] = id;
+
+        Services::get().getLogger()->info("Input", "Controller (ID: " + std::to_string(id) + ") assigned to player #" + std::to_string(player) + ".");
+    }
+
+    int Input::getControllerIDByPlayer(int player) const
+    {
+        if (player < 0 || player >= MAX_CONTROLLERS)
+        {
+            std::string errorMessage = "Player ID (" + std::to_string(player) + ") is out of range: [0, " + std::to_string(MAX_CONTROLLERS) + "].";
+            LeoEngine::Services::get().getLogger()->error("Input", errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
+        }
+
+        return _playerAssignedControllerIDs[player];
+    }
+
+    int Input::getPlayerByControllerID(int id) const
+    {
+        for (int i = 0; i < MAX_CONTROLLERS; i++)
+        {
+            if (_playerAssignedControllerIDs[i] == id)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     KeyState Input::getControllerButtonState(int controllerID, ControllerButton button) const
@@ -331,6 +378,19 @@ namespace LeoEngine
 
                 Services::get().getLogger()->info("Input", "Controller connected (ID: " + std::to_string(castEvent->controllerID) + ").");
 
+                // player controller
+                for (int i = 0; i < MAX_CONTROLLERS; i++)
+                {
+                    if (_playerAssignedControllerIDs[i] == -1)
+                    {
+                        _playerAssignedControllerIDs[i] = castEvent->controllerID;
+
+                        Services::get().getLogger()->info("Input", "Controller (ID: " + std::to_string(castEvent->controllerID) + ") assigned to player #" + std::to_string(i) + ".");
+
+                        break;
+                    }
+                }
+
                 break;
             }
 
@@ -341,6 +401,16 @@ namespace LeoEngine
                 _controllers.erase(static_cast<int>(castEvent->controllerID));
 
                 Services::get().getLogger()->info("Input", "Controller disconnected (ID: " + std::to_string(castEvent->controllerID) + ").");
+
+                for (int i = 0; i < MAX_CONTROLLERS; i++)
+                {
+                    if (_playerAssignedControllerIDs[i] == castEvent->controllerID)
+                    {
+                        _playerAssignedControllerIDs[i] = -1;
+
+                        Services::get().getLogger()->info("Input", "Controller (ID: " + std::to_string(castEvent->controllerID) + ") unassigned from player #" + std::to_string(i) + ".");
+                    }
+                }
 
                 break;
             }

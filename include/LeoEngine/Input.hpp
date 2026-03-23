@@ -12,6 +12,8 @@
 #include "LeoEngine/Events.hpp"
 #include "LeoEngine/ControllerButton.hpp"
 
+#define MAX_CONTROLLERS 4
+
 namespace LeoEngine
 {
 
@@ -41,6 +43,11 @@ namespace LeoEngine
 
         int getLastAddedControllerID() const;
 
+        void setPlayerControllerID(int player, int id);
+
+        int getControllerIDByPlayer(int player) const;
+        int getPlayerByControllerID(int id) const;
+
         KeyState getControllerButtonState(int controllerID, ControllerButton button) const;
         Pair<double, double> getControllerLeftJoystickAxes(int controllerID) const;
         Pair<double, double> getControllerRightJoystickAxes(int controllerID) const;
@@ -57,6 +64,8 @@ namespace LeoEngine
         Events *_events;
 
         std::map<KeyCode, KeyState> _keyStates;
+
+        int _playerAssignedControllerIDs[MAX_CONTROLLERS];
 
         std::map<int, Controller*> _controllers;
         int _lastAddedControllerID;
