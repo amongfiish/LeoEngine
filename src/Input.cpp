@@ -328,6 +328,9 @@ namespace LeoEngine
                 Controller* newController = new Controller(castEvent->controllerID);
                 _controllers.emplace(std::make_pair(newController->getJoystickID(), newController));
                 _lastAddedControllerID = newController->getJoystickID();
+
+                Services::get().getLogger()->info("Input", "Controller connected (ID: " + std::to_string(castEvent->controllerID) + ").");
+
                 break;
             }
 
@@ -336,6 +339,9 @@ namespace LeoEngine
                 EventControllerRemoved* castEvent = dynamic_cast<EventControllerRemoved*>(event);
                 delete _controllers.at(castEvent->controllerID);
                 _controllers.erase(static_cast<int>(castEvent->controllerID));
+
+                Services::get().getLogger()->info("Input", "Controller disconnected (ID: " + std::to_string(castEvent->controllerID) + ").");
+
                 break;
             }
 
