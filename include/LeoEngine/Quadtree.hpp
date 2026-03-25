@@ -10,6 +10,7 @@
 #include "LeoEngine/Collision.hpp"
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
+#include "LeoEngine/Graphics.hpp"
 
 namespace LeoEngine
 {
@@ -57,38 +58,111 @@ namespace LeoEngine
                 throw std::runtime_error(errorMessage);
             }
 
-            if (_elements.size() < _maxElements || (_topLeft == nullptr && (_bounds.width/2 <= 1)))
+            if (_elements.size() == _maxElements && _topLeft == nullptr && _bounds.width >= 2)
             {
-                
-            }
-
-            if (_elements.size() == _maxElements && _topLeft != nullptr)
-            {
-                
+                // subdivide
+                _subdivide();
             }
 
             if (_topLeft != nullptr)
             {
-                if (checkForOverlap(_bounds, _topLeft->_bounds))
+                if (checkForOverlap(_topLeft->_bounds, bounds))
                 {
                     _topLeft->insert(element, bounds);
                 }
-                if (checkForOverlap(_bounds, _topLeft->_bounds))
+                if (checkForOverlap(_topRight->_bounds, bounds))
                 {
-                    _topLeft->insert(element, bounds);
+                    _topRight->insert(element, bounds);
                 }
-                if (checkForOverlap(_bounds, _topLeft->_bounds))
+                if (checkForOverlap(_bottomLeft->_bounds, bounds))
                 {
-                    _topLeft->insert(element, bounds);
+                    _bottomLeft->insert(element, bounds);
                 }
-                if (checkForOverlap(_bounds, _topLeft->_bounds))
+                if (checkForOverlap(_bottomRight->_bounds, bounds))
                 {
-                    _topLeft->insert(element, bounds);
+                    _bottomRight->insert(element, bounds);
                 }
+            }
+            else
+            {
+                _elements.push_back(element);
             }
         }
 
+        void clear()
+        {
+            _elements.clear();
+
+            if (_topLeft != nullptr)
+            {
+                delete _topLeft;
+                delete _topRight;
+                delete _bottomLeft;
+                delete _bottomRight;
+
+                _topLeft = nullptr;
+                _topRight = nullptr;
+                _bottomLeft = nullptr;
+                _bottomRight = nullptr;
+            }
+        }
+
+        void draw()
+        {
+            static Colour BOX_COLOUR(0x00, 0x00, 0xFF, 0xFF);
+            Services::get().getGraphics()->drawRectangle(BOX_COLOUR, false, _bounds);
+
+            if (_topLeft != nullptr)
+            {
+                _topLeft->draw();
+                _topRight->draw();
+                _bottomLeft->draw();
+                _bottomRight->draw();
+            }
+        }
+
+        Quadtree<T>* getTopLeft()
+        {
+            return _topLeft;
+        }
+
+        Quadtree<T>* getTopRight()
+        {
+            return _topRight;
+        }
+
+        Quadtree<T>* getBottomLeft()
+        {
+            return _bottomLeft;
+        }
+
+        Quadtree<T>* getBottomRight()
+        {
+            return _bottomRight;
+        }
+
+        std::vector<T*>& getElements()
+        {
+            return _elements;
+        }
+
     private:
+        void _subdivide()
+        {
+            if (_topLeft != nullptr)
+            {
+                std::string errorMessage = "Attempting to subdivide an already subdivided quadtree node.";
+                Services::get().getLogger()->error("Quadtree", errorMessage);
+                Services::get().getLogger()->flush();
+                throw std::runtime_error(errorMessage);
+            }
+
+            _topLeft = new Quadtree(LeoEngine::Rectangle<int>(_bounds.x, _bounds.y, _bounds.width/2, _bounds.height/2), _maxElements);
+            _topRight = new Quadtree(LeoEngine::Rectangle<int>(_bounds.x + _bounds.width/2, _bounds.y, _bounds.width/2, _bounds.height/2), _maxElements);
+            _bottomLeft = new Quadtree(LeoEngine::Rectangle<int>(_bounds.x, _bounds.y + _bounds.height/2, _bounds.width/2, _bounds.height/2), _maxElements);
+            _bottomRight = new Quadtree(LeoEngine::Rectangle<int>(_bounds.x + _bounds.width/2, _bounds.y + _bounds.height/2, _bounds.width/2, _bounds.height/2), _maxElements);
+        }
+
         Rectangle<int> _bounds;
 
         std::vector<T*> _elements;
