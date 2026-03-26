@@ -31,33 +31,31 @@ namespace LeoEngine
 
     bool checkForOverlap(const Rectangle<int> &r, const Circle &c)
     {
-        const Pair<int, int> cCenter = c.getCenter();
-        
-        int testX = cCenter.first;
-        int testY = cCenter.second;
+        int testX = c.x;
+        int testY = c.y;
 
-        if (cCenter.first < r.x)
+        if (c.x < r.x)
         {
             testX = r.x;
         }
-        else if (cCenter.first > r.getRight())
+        else if (c.x > r.getRight())
         {
             testX = r.getRight();
         }
 
-        if (cCenter.second < r.y)
+        if (c.y < r.y)
         {
             testY = r.y;
         }
-        else if (cCenter.second > r.getBottom())
+        else if (c.y > r.getBottom())
         {
             testY = r.getBottom();
         }
 
-        double distanceX = testX - cCenter.first;
-        double distanceY = testY - cCenter.second;
+        double distanceX = testX - c.x;
+        double distanceY = testY - c.y;
 
-        double distance = sqrt((distanceX * distanceX) + (distanceY * distanceY));
+        double distance = sqrt(pow(distanceX,2) + pow(distanceY,2));
 
         if (distance <= c.radius)
         {
