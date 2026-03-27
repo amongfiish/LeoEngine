@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include "LeoEngine/Input.hpp"
+#include "LeoEngine/UIButton.hpp"
 #include "LeoEngine/EventKeyDown.hpp"
 #include "LeoEngine/EventKeyUp.hpp"
 #include "LeoEngine/EventMouseButtonDown.hpp"
@@ -11,9 +12,11 @@
 #include "LeoEngine/EventControllerJoystickMoved.hpp"
 #include "LeoEngine/EventControllerButtonDown.hpp"
 #include "LeoEngine/EventControllerButtonUp.hpp"
+#include "LeoEngine/Colour.hpp"
 #include "LeoEngine/Controller.hpp"
 #include "LeoEngine/Services.hpp"
 #include "LeoEngine/Logger.hpp"
+#include "LeoEngine/Graphics.hpp"
 
 namespace LeoEngine
 {
@@ -83,6 +86,24 @@ namespace LeoEngine
                 *itButton = KeyState::HELD;
             }
         }
+    }
+
+    void Input::draw()
+    {
+        static const Colour CURSOR_COLOUR(0xFF, 0xFF, 0xFF, 0xFF);
+
+        if (_controllerCursorSelection == nullptr)
+        {
+            return;
+        }
+
+        LeoEngine::Rectangle<int> cursorBounds = _controllerCursorSelection->getGlobalBounds();
+        cursorBounds.x -= 1;
+        cursorBounds.y -= 1;
+        cursorBounds.width += 2;
+        cursorBounds.height += 2;
+
+        LeoEngine::Services::get().getGraphics()->drawRectangleCameraless(CURSOR_COLOUR, false, cursorBounds);
     }
 
     void Input::lockInput()
@@ -313,6 +334,56 @@ namespace LeoEngine
         return _controllers.at(controllerID)->getRightTriggerAxis();
     }
 
+    void Input::registerControllerCursorDefaultSelection(UIButton* button)
+    {
+        if (button == nullptr)
+        {
+            _controllerCursorSelection = nullptr;
+        }
+
+        _controllerCursorDefaultSelection = button;
+    }
+
+    void Input::_handleCursorMove(KeyCode direction)
+    {
+        if (_controllerCursorSelection == nullptr)
+        {
+            _controllerCursorSelection = _controllerCursorDefaultSelection;
+            return;
+        }
+
+        UIButton* nextSelection = nullptr;
+
+        switch (direction)
+        {
+        case KeyCode::LEFT_ARROW:
+            nextSelection = _controllerCursorSelection->getLeftButton();
+            break;
+
+        case KeyCode::RIGHT_ARROW:
+            nextSelection = _controllerCursorSelection->getRightButton();
+            break;
+
+        case KeyCode::UP_ARROW:
+            nextSelection = _controllerCursorSelection->getUpButton();
+            break;
+
+        case KeyCode::DOWN_ARROW:
+            nextSelection = _controllerCursorSelection->getDownButton();
+            break;
+
+        default:
+            break;
+        }
+
+        if (nextSelection == nullptr)
+        {
+            return;
+        }
+
+        _controllerCursorSelection = nextSelection;
+    }
+
     void Input::keyCallback(Event *event)
     {
         switch (event->type)
@@ -336,6 +407,40 @@ namespace LeoEngine
 
                 std::string traceMessage = "Key '" + getKeyName(castEvent->keyCode) + "' pressed down.";
                 Services::get().getLogger()->trace("Input", traceMessage);
+
+                // controllerButtonSelection
+                switch (castEvent->keyCode)
+                {
+                case KeyCode::LEFT_ARROW:
+                    _handleCursorMove(KeyCode::LEFT_ARROW);
+                    break;
+
+                case KeyCode::RIGHT_ARROW:
+                    _handleCursorMove(KeyCode::RIGHT_ARROW);
+                    break;
+
+                case KeyCode::UP_ARROW:
+                    _handleCursorMove(KeyCode::UP_ARROW);
+                    break;
+
+                case KeyCode::DOWN_ARROW:
+                    _handleCursorMove(KeyCode::DOWN_ARROW);
+                    break;
+
+                case KeyCode::SPACE:
+                    if (_controllerCursorSelection != nullptr)
+                    {
+                        _controllerCursorSelection->click();
+                        if (_controllerCursorSelection->getUnhoverOnClick())
+                        {
+                            _controllerCursorSelection = nullptr;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+                }
 
                 break;
             }
@@ -461,6 +566,41 @@ namespace LeoEngine
             {
                 EventControllerButtonDown* castEvent = dynamic_cast<EventControllerButtonDown*>(event);
                 _controllers[castEvent->controllerID]->setButtonState(castEvent->button, KeyState::PRESSED);
+
+                switch (castEvent->button)
+                {
+                case ControllerButton::LEFT_DPAD:
+                    _handleCursorMove(KeyCode::LEFT_ARROW);
+                    break;
+
+                case ControllerButton::RIGHT_DPAD:
+                    _handleCursorMove(KeyCode::RIGHT_ARROW);
+                    break;
+
+                case ControllerButton::UP_DPAD:
+                    _handleCursorMove(KeyCode::UP_ARROW);
+                    break;
+
+                case ControllerButton::DOWN_DPAD:
+                    _handleCursorMove(KeyCode::DOWN_ARROW);
+                    break;
+
+                case ControllerButton::RIGHT_FACE:
+                    if (_controllerCursorSelection != nullptr)
+                    {
+                        _controllerCursorSelection->click();
+                        // is the nullptr check good? was a workaround for garter
+                        if (_controllerCursorSelection && _controllerCursorSelection->getUnhoverOnClick())
+                        {
+                            _controllerCursorSelection = nullptr;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+                }
+
                 break;
             }
 

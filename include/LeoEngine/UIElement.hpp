@@ -38,6 +38,9 @@ namespace LeoEngine
         void setAnchor(UIAnchor anchor);
         void setOrigin(UIAnchor origin);
 
+        // get the global bounds (starting from top left corner) of the element
+        Rectangle<int> getGlobalBounds() const;
+
         template<typename T>
         T *createChild();
 
@@ -54,8 +57,6 @@ namespace LeoEngine
         virtual void _update() {};
         virtual void _draw() {};
 
-        // get the global bounds (starting from top left corner) of the element
-        Rectangle<int> getGlobalBounds() const;
 
         const UIElement *_parent;
         std::vector<UIElement *> _children;

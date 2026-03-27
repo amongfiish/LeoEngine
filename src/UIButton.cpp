@@ -10,7 +10,7 @@ namespace LeoEngine
 {
 
     UIButton::UIButton(std::function<void(void)> clickFunction, bool unhoverOnClick)
-        : _mouseHovering(false),
+        : _cursorHovering(false),
           _clickFunction(clickFunction),
           _unhoverOnClick(unhoverOnClick)
     {
@@ -25,10 +25,65 @@ namespace LeoEngine
         Services::get().getEvents()->removeCallback(_clickCallbackID);
     }
 
+    void UIButton::click()
+    {
+        _clickFunction();
+    }
+
     void UIButton::setSize(int width, int height)
     {
         _bounds.width = width;
         _bounds.height = height;
+    }
+
+    void UIButton::setLeftButton(UIButton* button)
+    {
+        _leftButton = button;
+    }
+
+    void UIButton::setRightButton(UIButton* button)
+    {
+        _rightButton = button;
+    }
+
+    void UIButton::setUpButton(UIButton* button)
+    {
+        _upButton = button;
+    }
+
+    void UIButton::setDownButton(UIButton* button)
+    {
+        _downButton = button;
+    }
+
+    UIButton* UIButton::getLeftButton()
+    {
+        return _leftButton;
+    }
+
+    UIButton* UIButton::getRightButton()
+    {
+        return _rightButton;
+    }
+
+    UIButton* UIButton::getUpButton()
+    {
+        return _upButton;
+    }
+
+    UIButton* UIButton::getDownButton()
+    {
+        return _downButton;
+    }
+
+    bool UIButton::getUnhoverOnClick() const
+    {
+        return _unhoverOnClick;
+    }
+
+    void UIButton::_setMouseHovering(bool hovering)
+    {
+        _cursorHovering = hovering;
     }
 
     void UIButton::_mouseMovedCallback(Event *event)
@@ -42,11 +97,11 @@ namespace LeoEngine
 
         if (checkForOverlap(mousePosition, getGlobalBounds()))
         {
-            _mouseHovering = true;
+            _cursorHovering = true;
         }
         else
         {
-            _mouseHovering = false;
+            _cursorHovering = false;
         }
     }
 
@@ -59,11 +114,11 @@ namespace LeoEngine
 
         EventMouseButtonDown *mouseButtonEvent = dynamic_cast<EventMouseButtonDown *>(event);
 
-        if (mouseButtonEvent->mouseButton == _MOUSE_BUTTON && _mouseHovering)
+        if (mouseButtonEvent->mouseButton == _MOUSE_BUTTON && _cursorHovering)
         {
             if (_unhoverOnClick)
             {
-                _mouseHovering = false;
+                _cursorHovering = false;
             }
 
             _clickFunction();

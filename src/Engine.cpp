@@ -75,6 +75,7 @@ namespace LeoEngine
                 Services::get().getGraphics()->fill(BLACK);
                 // draw
                 game.draw();
+                Services::get().getInput()->draw();
                 // show on the screen
                 Services::get().getGraphics()->present();
 

@@ -37,7 +37,7 @@ namespace LeoEngine
         Colour *backgroundColour = &_backgroundColour;
         Colour *outlineColour = &_outlineColour;
 
-        if (_mouseHovering)
+        if (_cursorHovering)
         {
             backgroundColour = &_backgroundColourHover;
             outlineColour = &_outlineColourHover;

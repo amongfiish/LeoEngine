@@ -17,10 +17,26 @@ namespace LeoEngine
         UIButton(std::function<void(void)> clickFunction, bool unhoverOnClick);
         virtual ~UIButton();
 
+        void click();
+
         void setSize(int width, int height);
+
+        void setLeftButton(UIButton* button);
+        void setRightButton(UIButton* button);
+        void setUpButton(UIButton* button);
+        void setDownButton(UIButton* button);
+
+        UIButton* getLeftButton();
+        UIButton* getRightButton();
+        UIButton* getUpButton();
+        UIButton* getDownButton();
+
+        bool getUnhoverOnClick() const;
 
     protected:
         static constexpr int _MOUSE_BUTTON = 1;
+
+        void _setMouseHovering(bool hovering);
 
         void _mouseMovedCallback(Event *event);
         bool _clickCallback(Event *event);
@@ -30,8 +46,12 @@ namespace LeoEngine
 
         std::function<void(void)> _clickFunction;
 
-        bool _mouseHovering;
-        // should _mouseHovering be set to false in _clickCallback?
+        UIButton* _leftButton;
+        UIButton* _rightButton;
+        UIButton* _upButton;
+        UIButton* _downButton;
+
+        bool _cursorHovering;
         bool _unhoverOnClick;
     };
 

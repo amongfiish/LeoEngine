@@ -18,6 +18,7 @@ namespace LeoEngine
 {
 
     class Controller;
+    class UIButton;
 
     class Input
     {
@@ -26,6 +27,7 @@ namespace LeoEngine
         ~Input();
 
         void update();
+        void draw();
 
         // RELEASED will always be returned by getKeyState() when _locked==true
         void lockInput();
@@ -54,7 +56,11 @@ namespace LeoEngine
         double getControllerLeftTriggerAxis(int controllerID) const;
         double getControllerRightTriggerAxis(int controllerID) const;
 
+        void registerControllerCursorDefaultSelection(UIButton* button);
+
     private:
+        void _handleCursorMove(KeyCode direction);
+
         void keyCallback(Event *event);
         void controllerCallback(Event *event);
         void mouseCallback(Event *event);
@@ -69,6 +75,9 @@ namespace LeoEngine
 
         std::map<int, Controller*> _controllers;
         int _lastAddedControllerID;
+
+        UIButton* _controllerCursorDefaultSelection;
+        UIButton* _controllerCursorSelection;
 
         Pair<int, int> _mousePosition;
         std::vector<KeyState> _mouseButtons;
