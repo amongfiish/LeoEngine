@@ -23,11 +23,13 @@ namespace LeoEngine
 
     Input::Input(Events *events)
         : _events(events),
-        _mousePosition(0, 0),
-        _mouseButtons(10, KeyState::RELEASED),
-        _mouseWheelMotion(0, 0),
-        _locked(false),
-        _lastAddedControllerID(-1)
+          _mousePosition(0, 0),
+          _mouseButtons(10, KeyState::RELEASED),
+          _mouseWheelMotion(0, 0),
+          _locked(false),
+          _lastAddedControllerID(-1),
+          _controllerCursorDefaultSelection(nullptr),
+          _controllerCursorSelection(nullptr)
     {
         // input event callbacks
         _events->addCallback(EventType::KEY_DOWN, bind(&Input::keyCallback, this, placeholders::_1));
@@ -266,7 +268,7 @@ namespace LeoEngine
         return _controllers.at(controllerID)->getButtonState(button);
     }
 
-    Pair<double, double> Input::getControllerLeftJoystickAxes(int controllerID) const
+    Pair<double, double> Input::getControllerLeftJoystickAxes(int controllerID, double deadzone) const
     {
         if (!controllerExists(controllerID))
         {
@@ -280,10 +282,10 @@ namespace LeoEngine
             return Pair<double, double>(0.0, 0.0);
         }
 
-        return _controllers.at(controllerID)->getLeftStickAxes();
+        return _controllers.at(controllerID)->getLeftStickAxes(deadzone);
     }
 
-    Pair<double, double> Input::getControllerRightJoystickAxes(int controllerID) const
+    Pair<double, double> Input::getControllerRightJoystickAxes(int controllerID, double deadzone) const
     {
         if (!controllerExists(controllerID))
         {
@@ -297,7 +299,7 @@ namespace LeoEngine
             return Pair<double, double>(0.0, 0.0);
         }
 
-        return _controllers.at(controllerID)->getRightStickAxes();
+        return _controllers.at(controllerID)->getRightStickAxes(deadzone);
     }
 
     double Input::getControllerLeftTriggerAxis(int controllerID) const

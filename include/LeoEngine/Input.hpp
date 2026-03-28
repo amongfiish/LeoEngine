@@ -51,14 +51,16 @@ namespace LeoEngine
         int getPlayerByControllerID(int id) const;
 
         KeyState getControllerButtonState(int controllerID, ControllerButton button) const;
-        Pair<double, double> getControllerLeftJoystickAxes(int controllerID) const;
-        Pair<double, double> getControllerRightJoystickAxes(int controllerID) const;
+        Pair<double, double> getControllerLeftJoystickAxes(int controllerID, double deadzone=DEFAULT_DEADZONE) const;
+        Pair<double, double> getControllerRightJoystickAxes(int controllerID, double deadzone=DEFAULT_DEADZONE) const;
         double getControllerLeftTriggerAxis(int controllerID) const;
         double getControllerRightTriggerAxis(int controllerID) const;
 
         void registerControllerCursorDefaultSelection(UIButton* button);
 
     private:
+        static constexpr double DEFAULT_DEADZONE = 0.2;
+
         void _handleCursorMove(KeyCode direction);
 
         void keyCallback(Event *event);

@@ -31,14 +31,32 @@ namespace LeoEngine
         return _buttonStates.at(button);
     }
 
-    const Pair<double, double>& Controller::getLeftStickAxes() const
+    Pair<double, double> Controller::getLeftStickAxes(double deadzone) const
     {
-        return _axesLeftStick;
+        Pair<double, double> value = _axesLeftStick;
+        if (abs(value.first) < deadzone)
+        {
+            value.first = 0;
+        }
+        if (abs(value.second) < deadzone)
+        {
+            value.second = 0;
+        }
+        return value;
     }
 
-    const Pair<double, double>& Controller::getRightStickAxes() const
+    Pair<double, double> Controller::getRightStickAxes(double deadzone) const
     {
-        return _axesRightStick;
+        Pair<double, double> value = _axesRightStick;
+        if (abs(value.first) < deadzone)
+        {
+            value.first = 0;
+        }
+        if (abs(value.second) < deadzone)
+        {
+            value.second = 0;
+        }
+        return value;
     }
 
     double Controller::getLeftTriggerAxis() const
@@ -59,37 +77,21 @@ namespace LeoEngine
     void Controller::setLeftStickAxisX(double value)
     {
         _axesLeftStick.first = value / AXIS_MAX;
-        if (abs(_axesLeftStick.first) < DEADZONE)
-        {
-            _axesLeftStick.first = 0;
-        }
     }
 
     void Controller::setLeftStickAxisY(double value)
     {
         _axesLeftStick.second = value / AXIS_MAX;
-        if (abs(_axesLeftStick.second) < DEADZONE)
-        {
-            _axesLeftStick.second = 0;
-        }
     }
 
     void Controller::setRightStickAxisX(double value)
     {
         _axesRightStick.first = value / AXIS_MAX;
-        if (abs(_axesRightStick.first) < DEADZONE)
-        {
-            _axesRightStick.first = 0;
-        }
     }
 
     void Controller::setRightStickAxisY(double value)
     {
         _axesRightStick.second = value / AXIS_MAX;
-        if (abs(_axesRightStick.second) < DEADZONE)
-        {
-            _axesRightStick.second = 0;
-        }
     }
 
     void Controller::setLeftTriggerAxis(double value)
