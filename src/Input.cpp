@@ -23,11 +23,13 @@ namespace LeoEngine
 
     Input::Input(Events *events)
         : _events(events),
-        _mousePosition(0, 0),
-        _mouseButtons(10, KeyState::RELEASED),
-        _mouseWheelMotion(0, 0),
-        _locked(false),
-        _lastAddedControllerID(-1)
+          _mousePosition(0, 0),
+          _mouseButtons(10, KeyState::RELEASED),
+          _mouseWheelMotion(0, 0),
+          _locked(false),
+          _lastAddedControllerID(-1),
+          _controllerCursorDefaultSelection(nullptr),
+          _controllerCursorSelection(nullptr)
     {
         // input event callbacks
         _events->addCallback(EventType::KEY_DOWN, bind(&Input::keyCallback, this, placeholders::_1));
