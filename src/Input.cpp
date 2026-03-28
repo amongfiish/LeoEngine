@@ -431,7 +431,7 @@ namespace LeoEngine
                     if (_controllerCursorSelection != nullptr)
                     {
                         _controllerCursorSelection->click();
-                        if (_controllerCursorSelection->getUnhoverOnClick())
+                        if (_controllerCursorSelection && _controllerCursorSelection->getUnhoverOnClick())
                         {
                             _controllerCursorSelection = nullptr;
                         }
