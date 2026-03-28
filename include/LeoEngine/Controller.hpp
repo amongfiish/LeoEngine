@@ -22,16 +22,14 @@ namespace LeoEngine
 
         KeyState getButtonState(ControllerButton button);
 
-        Pair<double, double> getLeftStickAxes(double deadzone=DEFAULT_DEADZONE) const;
-        Pair<double, double> getRightStickAxes(double deadzone=DEFAULT_DEADZONE) const;
+        Pair<double, double> getLeftStickAxes(double deadzone) const;
+        Pair<double, double> getRightStickAxes(double deadzone) const;
 
         double getLeftTriggerAxis() const;
         double getRightTriggerAxis() const;
 
     private:
         friend Input;
-
-        static constexpr double DEFAULT_DEADZONE = 0.2;
 
         void setButtonState(ControllerButton button, KeyState state);
 

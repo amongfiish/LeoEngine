@@ -268,7 +268,7 @@ namespace LeoEngine
         return _controllers.at(controllerID)->getButtonState(button);
     }
 
-    Pair<double, double> Input::getControllerLeftJoystickAxes(int controllerID) const
+    Pair<double, double> Input::getControllerLeftJoystickAxes(int controllerID, double deadzone) const
     {
         if (!controllerExists(controllerID))
         {
@@ -282,10 +282,10 @@ namespace LeoEngine
             return Pair<double, double>(0.0, 0.0);
         }
 
-        return _controllers.at(controllerID)->getLeftStickAxes();
+        return _controllers.at(controllerID)->getLeftStickAxes(deadzone);
     }
 
-    Pair<double, double> Input::getControllerRightJoystickAxes(int controllerID) const
+    Pair<double, double> Input::getControllerRightJoystickAxes(int controllerID, double deadzone) const
     {
         if (!controllerExists(controllerID))
         {
@@ -299,7 +299,7 @@ namespace LeoEngine
             return Pair<double, double>(0.0, 0.0);
         }
 
-        return _controllers.at(controllerID)->getRightStickAxes();
+        return _controllers.at(controllerID)->getRightStickAxes(deadzone);
     }
 
     double Input::getControllerLeftTriggerAxis(int controllerID) const
