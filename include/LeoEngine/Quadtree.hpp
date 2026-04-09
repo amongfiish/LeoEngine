@@ -146,6 +146,45 @@ namespace LeoEngine
             return _elements;
         }
 
+        template <typename U>
+        std::vector<T*> getPotentialOverlaps(U bound)
+        {
+            std::vector<T*> elements;
+            
+            if (checkForOverlap(_bounds, bound))
+            {
+                if (_topLeft != nullptr)
+                {
+                    if (checkForOverlap(_topLeft->bounds, bound))
+                    {
+                        std::vector<T*> topLeftElements = _topLeft->getPotentialOverlaps(bound);
+                        elements.insert(elements.end(), topLeftElements.begin(), topLeftElements.end());
+                    }
+                    if (checkForOverlap(_topRight->bounds, bound))
+                    {
+                        std::vector<T*> topRightElements = _topRight->getPotentialOverlaps(bound);
+                        elements.insert(elements.end(), topRightElements.begin(), topRightElements.end());
+                    }
+                    if (checkForOverlap(_bottomLeft->bounds, bound))
+                    {
+                        std::vector<T*> bottomLeftElements = _bottomLeftElements->getPotentialOverlaps(bound);
+                        elements.insert(elements.end(), bottomLeftElements.begin(), bottomLeftElements.end());
+                    }
+                    if (checkForOverlap(_bottomRight->bounds, bound))
+                    {
+                        std::vector<T*> bottomRightElements = _bottomRightElements->getPotentialOverlaps(bound);
+                        elements.insert(elements.end(), bottomRightElements.begin(), bottomRightElements.end());
+                    }
+                }
+                else
+                {
+                    return _elements;
+                }
+            }
+
+            return elements;
+        }
+
     private:
         void _subdivide()
         {
