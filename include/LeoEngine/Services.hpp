@@ -9,8 +9,6 @@ namespace LeoEngine
     class Audio;
     class Graphics;
     class Logger;
-    class Saver;
-    class Actions;
 
     class Services
     {
@@ -22,7 +20,6 @@ namespace LeoEngine
         Audio *getAudio();
         Graphics *getGraphics();
         Logger *getLogger();
-        Actions *getActions();
 
     private:
         Services();
@@ -35,7 +32,6 @@ namespace LeoEngine
         Graphics *_graphics = nullptr;
         Audio *_audio = nullptr;
         Input *_input = nullptr;
-        Actions *_actions = nullptr;
     };
 
 }

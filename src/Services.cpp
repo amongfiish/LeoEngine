@@ -45,11 +45,6 @@ namespace LeoEngine
         return _logger;
     }
 
-    Actions *Services::getActions()
-    {
-        return _actions;
-    }
-
     Services::Services()
             : _logger(new Logger),
             _events(new Events),

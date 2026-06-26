@@ -15,7 +15,8 @@ namespace LeoEngine
 {
 
     Engine::Engine()
-        : _running(false)
+        : _running(false),
+          _lockFramerate(true)
     {
         setFramerate(DEFAULT_FRAMERATE);
         setFixedUpdateRate(DEFAULT_FIXED_UPDATE_RATE);
@@ -24,6 +25,11 @@ namespace LeoEngine
     Engine::~Engine()
     {
 
+    }
+
+    void Engine::setLockFramerate(bool lockFramerate)
+    {
+        _lockFramerate = lockFramerate;
     }
 
     void Engine::setFramerate(int framerate)
@@ -66,7 +72,7 @@ namespace LeoEngine
 
             previousUpdateTicks = currentTicks;
 
-            if (currentTicks - previousDrawTicks >= _nsBetweenFrames)
+            if (!_lockFramerate || currentTicks - previousDrawTicks >= _nsBetweenFrames)
             {
                 // update camera
                 Services::get().getGraphics()->updateCamera();
