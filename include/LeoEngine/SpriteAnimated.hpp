@@ -31,6 +31,8 @@ namespace LeoEngine
         // hmm...
         SpriteStatic &getSprite();
 
+        bool isPaused() const;
+
     private:
         void fetchFrameData();
 

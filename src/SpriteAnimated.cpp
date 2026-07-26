@@ -98,6 +98,11 @@ namespace LeoEngine
         return _sprite;
     }
 
+    bool SpriteAnimated::isPaused() const
+    {
+        return _paused;
+    }
+
     void SpriteAnimated::fetchFrameData()
     {
         AnimationFrameData currentFrameData = _animation->getFrameData(_currentFrame);
