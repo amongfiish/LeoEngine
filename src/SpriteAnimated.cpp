@@ -6,11 +6,12 @@ namespace LeoEngine
 
     SpriteAnimated::SpriteAnimated()
         : _animation(nullptr),
-        _currentFrame(0),
-        _currentFrameTimer(0),
-        _paused(false),
-        _loop(true),
-        _startFrame(0)
+          _loop(true),
+          _reverse(false),
+          _paused(false),
+          _startFrame(0),
+          _currentFrame(0),
+          _currentFrameTimer(0)
     {
 
     }
@@ -35,7 +36,18 @@ namespace LeoEngine
 
         while (_currentFrameTimer <= 0)
         {
-            _currentFrame = (_currentFrame + 1) % _animation->getNumberOfFrames();
+            if (_reverse)
+            {
+                _currentFrame -= 1;
+                if (_currentFrame < 0)
+                {
+                    _currentFrame += _animation->getNumberOfFrames();
+                }
+            }
+            else
+            {
+                _currentFrame = (_currentFrame + 1) % _animation->getNumberOfFrames();
+            }
             
             if (!_loop && _currentFrame == _startFrame)
             {
@@ -91,6 +103,11 @@ namespace LeoEngine
     void SpriteAnimated::setLoop(bool shouldLoop)
     {
         _loop = shouldLoop;
+    }
+
+    void SpriteAnimated::setReverse(bool reverse)
+    {
+        _reverse = reverse;
     }
 
     SpriteStatic &SpriteAnimated::getSprite()

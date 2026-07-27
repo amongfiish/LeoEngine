@@ -21,14 +21,16 @@ namespace LeoEngine
     {
     public:
         SceneCollection()
-            : _currentScene(nullptr),
+            : update(std::bind(
+                  &SceneCollection::normalUpdate,
+                  this, std::placeholders::_1)),
+              draw(std::bind(&SceneCollection::normalDraw, this)),
+              _currentScene(nullptr),
               _nextScene(nullptr),
               _transitionElapsedTime(0.0),
               _transitionTotalTime(0.0),
-              _fadeRenderTarget(100, 100),
               _transitionSecondHalf(false),
-              update(std::bind(&SceneCollection::normalUpdate, this, std::placeholders::_1)),
-              draw(std::bind(&SceneCollection::normalDraw, this))
+              _fadeRenderTarget(100, 100)
         {
             Services::get().getEvents()->addCallback(EventType::CHANGE_SCENE, bind(&SceneCollection::sceneChangeCallback, this, placeholders::_1));
             Services::get().getGraphics()->setRenderTarget(&_fadeRenderTarget);
@@ -126,7 +128,9 @@ namespace LeoEngine
     private:
         bool sceneIsValid(int sceneID)
         {
-            bool sceneIsValid = sceneID >= 0 && sceneID < _scenes.size();
+            bool sceneIsValid = 
+                sceneID >= 0 && 
+                static_cast<unsigned int>(sceneID) < _scenes.size();
             return sceneIsValid;
         }
 
