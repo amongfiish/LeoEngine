@@ -1,5 +1,8 @@
+#include <stdexcept>
 #include "LeoEngine/SpriteAnimated.hpp"
 #include "LeoEngine/Rectangle.hpp"
+#include "LeoEngine/Services.hpp"
+#include "LeoEngine/Logger.hpp"
 
 namespace LeoEngine
 {
@@ -95,6 +98,25 @@ namespace LeoEngine
 
     void SpriteAnimated::setCurrentFrame(int frame)
     {
+        int numberOfFrames = _animation->getNumberOfFrames();
+        if (frame < 0)
+        {
+            frame += numberOfFrames;
+        }
+
+        if (frame > numberOfFrames - 1 || frame < 0)
+        {
+            std::string errorMessage =
+                "Provided frame (" + std::to_string(frame) +
+                ") outside acceptable range [" +
+                std::to_string(-numberOfFrames) + ", " +
+                std::to_string(numberOfFrames - 1) + "].";
+            LeoEngine::Services::get().getLogger()->error(
+                "SpriteAnimated",
+                errorMessage);
+            throw std::runtime_error(errorMessage);
+        }
+
         _currentFrame = frame;
         _startFrame = frame;
         fetchFrameData();
