@@ -12,6 +12,7 @@ namespace LeoEngine
           _loop(true),
           _reverse(false),
           _paused(false),
+          _speed(1.0f),
           _startFrame(0),
           _currentFrame(0),
           _currentFrameTimer(0)
@@ -33,7 +34,7 @@ namespace LeoEngine
 
         if (_currentFrameTimer > 0)
         {
-            _currentFrameTimer -= deltaTime;
+            _currentFrameTimer -= deltaTime * _speed;
             return;
         }
 
@@ -114,6 +115,7 @@ namespace LeoEngine
             LeoEngine::Services::get().getLogger()->error(
                 "SpriteAnimated",
                 errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
             throw std::runtime_error(errorMessage);
         }
 
@@ -130,6 +132,28 @@ namespace LeoEngine
     void SpriteAnimated::setReverse(bool reverse)
     {
         _reverse = reverse;
+    }
+
+    void SpriteAnimated::setSpeed(float speed)
+    {
+        if (speed < 0.0)
+        {
+            std::string errorMessage =
+                "Negative speed provided. Please use setReverse instead.";
+            LeoEngine::Services::get().getLogger()->error(
+                "SpriteAnimated",
+                errorMessage);
+            LeoEngine::Services::get().getLogger()->flush();
+            throw std::runtime_error(errorMessage);
+        }
+        if (speed == 0.0)
+        {
+            LeoEngine::Services::get().getLogger()->warn(
+                "SpriteAnimated",
+                std::string("Provided speed of 0.0. It's recommended to use ") +
+                "pauseAnimation instead.");
+        }
+        _speed = speed;
     }
 
     SpriteStatic &SpriteAnimated::getSprite()

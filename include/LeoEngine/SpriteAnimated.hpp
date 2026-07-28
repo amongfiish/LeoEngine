@@ -28,6 +28,7 @@ namespace LeoEngine
 
         void setLoop(bool shouldLoop);
         void setReverse(bool reverse);
+        void setSpeed(float speed);
 
         // hmm...
         SpriteStatic &getSprite();
@@ -44,6 +45,7 @@ namespace LeoEngine
         bool _loop;
         bool _reverse;
         bool _paused;
+        float _speed;
 
         int _startFrame;
         int _currentFrame;
