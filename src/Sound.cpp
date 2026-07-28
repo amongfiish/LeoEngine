@@ -13,7 +13,7 @@ namespace LeoEngine
         if (_audio == NULL)
         {
             std::string errorString = "Failed to load new MIX_Audio from path '" + filepath + "'. MIX_GetError output: '" + SDL_GetError() + "'";
-            Services::get().getLogger()->critical("Sound", errorString);
+            Services::get().getLogger()->error("Sound", errorString);
             Services::get().getLogger()->flush();
             
             throw std::runtime_error(errorString);
