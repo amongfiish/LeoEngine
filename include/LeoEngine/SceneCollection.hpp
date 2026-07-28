@@ -115,7 +115,7 @@ namespace LeoEngine
 
             _nextScene = _scenes.at(sceneID);
 
-            _transitionElapsedTime = 0;
+            _transitionElapsedTime = 0.0;
             _transitionTotalTime = transitionTime;
             _transitionSecondHalf = false;
             update = std::bind(&SceneCollection::fadeUpdate, this, std::placeholders::_1);
