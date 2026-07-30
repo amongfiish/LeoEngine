@@ -24,6 +24,7 @@ namespace LeoEngine
             }
 
             SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
+            SDL_SetTextureScaleMode(_texture, SDL_SCALEMODE_NEAREST);
         }
 
         ~RenderTarget()
